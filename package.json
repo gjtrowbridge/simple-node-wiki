@@ -10,5 +10,11 @@
     "wiki"
   ],
   "author": "Greg Trowbridge",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^9.0.8",
+    "gulp": "^3.8.11",
+    "q": "^1.2.1",
+    "react": "^0.13.2"
+  }
 }
