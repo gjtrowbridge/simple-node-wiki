@@ -21,7 +21,9 @@ gulp.task('scripts', function() {
 })
 
 gulp.task('watch', function() {
-  
+  gulp.watch('./src/*', function() {
+    gulp.run('default');
+  });
 })
 
 gulp.task('default', ['lint', 'scripts']);

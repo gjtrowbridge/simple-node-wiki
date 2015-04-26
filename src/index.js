@@ -1,4 +1,3 @@
-
 var React = require('react');
 var Page = require('./Page.js');
 
