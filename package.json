@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "browserify": "^9.0.8",
+    "express": "^4.12.3",
     "gulp": "^3.8.11",
     "q": "^1.2.1",
     "react": "^0.13.2"
