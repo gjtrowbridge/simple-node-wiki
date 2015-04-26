@@ -14,12 +14,14 @@ gulp.task('scripts', function() {
   return gulp.src('src/index.js')
       .pipe(browserify({
         insertGlobals: true,
-        debug: !gulp.env.production
+        debug: true
       }))
       .pipe(rename('bundle.js'))
       .pipe(gulp.dest('./public/js'));
 })
 
-gulp.task('default', function() {
-  gulp.run('lint', 'scripts');
-});
+gulp.task('watch', function() {
+  
+})
+
+gulp.task('default', ['lint', 'scripts']);

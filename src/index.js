@@ -1,7 +1,10 @@
 
 var React = require('react');
-var DisplayBox = require('./DisplayBox.js');
-var EditBox = require('./EditBox.js');
 var Page = require('./Page.js');
 
-
+React.render(
+  React.createElement(Page, {
+    name: 'Greg'
+  }),
+  document.getElementById('mount_point')
+);
