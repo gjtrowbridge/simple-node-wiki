@@ -3,10 +3,10 @@ var app = express();
 var api = require('./api');
 
 // Add api endpoints
-app.use('/api', api(express));
+app.use('/__api', api(express));
 
 // Serve static files
-app.use(express.static(__dirname + '/public'));
+app.use('/__public', express.static(__dirname + '/public'));
 
 app.get('*', function(req, res) {
   res.sendFile(__dirname + '/public/index.html')
