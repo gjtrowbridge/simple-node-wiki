@@ -1,8 +1,9 @@
 var gulp = require('gulp');
 
 var jshint = require('gulp-jshint');
-var browserify = require('gulp-browserify');
+var browserify = require('browserify');
 var rename = require('gulp-rename');
+var vinylSourceStream = require('vinyl-source-stream');
 
 gulp.task('lint', function() {
   return gulp.src('src/*.js')
@@ -11,19 +12,19 @@ gulp.task('lint', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('src/index.js')
-      .pipe(browserify({
-        insertGlobals: true,
-        debug: true
-      }))
+  var file = './src/index.js';
+  var b = browserify({
+    entries: [file],
+    debug: true
+  });
+  return b.bundle()
+      .pipe(vinylSourceStream(file))
       .pipe(rename('bundle.js'))
       .pipe(gulp.dest('./public/js'));
-})
+});
 
 gulp.task('watch', function() {
-  gulp.watch('./src/*', function() {
-    gulp.run('default');
-  });
+  gulp.watch('./src/**/*.js', ['default']);
 })
 
 gulp.task('default', ['lint', 'scripts']);

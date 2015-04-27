@@ -14,13 +14,14 @@
   "dependencies": {
     "browserify": "^9.0.8",
     "express": "^4.12.3",
-    "gulp": "^3.8.11",
-    "gulp-jshint": "^1.10.0",
     "q": "^1.2.1",
-    "react": "^0.13.2"
+    "react": "^0.13.2",
+    "react-router": "^0.13.2"
   },
   "devDependencies": {
+    "browserify": "^9.0.8",
     "gulp-browserify": "^0.5.1",
-    "gulp-rename": "^1.2.2"
+    "gulp-rename": "^1.2.2",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
