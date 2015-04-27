@@ -8,6 +8,10 @@ app.use('/api', api(express));
 // Serve static files
 app.use(express.static(__dirname + '/public'));
 
+app.get('*', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html')
+});
+
 // Start up app on specified port
 var port = process.env.port || 8080;
 app.listen(port, function() {

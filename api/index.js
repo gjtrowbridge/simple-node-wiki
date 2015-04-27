@@ -2,7 +2,7 @@
 var addApiEndpoints = function(express) {
   var api = express.Router();
 
-  api.get('/', function(req, res) {
+  api.post('/', function(req, res) {
     res.send('Welcome to the api!');
   });
 
