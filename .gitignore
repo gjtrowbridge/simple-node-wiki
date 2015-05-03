@@ -1,4 +1,4 @@
 node_modules/
 mockups/
 public/js/bundle.js
-server/database/database.sqlite
+*.sqlite
