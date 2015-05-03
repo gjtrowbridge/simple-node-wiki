@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var api = require('./server/api');
+var api = require('./server/api/index.js');
 
 // Add api endpoints
 app.use('/_api', api(express));

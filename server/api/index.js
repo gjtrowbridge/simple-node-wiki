@@ -1,6 +1,10 @@
-var createPageRouter = require('./pages/createPageRouter.js');
+var Sequelize = require('sequelize');
+var createPageRouter = require('./createPageRouter.js');
 
-var createApiRouter = function(express, sequelize) {
+var databaseInfo = require('../database/setupDatabase.js')
+
+// This router is the entry point for all API endpoints
+var createApiRouter = function(express) {
   var apiRouter = express.Router();
 
   apiRouter.post('/', function(req, res) {
@@ -8,9 +12,9 @@ var createApiRouter = function(express, sequelize) {
   });
 
   // Add end points for handling CRUD operations for pages
-  apiRouter.use('/pages', createPageRouter(express, sequelize));
+  apiRouter.use('/pages', createPageRouter(express, databaseInfo));
 
   return apiRouter;
-}
+};
 
 module.exports = createApiRouter;
