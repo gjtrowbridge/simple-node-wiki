@@ -1,15 +1,16 @@
-var pagesHandler = require('./pages/addPageEndpoints.js');
+var createPageRouter = require('./pages/createPageRouter.js');
 
-var addApiEndpoints = function(express, sequelize) {
-  var api = express.Router();
+var createApiRouter = function(express, sequelize) {
+  var apiRouter = express.Router();
 
-  api.post('/', function(req, res) {
+  apiRouter.post('/', function(req, res) {
     res.send('Welcome to the api!');
   });
 
-  api.use('/pages', pagesHandler)
+  // Add end points for handling CRUD operations for pages
+  apiRouter.use('/pages', createPageRouter(express, sequelize));
 
-  return api;
+  return apiRouter;
 }
 
-module.exports = addApiEndpoints;
+module.exports = createApiRouter;

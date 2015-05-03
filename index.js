@@ -1,15 +1,15 @@
 var express = require('express');
 var app = express();
-var api = require('./api');
+var api = require('./server/api');
 
 // Add api endpoints
-app.use('/__api', api(express));
+app.use('/_api', api(express));
 
 // Serve static files
-app.use('/__public', express.static(__dirname + '/public'));
+app.use('/_public', express.static(__dirname + '/client/public'));
 
 app.get('*', function(req, res) {
-  res.sendFile(__dirname + '/public/index.html')
+  res.sendFile(__dirname + '/client//public/index.html')
 });
 
 // Start up app on specified port
