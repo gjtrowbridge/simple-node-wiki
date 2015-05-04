@@ -2,6 +2,7 @@
 var definePage = function(Sequelize, sequelize) {
   var Page = sequelize.define('page', {
     name: Sequelize.STRING,
+    title: Sequelize.STRING,
     text: Sequelize.TEXT
   }, {
     freezeTableName: true,

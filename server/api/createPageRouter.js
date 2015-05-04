@@ -24,22 +24,38 @@ var createPageRouter = function(express, databaseInfo) {
   });
 
   // This will return the data for single page of
-  // the wiki
-  pageRouter.get('/:name', function(req, res) {
-    var name = req.params.name;
-    Page.findOne({
-      where: {
-        name: name
-      }
-    }).done(
+  // the wiki, given an ID or name
+  pageRouter.get('/:id_or_name', function(req, res) {
+    var id_or_name = req.params.id_or_name;
+
+    var findPromise;
+    // Find a page with the specified ID (if numeric)
+    if (id_or_name.match(/\d+/) !== null) {
+      var id = id_or_name;
+      findPromise = Page.findOne({
+        where: {
+          id: id
+        }
+      });
+    // Or finds a page with the specified name (if non-numeric)
+    } else {
+      var name = id_or_name;
+      findPromise = Page.findOne({
+        where: {
+          name: name
+        }
+      });
+    }
+    // Return results
+    findPromise.done(
       function(page) {
         if (page !== null) {
           res.status(200).json({
             data: page
-          })
+          });
         } else {
           res.status(404).json({
-            error: 'No page found with name "' + name + '"'
+            error: 'Page not found'
           });
         }
       },
@@ -49,6 +65,36 @@ var createPageRouter = function(express, databaseInfo) {
         });
       }
     );
+  });
+
+  // Create a new page
+  pageRouter.post('/', function(req, res) {
+    Page.create({
+      name: req.body.name,
+      text: req.body.text,
+      title: req.body.title
+    }).done(
+      function(page) {
+        res.status(201).json({
+          data: page
+        });
+      },
+      function(err) {
+        res.status(500).json({
+          error: err
+        });
+      }
+    );
+  });
+
+  // Update a page
+  pageRouter.put('/:id', function(req, res) {
+
+  });
+
+  // Delete a page
+  pageRouter.delete('/:id', function(req, res) {
+
   });
 
   return pageRouter;

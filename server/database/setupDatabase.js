@@ -11,7 +11,7 @@ var models = {};
 // Page
 var definePage = require('./models/definePage.js');
 models.Page = definePage(Sequelize, sequelize);
-models.Page.sync({force: false});
+models.Page.sync({force: true});
 
 // TODO: User
 
