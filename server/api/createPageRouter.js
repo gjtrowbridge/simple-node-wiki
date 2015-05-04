@@ -89,7 +89,27 @@ var createPageRouter = function(express, databaseInfo) {
 
   // Update a page
   pageRouter.put('/:id', function(req, res) {
-
+    var id = req.params.id;
+    Page.update({
+      name: req.body.name,
+      text: req.body.text,
+      title: req.body.title
+    }, {
+      where: {
+        id: id
+      }
+    }).done(
+      function(rows_affected) {
+        res.status(200).json({
+          rows_affected: rows_affected
+        });
+      },
+      function(err) {
+        res.status(500).json({
+          error: err
+        });
+      }
+    );
   });
 
   // Delete a page
