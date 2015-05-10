@@ -64,8 +64,16 @@ var EditBox = require('../EditBox/EditBox.js');
 
 var Page = React.createClass({
   displayName: 'Page',
-  handleChange: function(e) {
-    console.log(e);
+  getInitialState: function() {
+    return {
+      title: '',
+      text: ''
+    }
+  },
+  handleBoxMainChange: function(e) {
+    this.setState({
+      text: e.target.value
+    });
   },
   render: function() {
     var children = [
@@ -74,14 +82,15 @@ var Page = React.createClass({
         {
           key: 1,
           editing: true,
-          onBoxMainChange: this.handleChange
+          onBoxMainChange: this.handleBoxMainChange
         }
       ),
       React.createElement(
         PageBox,
         {
           key: 2,
-          editing: true
+          editing: true,
+          text: this.state.text
         }
       )
     ];
@@ -108,6 +117,7 @@ var PageBox = React.createClass({
   },
 
   render: function() {
+    console.log('rendering');
     var children = [
       React.createElement(
         'input',
@@ -120,7 +130,7 @@ var PageBox = React.createClass({
         'textarea', 
         {
           className: 'box-main',
-          value: this.props.text ? this.props.text : '',
+          value: this.props.text ? this.props.text : undefined,
           onChange: this.props.onBoxMainChange,
           key: 2
         }

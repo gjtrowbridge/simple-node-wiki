@@ -5,8 +5,16 @@ var EditBox = require('../EditBox/EditBox.js');
 
 var Page = React.createClass({
   displayName: 'Page',
-  handleChange: function(e) {
-    console.log(e);
+  getInitialState: function() {
+    return {
+      title: '',
+      text: ''
+    }
+  },
+  handleBoxMainChange: function(e) {
+    this.setState({
+      text: e.target.value
+    });
   },
   render: function() {
     var children = [
@@ -15,14 +23,15 @@ var Page = React.createClass({
         {
           key: 1,
           editing: true,
-          onBoxMainChange: this.handleChange
+          onBoxMainChange: this.handleBoxMainChange
         }
       ),
       React.createElement(
         PageBox,
         {
           key: 2,
-          editing: true
+          editing: true,
+          text: this.state.text
         }
       )
     ];

@@ -12,6 +12,7 @@ var PageBox = React.createClass({
   },
 
   render: function() {
+    console.log('rendering');
     var children = [
       React.createElement(
         'input',
@@ -24,7 +25,7 @@ var PageBox = React.createClass({
         'textarea', 
         {
           className: 'box-main',
-          value: this.props.text ? this.props.text : '',
+          value: this.props.text ? this.props.text : undefined,
           onChange: this.props.onBoxMainChange,
           key: 2
         }
