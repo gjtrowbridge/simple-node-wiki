@@ -1,5 +1,4 @@
 var React = require('react');
-var PageBox = require('../PageBox/PageBox.js');
 var DisplayBox = require('../DisplayBox/DisplayBox.js');
 var EditBox = require('../EditBox/EditBox.js');
 var marked = require('marked');
@@ -20,7 +19,7 @@ var Page = React.createClass({
   render: function() {
     var children = [
       React.createElement(
-        PageBox,
+        EditBox,
         {
           key: 1,
           editing: true,
@@ -28,10 +27,9 @@ var Page = React.createClass({
         }
       ),
       React.createElement(
-        PageBox,
+        DisplayBox,
         {
           key: 2,
-          editing: true,
           text: this.state.text
         }
       )

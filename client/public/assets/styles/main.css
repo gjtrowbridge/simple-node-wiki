@@ -448,30 +448,55 @@ th {
 .display-box {
   border: solid 1px;
   height: 100%;
-}
-.edit-box {
-  border: solid 1px;
-  height: 100%;
-}
-.page {
-  height: 100%;
-}
-.page-box {
-  border: solid 1px;
-  height: 100%;
   font: 12px;
 }
-.page-box .box-header,
-.page-box .box-main {
+.display-box .box-header,
+.display-box .box-main {
   display: block;
   margin-top: 10px;
   margin-left: 1%;
   margin-right: 1%;
   width: 98%;
 }
-.page-box .box-header {
+.display-box .box-header {
   text-align: center;
 }
-.page-box .box-main {
+.display-box .box-main {
   min-height: 90%;
+}
+.edit-box {
+  border: solid 1px;
+  height: 100%;
+}
+.edit-box .box-header,
+.edit-box .box-main {
+  display: block;
+  margin-top: 10px;
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 98%;
+  padding: 15px;
+}
+.edit-box .box-header {
+  text-align: center;
+}
+.edit-box .box-main {
+  min-height: 90%;
+}
+.page {
+  height: 100%;
+  font: 18px arial, sans-serif;
+}
+.page .box-header,
+.page .box-main {
+  display: block;
+  margin-top: 10px;
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 98%;
+  padding: 15px;
+  border: solid 1px;
+}
+.page .box-header {
+  text-align: center;
 }
