@@ -2,9 +2,15 @@
   "name": "basic-wiki",
   "version": "0.0.0",
   "description": "A basic wiki",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build-css && npm run build-react",
+    "watch": "npm run watch-css & npm run watch-react & nodemon server",
+    "build-css": "stylus --include-css client/src/ --out client/public/assets/styles",
+    "build-react": "browserify client/src/main.js > client/public/assets/js/bundle.js",
+    "watch-react": "watchify client/src/main.js -o client/public/assets/js/bundle.js",
+    "postinstall": "npm run build"
   },
   "keywords": [
     "wiki"
@@ -23,8 +29,6 @@
   },
   "devDependencies": {
     "browserify": "^9.0.8",
-    "gulp-browserify": "^0.5.1",
-    "gulp-rename": "^1.2.2",
-    "vinyl-source-stream": "^1.1.0"
+    "watchify": "^3.2.1"
   }
 }
