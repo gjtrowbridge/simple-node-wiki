@@ -22829,8 +22829,8 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
 // Custom Components
-var Nav = require('./Nav/Nav.js');
-var Page = require('./Page/Page.js');
+var Nav = require('./components/Nav/Nav.js');
+var Page = require('./components/Page/Page.js');
 
 // Create and render container app
 var App = React.createClass({
@@ -22861,4 +22861,4 @@ Router.run(routes, Router.HistoryLocation, function(Handler) {
   );
 });
 
-},{"./Nav/Nav.js":3,"./Page/Page.js":4,"react":198,"react-router":29}]},{},[200]);
+},{"./components/Nav/Nav.js":3,"./components/Page/Page.js":4,"react":198,"react-router":29}]},{},[200]);

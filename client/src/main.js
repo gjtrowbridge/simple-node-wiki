@@ -8,8 +8,8 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
 // Custom Components
-var Nav = require('./Nav/Nav.js');
-var Page = require('./Page/Page.js');
+var Nav = require('./components/Nav/Nav.js');
+var Page = require('./components/Page/Page.js');
 
 // Create and render container app
 var App = React.createClass({

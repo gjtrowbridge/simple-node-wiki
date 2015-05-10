@@ -11,7 +11,7 @@ app.use('/_api', api(express));
 app.use('/_public', express.static(__dirname + '/client/public'));
 
 app.get('*', function(req, res) {
-  res.sendFile(__dirname + '/client//public/index.html')
+  res.sendFile(__dirname + '/client/public/index.html')
 });
 
 // Start up app on specified port

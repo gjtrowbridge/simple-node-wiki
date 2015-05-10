@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build-css && npm run build-react",
-    "watch": "npm run watch-css & npm run watch-react & nodemon server",
+    "build": "npm run build-css && npm run build-js",
+    "watch": "npm run watch-css & npm run watch-js & nodemon server",
     "build-css": "stylus --include-css client/src/ --out client/public/assets/styles",
-    "build-react": "browserify client/src/main.js > client/public/assets/js/bundle.js",
-    "watch-react": "watchify client/src/main.js -o client/public/assets/js/bundle.js",
+    "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
+    "build-js": "browserify client/src/main.js > client/public/assets/js/bundle.js",
+    "watch-js": "watchify client/src/main.js -o client/public/assets/js/bundle.js",
     "postinstall": "npm run build"
   },
   "keywords": [
@@ -21,6 +22,7 @@
     "body-parser": "^1.12.3",
     "browserify": "^9.0.8",
     "express": "^4.12.3",
+    "normalize.css": "^3.0.3",
     "q": "^1.2.1",
     "react": "^0.13.2",
     "react-router": "^0.13.2",
