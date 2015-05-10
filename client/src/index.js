@@ -8,8 +8,8 @@ var Route = Router.Route;
 var RouteHandler = Router.RouteHandler;
 
 // Custom Components
-var Nav = require('./nav/Nav.js');
-var Page = require('./page/Page.js');
+var Nav = require('./Nav/Nav.js');
+var Page = require('./Page/Page.js');
 
 // Create and render container app
 var App = React.createClass({
@@ -17,12 +17,13 @@ var App = React.createClass({
   mixins: [ Router.State ],
   render: function() {
     var children = [
-      // React.createElement(Nav, {key: 1}),
-      'YO! ',
-      this.getPath(),
-      React.createElement(RouteHandler, {key: 2})
+      React.createElement(Page, {key: 1}),
+      // 'YO! ',
+      // this.getPath(),
+      // React.createElement(RouteHandler, {key: 2})
     ];
-    return React.createElement('div', null, children);
+    return React.createElement(Page);
+    // return React.createElement('div', null, children);
   }
 });
 
@@ -31,11 +32,6 @@ var routes = React.createElement(Route, {
   handler: App,
   path: '*'
 });
-
-// React.render(
-//   React.createElement(App),
-//   document.getElementById('mount_point')
-// );
 
 Router.run(routes, Router.HistoryLocation, function(Handler) {
   React.render(
