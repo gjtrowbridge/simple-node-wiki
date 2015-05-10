@@ -436,14 +436,42 @@ th {
   display: inline-block;
   vertical-align: top;
 }
-.col-1-4 {
-  width: 25%;
+.col-1-1 {
+  width: 100%;
 }
 .col-1-2 {
   width: 50%;
 }
+.col-1-4 {
+  width: 25%;
+}
 .display-box {
   border: solid 1px;
-  height: 100px;
-  width: 100px;
+  height: 100%;
+}
+.edit-box {
+  border: solid 1px;
+  height: 100%;
+}
+.page {
+  height: 100%;
+}
+.page-box {
+  border: solid 1px;
+  height: 100%;
+  font: 12px;
+}
+.page-box .box-header,
+.page-box .box-main {
+  display: block;
+  margin-top: 10px;
+  margin-left: 1%;
+  margin-right: 1%;
+  width: 98%;
+}
+.page-box .box-header {
+  text-align: center;
+}
+.page-box .box-main {
+  min-height: 90%;
 }
