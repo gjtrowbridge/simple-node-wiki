@@ -1,4 +1,5 @@
 var React = require('react');
+var d = React.DOM;
 
 var PageBox = React.createClass({
   displayName: 'PageBox',
@@ -29,7 +30,8 @@ var PageBox = React.createClass({
           onChange: this.props.onBoxMainChange,
           key: 2
         }
-      )
+      ),
+      d.span({dangerouslySetInnerHTML:{__html: this.props.text ? this.props.text : ''}})
     ];
 
     return React.createElement('div', {

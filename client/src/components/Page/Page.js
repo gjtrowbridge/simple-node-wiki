@@ -2,6 +2,7 @@ var React = require('react');
 var PageBox = require('../PageBox/PageBox.js');
 var DisplayBox = require('../DisplayBox/DisplayBox.js');
 var EditBox = require('../EditBox/EditBox.js');
+var marked = require('marked');
 
 var Page = React.createClass({
   displayName: 'Page',
@@ -13,7 +14,7 @@ var Page = React.createClass({
   },
   handleBoxMainChange: function(e) {
     this.setState({
-      text: e.target.value
+      text: marked(e.target.value, {sanitize: true})
     });
   },
   render: function() {
