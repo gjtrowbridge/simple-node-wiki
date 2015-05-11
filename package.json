@@ -11,6 +11,7 @@
     "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
     "build-js": "browserify client/src/main.js > client/public/assets/js/bundle.js",
     "watch-js": "watchify client/src/main.js -o client/public/assets/js/bundle.js",
+    "init-database": "sequelize init",
     "postinstall": "npm run build"
   },
   "keywords": [
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.8",
+    "sequelize-cli": "^1.7.0",
     "watchify": "^3.2.1"
   }
 }
