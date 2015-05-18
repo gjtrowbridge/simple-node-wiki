@@ -1,9 +1,9 @@
 // Creates and returns a router that handles all 'page' related endpoints
-var createPageRouter = function(express, databaseInfo) {
+var createPageRouter = function(express, db) {
   var pageRouter = express.Router();
 
-  var Page = databaseInfo.models.Page;
-  var sequelize = databaseInfo.sequelize;
+  var Page = db.Page;
+  var sequelize = db.sequelize;
 
   // This will return the data for all pages
   // currently defined in the wiki
@@ -70,9 +70,9 @@ var createPageRouter = function(express, databaseInfo) {
   // Create a new page
   pageRouter.post('/', function(req, res) {
     Page.create({
-      name: req.body.name,
+      title: req.body.title,
       text: req.body.text,
-      title: req.body.title
+      name: req.body.name
     }).done(
       function(page) {
         res.status(201).json({
@@ -91,9 +91,9 @@ var createPageRouter = function(express, databaseInfo) {
   pageRouter.put('/:id', function(req, res) {
     var id = req.params.id;
     Page.update({
-      name: req.body.name,
+      title: req.body.title,
       text: req.body.text,
-      title: req.body.title
+      name: req.body.name
     }, {
       where: {
         id: id
@@ -114,7 +114,7 @@ var createPageRouter = function(express, databaseInfo) {
 
   // Delete a page
   pageRouter.delete('/:id', function(req, res) {
-
+    res.status(500).send('Delete not yet implemented');
   });
 
   return pageRouter;

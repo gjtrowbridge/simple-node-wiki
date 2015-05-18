@@ -2,3 +2,4 @@ node_modules/
 mockups/
 public/js/bundle.js
 *.sqlite
+client/public/assets/js/bundle.js

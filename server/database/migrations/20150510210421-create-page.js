@@ -1,20 +1,20 @@
 "use strict";
 module.exports = {
-  up: function(migration, DataTypes, done) {
-    migration.createTable("Pages", {
+  up: function(migration, DataTypes) {
+    return migration.createTable("Pages", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      name: {
+      title: {
         type: DataTypes.STRING
       },
       text: {
         type: DataTypes.TEXT
       },
-      url: {
+      name: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false
@@ -27,16 +27,9 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE
       }
-    }).done(
-      function() {
-        done();
-      },
-      function(err) {
-        done(err);
-      }
-    );
+    });
   },
-  down: function(migration, DataTypes, done) {
-    migration.dropTable("Pages").done(done);
+  down: function(migration, DataTypes) {
+    return migration.dropTable("Pages");
   }
 };
