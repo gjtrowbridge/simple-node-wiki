@@ -4,23 +4,31 @@ var d = React.DOM;
 var DisplayBox = React.createClass({
   displayName: 'DisplayBox',
   render: function() {
-    console.log('displaying box');
     var children = [
-      React.createElement('div', {
+      
+    ];
+    return React.createElement('div', {
+        className: 'display-box col-1-2'
+      },
+      React.createElement('input', {
         className: 'box-header',
         key: 1
-      }, "Test"),
+      }),
       d.div({
         className: 'box-main',
         dangerouslySetInnerHTML: {
           __html: this.props.text ? this.props.text : ''
         },
         key: 2
-      })
-    ];
-    return React.createElement('div', {
-      className: 'display-box col-1-2'
-    }, children);
+      }),
+      React.createElement(
+        'button',
+        {
+          className: 'btn btn-edit',
+          onClick: this.props.onButtonClick
+        }, ['Edit']
+      )
+    );
   }
 });
 

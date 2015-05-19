@@ -13,8 +13,11 @@ var Page = React.createClass({
   },
   handleBoxMainChange: function(e) {
     this.setState({
-      text: marked(e.target.value, {sanitize: true})
+      text: e.target.value
     });
+  },
+  convertToMarkdown: function(text) {
+    return marked(text, {sanitize: true});
   },
   render: function() {
     var children = [
@@ -23,6 +26,7 @@ var Page = React.createClass({
         {
           key: 1,
           editing: true,
+          text: this.state.text,
           onBoxMainChange: this.handleBoxMainChange
         }
       ),
@@ -30,7 +34,7 @@ var Page = React.createClass({
         DisplayBox,
         {
           key: 2,
-          text: this.state.text
+          text: this.convertToMarkdown(this.state.text)
         }
       )
     ];
