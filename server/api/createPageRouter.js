@@ -89,6 +89,7 @@ var createPageRouter = function(express, db) {
 
   // Update a page (can only update with ID)
   pageRouter.put('/:id', function(req, res) {
+    console.log(req.body);
     var id = req.params.id;
     Page.update({
       title: req.body.title,

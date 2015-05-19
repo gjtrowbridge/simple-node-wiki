@@ -16,14 +16,10 @@ var App = React.createClass({
   displayName: 'App',
   mixins: [ Router.State ],
   render: function() {
-    var children = [
-      React.createElement(Page, {key: 1}),
-      // 'YO! ',
-      // this.getPath(),
-      // React.createElement(RouteHandler, {key: 2})
-    ];
-    return React.createElement(Page);
-    // return React.createElement('div', null, children);
+    return React.createElement(Page, {
+      basePath: '/_api/pages/',
+      pageName: this.getPath()
+    });
   }
 });
 

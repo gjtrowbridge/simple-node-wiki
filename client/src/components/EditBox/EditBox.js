@@ -5,6 +5,7 @@ var EditBox = React.createClass({
   displayName: 'EditBox',
 
   render: function() {
+    console.log('rendering');
     return React.createElement('div',
       {
         className: 'edit-box col-1-2'
@@ -20,7 +21,7 @@ var EditBox = React.createClass({
         'textarea', 
         {
           className: 'box-main',
-          defaultValue: this.props.text,
+          value: this.props.text,
           onChange: this.props.onBoxMainChange,
           key: 2
         }
