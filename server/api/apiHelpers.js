@@ -6,9 +6,9 @@ var apiHelpers = {
       data: data
     });
   },
-  respondWithDataOrNotFound: function(req, res, page) {
-    if (page !== null) {
-      apiHelpers.respondWithData(req, res, page, 200);
+  respondWithDataOrNotFound: function(req, res, data) {
+    if (data !== null) {
+      apiHelpers.respondWithData(req, res, data, 200);
     } else {
       apiHelpers.respondWithError(req, res, 'Resource not found', 404);
     }
