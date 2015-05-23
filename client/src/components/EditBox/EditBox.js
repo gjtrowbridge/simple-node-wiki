@@ -5,21 +5,37 @@ var EditBox = React.createClass({
   displayName: 'EditBox',
 
   render: function() {
+    var classes = ['edit-box'];
+    if (!this.props.editMode) {
+      classes.push('edit-box-collapsed');
+    }
     return d.div(
       {
-        className:'edit-box col-1-2'
+        className: classes.join(' ')
       },
-      d.textarea(
+      d.div(
         {
-          defaultValue: this.props.text,
-          onChange: this.props.handleTextUpdate
-        }
-      ),
-      d.button(
-        {
-          className: 'btn btn-save'
+          className: 'edit-box-text-container'
         },
-        '<<'
+        d.textarea(
+          {
+            className: 'inner-text-area',
+            defaultValue: this.props.text,
+            onChange: this.props.handleTextUpdate
+          }
+        )
+      ),
+      d.div(
+        {
+          className: 'edit-box-toggle-container'
+        },
+        d.button(
+          {
+            className: 'btn btn-save vertical-center horizontal-center',
+            onClick: this.props.handleToggleEditMode
+          },
+          this.props.editMode ? '<<' : '>>'
+        )
       )
     );
   }

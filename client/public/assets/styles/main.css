@@ -430,19 +430,19 @@ th {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.col-1-1,
-.col-1-2,
-.col-1-4 {
+.col-1-1 {
   display: inline-block;
   vertical-align: top;
-}
-.col-1-1 {
   width: 100%;
 }
 .col-1-2 {
+  display: inline-block;
+  vertical-align: top;
   width: 50%;
 }
 .col-1-4 {
+  display: inline-block;
+  vertical-align: top;
   width: 25%;
 }
 .vertical-center {
@@ -457,17 +457,13 @@ th {
   display: block;
 }
 .display-box {
-  border: solid 1px;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
   height: 100%;
-  font: 12px;
-}
-.display-box .box-header,
-.display-box .box-main {
-  display: block;
-  margin-top: 10px;
-  margin-left: 1%;
-  margin-right: 1%;
-  width: 98%;
+  background-color: #fff;
+  border: solid 4px #808080;
+  border-left: solid 2px #808080;
 }
 .display-box .box-header {
   text-align: center;
@@ -476,38 +472,49 @@ th {
   min-height: 86%;
 }
 .edit-box {
-  border: solid 1px;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
   height: 100%;
+  background-color: #fff;
+  border: solid 4px #808080;
+  border-right: solid 2px #808080;
 }
-.edit-box .box-header,
-.edit-box .box-main {
-  display: block;
-  margin-top: 10px;
-  margin-left: 1%;
-  margin-right: 1%;
-  width: 98%;
-  padding: 15px;
+.edit-box .edit-box-text-container {
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  width: 90%;
 }
-.edit-box .box-header {
-  text-align: center;
+.edit-box .edit-box-text-container .inner-text-area {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 65px 40px;
+  font-size: 1.5em;
 }
-.edit-box .box-main {
-  min-height: 86%;
+.edit-box .edit-box-toggle-container {
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  width: 10%;
+}
+.edit-box.edit-box-collapsed {
+  display: inline-block;
+  vertical-align: top;
+  width: 10%;
+}
+.edit-box.edit-box-collapsed .edit-box-text-container {
+  display: none;
+}
+.edit-box.edit-box-collapsed .edit-box-toggle-container {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
 }
 .page {
-  height: 100%;
-  font: 18px arial, sans-serif;
-}
-.page .box-header,
-.page .box-main {
-  display: block;
-  margin-top: 10px;
-  margin-left: 1%;
-  margin-right: 1%;
-  width: 98%;
-  padding: 15px;
-  border: solid 1px;
-}
-.page .box-header {
-  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  background-color: #808080;
 }

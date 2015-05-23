@@ -21,10 +21,10 @@ var Page = React.createClass({
         title: page.title,
         name: page.name,
         id: page.id,
-        loading: false
+        loading: false,
+        editMode: true
       });
     });
-    console.log(me.state);
   },
   savePage: function() {
     var me = this;
@@ -54,7 +54,14 @@ var Page = React.createClass({
     this.setState({
       text: e.target.value
     });
-    // this.savePage();
+  },
+  handleToggleEditMode: function() {
+    this.setState(function(previousState) {
+      return {
+        editMode: !previousState.editMode
+      }
+    });
+    console.log('clicked');
   },
   convertToMarkdown: function(text) {
     return marked(text, {sanitize: true});
@@ -79,13 +86,16 @@ var Page = React.createClass({
           EditBox,
           {
             text: this.state.text,
-            handleTextUpdate: this.handleTextUpdate
+            handleTextUpdate: this.handleTextUpdate,
+            handleToggleEditMode: this.handleToggleEditMode,
+            editMode: this.state.editMode
           }
         ),
         React.createElement(
           DisplayBox,
           {
-            innerHTML: marked(this.state.text);
+            innerHTML: this.state.text !== undefined ?
+                marked(this.state.text) : ''
           }
         )
       );

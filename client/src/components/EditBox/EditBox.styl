@@ -1,24 +1,39 @@
 
 .edit-box {
-  border: solid 1px;
+  columnize(50%);
   height: 100%;
+  background-color: white;
+  border: solid 4px gray;
+  border-right: solid 2px gray;
   
-
-  .box-header, .box-main {
-    display: block;
-    margin-top: 10px;
-    margin-left: 1%;
-    margin-right: 1%;
-    width: 98%;
-    padding: 15px;
+  .edit-box-text-container {
+    height: 100%;
+    columnize(90%);
+    
+    .inner-text-area {
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 65px 40px;
+      font-size: 1.5em;
+    }
+  }
+  
+  .edit-box-toggle-container {
+    height: 100%;
+    columnize(10%);
+  }
+  
+  &.edit-box-collapsed {
+    columnize(10%);
+    .edit-box-text-container {
+      hide();
+    }
+    .edit-box-toggle-container {
+      columnize(100%);
+    }
   }
 
-  .box-header {
-    text-align:center;
-  }
-
-  .box-main {
-    min-height: 86%
-  }
 
 }
+
