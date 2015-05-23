@@ -5,33 +5,21 @@ var EditBox = React.createClass({
   displayName: 'EditBox',
 
   render: function() {
-    console.log('rendering');
-    return React.createElement('div',
+    return d.div(
       {
-        className: 'edit-box col-1-2'
+        className:'edit-box col-1-2'
       },
-      React.createElement(
-        'input',
+      d.textarea(
         {
-          className: 'box-header',
-          key: 1
+          defaultValue: this.props.text,
+          onChange: this.props.handleTextUpdate
         }
       ),
-      React.createElement(
-        'textarea', 
+      d.button(
         {
-          className: 'box-main',
-          value: this.props.text,
-          onChange: this.props.onBoxMainChange,
-          key: 2
-        }
-      ),
-      React.createElement(
-        'button',
-        {
-          className: 'btn btn-save',
-          onClick: this.props.onButtonClick
-        }, ['Save']
+          className: 'btn btn-save'
+        },
+        '<<'
       )
     );
   }

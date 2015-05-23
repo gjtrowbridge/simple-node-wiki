@@ -445,6 +445,17 @@ th {
 .col-1-4 {
   width: 25%;
 }
+.vertical-center {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.horizontal-center {
+  margin: auto;
+  display: block;
+}
 .display-box {
   border: solid 1px;
   height: 100%;

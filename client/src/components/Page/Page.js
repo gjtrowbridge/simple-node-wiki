@@ -2,46 +2,35 @@ var React = require('react');
 var DisplayBox = require('../DisplayBox/DisplayBox.js');
 var EditBox = require('../EditBox/EditBox.js');
 var marked = require('marked');
+var d = React.DOM;
 
 // TODO: Look into Flux, add it in...I think Flux can
 // handle API calls instead of jQuery (among many other
-// more relevant things)
+// things)
 var $ = require('jquery');
 
 var Page = React.createClass({
   displayName: 'Page',
-  getInitialState: function() {
-    return {
-      title: '',
-      text: '',
-      name: ''
-    }
-  },
-  handleBoxMainChange: function(e) {
-    this.setState({
-      text: e.target.value
-    });
-  },
-  convertToMarkdown: function(text) {
-    return marked(text, {sanitize: true});
-  },
-  componentDidMount: function() {
+  getPage: function() {
     var me = this;
-    var path = me.props.basePath + me.props.pageName;
-    $.get(path, function(response) {
-      var page = response.data
+    var url = me.props.apiUrl + me.props.pageName;
+    $.get(url, function(response) {
+      var page = response.data;
       me.setState({
         text: page.text,
         title: page.title,
         name: page.name,
-        id: page.id
-      })
+        id: page.id,
+        loading: false
+      });
     });
+    console.log(me.state);
   },
   savePage: function() {
     var me = this;
+    var url = me.props.apiUrl + me.state.id;
     $.ajax({
-      url: me.props.basePath + me.state.id,
+      url: url,
       type: 'PUT',
       success: function(response) {
         console.log(response);
@@ -53,29 +42,54 @@ var Page = React.createClass({
       }
     });
   },
+  getInitialState: function() {
+    return {
+      loading: true
+    }
+  },
+  componentDidMount: function() {
+    this.getPage();
+  },
+  handleTextUpdate: function(e) {
+    this.setState({
+      text: e.target.value
+    });
+    // this.savePage();
+  },
+  convertToMarkdown: function(text) {
+    return marked(text, {sanitize: true});
+  },
   render: function() {
-    var children = [
-      React.createElement(
-        EditBox,
+    if (this.state.loading) {
+      return React.createElement('div',
         {
-          key: 1,
-          editing: true,
-          text: this.state.text,
-          onBoxMainChange: this.handleBoxMainChange,
-          onButtonClick: this.savePage
-        }
-      ),
-      React.createElement(
-        DisplayBox,
+          className: 'page'
+        },
+        d.img({
+          className: 'vertical-center horizontal-center',
+          src: '/_public/assets/images/ajax-loader.gif'
+        })
+      );
+    } else {
+      return React.createElement('div',
         {
-          key: 2,
-          text: this.convertToMarkdown(this.state.text)
-        }
-      )
-    ];
-    return React.createElement('div', {
-      className: 'page'
-    }, children);
+          className: 'page'
+        },
+        React.createElement(
+          EditBox,
+          {
+            text: this.state.text,
+            handleTextUpdate: this.handleTextUpdate
+          }
+        ),
+        React.createElement(
+          DisplayBox,
+          {
+            innerHTML: marked(this.state.text);
+          }
+        )
+      );
+    }
   }
 });
 

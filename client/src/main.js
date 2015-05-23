@@ -14,11 +14,13 @@ var Page = require('./components/Page/Page.js');
 // Create and render container app
 var App = React.createClass({
   displayName: 'App',
-  mixins: [ Router.State ],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
   render: function() {
     return React.createElement(Page, {
-      basePath: '/_api/pages/',
-      pageName: this.getPath()
+      apiUrl: '/_api/pages',
+      pageName: this.context.router.getCurrentPath()
     });
   }
 });
