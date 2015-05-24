@@ -457,8 +457,8 @@ th {
   display: block;
 }
 .display-box {
-  border: solid 4px #808080;
-  border-left: solid 2px #808080;
+  border: solid 4px #b3d5f3;
+  border-left: solid 2px #b3d5f3;
   display: inline-block;
   vertical-align: top;
   width: 50%;
@@ -469,8 +469,8 @@ th {
   width: 90%;
 }
 .edit-box {
-  border: solid 4px #808080;
-  border-right: solid 2px #808080;
+  border: solid 4px #b3d5f3;
+  border-right: solid 2px #b3d5f3;
   display: inline-block;
   vertical-align: top;
   width: 50%;
@@ -503,7 +503,7 @@ th {
   display: inline-block;
   vertical-align: top;
   width: 100%;
-  background-color: #808080;
+  background-color: #b3d5f3;
 }
 .page .box {
   height: 100%;
