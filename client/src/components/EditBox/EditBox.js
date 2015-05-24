@@ -5,7 +5,7 @@ var EditBox = React.createClass({
   displayName: 'EditBox',
 
   render: function() {
-    var classes = ['edit-box'];
+    var classes = ['box', 'edit-box'];
     if (!this.props.editMode) {
       classes.push('edit-box-collapsed');
     }
@@ -15,7 +15,7 @@ var EditBox = React.createClass({
       },
       d.div(
         {
-          className: 'edit-box-text-container'
+          className: 'edit-box-text-container box-text-container'
         },
         d.textarea(
           {

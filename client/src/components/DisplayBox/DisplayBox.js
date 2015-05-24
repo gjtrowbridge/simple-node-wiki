@@ -5,10 +5,10 @@ var DisplayBox = React.createClass({
   displayName: 'DisplayBox',
   render: function() {
     return React.createElement('div', {
-        className: 'display-box'
+        className: 'box display-box'
       },
       d.div({
-        className: '',
+        className: 'inner-text-area',
         dangerouslySetInnerHTML: {
           __html: this.props.innerHTML ? this.props.innerHTML : ''
         },
