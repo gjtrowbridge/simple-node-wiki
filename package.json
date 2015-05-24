@@ -4,15 +4,15 @@
   "description": "A basic wiki",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build-css && npm run build-js",
-    "watch": "npm run watch-css & npm run watch-js & nodemon server",
+    "build": "npm run build-css & npm run build-js",
     "build-css": "stylus --include-css client/src/ --out client/public/assets/styles",
-    "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
     "build-js": "browserify client/src/main.js > client/public/assets/js/bundle.js",
-    "watch-js": "watchify client/src/main.js -o client/public/assets/js/bundle.js",
-    "init-database": "sequelize init",
-    "postinstall": "npm run build"
+    "migrate-database": "sequelize db:migrate",
+    "postinstall": "npm run build & npm run migrate-database",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm run watch-css & npm run watch-js & nodemon server",
+    "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
+    "watch-js": "watchify client/src/main.js -o client/public/assets/js/bundle.js"
   },
   "keywords": [
     "wiki"
@@ -29,7 +29,7 @@
     "q": "^1.2.1",
     "react": "^0.13.2",
     "react-router": "^0.13.2",
-    "sequelize": "^2.1.0",
+    "sequelize": "^3.0.0",
     "sqlite3": "^3.0.5",
     "stylus": "^0.51.1"
   },
