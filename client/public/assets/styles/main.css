@@ -457,28 +457,23 @@ th {
   display: block;
 }
 .display-box {
-  display: inline-block;
-  vertical-align: top;
-  width: 50%;
-  height: 100%;
-  background-color: #fff;
   border: solid 4px #808080;
   border-left: solid 2px #808080;
-}
-.display-box .box-header {
-  text-align: center;
-}
-.display-box .box-main {
-  min-height: 86%;
-}
-.edit-box {
   display: inline-block;
   vertical-align: top;
   width: 50%;
-  height: 100%;
-  background-color: #fff;
+}
+.display-box.display-box-expanded {
+  display: inline-block;
+  vertical-align: top;
+  width: 90%;
+}
+.edit-box {
   border: solid 4px #808080;
   border-right: solid 2px #808080;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
 }
 .edit-box .edit-box-text-container {
   display: inline-block;
@@ -512,6 +507,7 @@ th {
 }
 .page .box {
   height: 100%;
+  background-color: #fff;
 }
 .page .box .inner-text-area {
   width: 100%;

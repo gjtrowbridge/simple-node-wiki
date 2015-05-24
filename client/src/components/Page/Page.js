@@ -95,7 +95,8 @@ var Page = React.createClass({
           DisplayBox,
           {
             innerHTML: this.state.text !== undefined ?
-                marked(this.state.text) : ''
+                marked(this.state.text) : '',
+            editMode: this.state.editMode
           }
         )
       );

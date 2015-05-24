@@ -4,8 +4,12 @@ var d = React.DOM;
 var DisplayBox = React.createClass({
   displayName: 'DisplayBox',
   render: function() {
+    var classes = ['box', 'display-box'];
+    if (!this.props.editMode) {
+      classes.push('display-box-expanded');
+    }
     return React.createElement('div', {
-        className: 'box display-box'
+        className: classes.join(' ')
       },
       d.div({
         className: 'inner-text-area',

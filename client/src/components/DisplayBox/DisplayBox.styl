@@ -1,17 +1,11 @@
 
 .display-box {
-  columnize(50%);
-  height: 100%;
-  background-color: white;
   border: solid 4px gray;
   border-left: solid 2px gray;
+  columnize(50%);
 
-  .box-header {
-    text-align:center;
-  }
-
-  .box-main {
-    min-height: 86%
+  &.display-box-expanded {
+    columnize(90%);
   }
 
 }
