@@ -1,3 +1,11 @@
+/*
+  This component is simply a bar across a container
+  that shows a name/url. Used in the Page component.
+  Could probably be combined with the TitleBar
+  component, but keeping them separate for now
+  since they may diverge more.
+*/
+
 var React = require('react');
 var d = React.DOM;
 
@@ -10,7 +18,8 @@ var NameBar = React.createClass({
       },
       d.input(
         {
-          defaultValue: this.props.name ? this.props.name : ''
+          defaultValue: this.props.name ? this.props.name : '',
+          disabled: true
         }
       )
     );

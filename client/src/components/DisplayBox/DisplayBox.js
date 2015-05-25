@@ -1,3 +1,11 @@
+/*
+  This component is a container with an
+  innerHTML property.
+  
+  Used in the Page component to render
+  parsed markdown.
+*/
+
 var React = require('react');
 var d = React.DOM;
 

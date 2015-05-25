@@ -1,16 +1,28 @@
+/*
+  This is the main component of each wiki page, and holds
+  the display view, the edit view, and the title and
+  name information for the page.
+*/
+
+// React
 var React = require('react');
+var d = React.DOM;
+
+// Components
 var DisplayBox = require('../DisplayBox/DisplayBox.js');
 var EditBox = require('../EditBox/EditBox.js');
 var TitleBar = require('../TitleBar/TitleBar.js');
 var NameBar = require('../NameBar/NameBar.js');
-var marked = require('marked');
-var d = React.DOM;
 
-// TODO: Look into Flux, add it in...I think Flux can
-// handle API calls instead of jQuery (among many other
-// things)
+// Misc
+var marked = require('marked');
+var helpers = require('../../helpers.js');
+
+// jQuery is just a fast/easy way to make API requests
+// May want to switch this out later, but it's OK for now.
 var $ = require('jquery');
 
+//
 var Page = React.createClass({
   displayName: 'Page',
   getPage: function() {
@@ -68,6 +80,9 @@ var Page = React.createClass({
   convertToMarkdown: function(text) {
     return marked(text, {sanitize: true});
   },
+  convertTitleToPath: function(title) {
+    return helpers.converStringToPath(title);
+  },
   render: function() {
     if (this.state.loading) {
       return React.createElement('div',
@@ -93,7 +108,9 @@ var Page = React.createClass({
         React.createElement(
           EditBox,
           {
+            name: this.state.name,
             text: this.state.text,
+            title: this.state.title,
             handleTextUpdate: this.handleTextUpdate,
             handleToggleEditMode: this.handleToggleEditMode,
             editMode: this.state.editMode

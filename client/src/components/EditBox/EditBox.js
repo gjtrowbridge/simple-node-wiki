@@ -1,3 +1,12 @@
+/*
+  This component is a container with an
+  editable text area.
+
+  Used in the Page component to accept
+  markdown text as input, which then
+  gets displayed in the DisplayBox.
+*/
+
 var React = require('react');
 var d = React.DOM;
 

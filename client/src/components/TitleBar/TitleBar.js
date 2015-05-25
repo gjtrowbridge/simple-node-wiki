@@ -1,3 +1,9 @@
+/*
+  This component is simply a bar across a container
+  that shows the text of a title.
+  Used in the Page component.
+*/
+
 var React = require('react');
 var d = React.DOM;
 
