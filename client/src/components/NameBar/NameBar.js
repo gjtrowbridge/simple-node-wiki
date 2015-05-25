@@ -18,8 +18,9 @@ var NameBar = React.createClass({
       },
       d.input(
         {
-          defaultValue: this.props.name ? this.props.name : '',
-          disabled: true
+          value: this.props.name ? this.props.name : '',
+          disabled: true,
+          placeholder: this.props.placeholder
         }
       )
     );

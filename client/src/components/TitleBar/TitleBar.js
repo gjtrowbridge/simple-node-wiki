@@ -16,7 +16,9 @@ var TitleBar = React.createClass({
       },
       d.input(
         {
-          defaultValue: this.props.title ? this.props.title : ''
+          defaultValue: this.props.title ? this.props.title : '',
+          onChange: this.props.handleTitleUpdate,
+          placeholder: this.props.placeholder
         }
       )
     );
