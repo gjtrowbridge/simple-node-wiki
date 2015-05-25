@@ -1,5 +1,13 @@
 
 .name-bar {
   border: solid standard-border background-color;
-  border-bottom: solid (standard-border/2) background-color;
+  border-top-width: (standard-border/2);
+  
+  input {
+    font-weight: bold;
+    font-size: 1.5em;
+    &:disabled {
+      background-color: white;
+    }
+  }
 }
