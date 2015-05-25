@@ -10,6 +10,7 @@ var RouteHandler = Router.RouteHandler;
 // Custom Components
 var Nav = require('./components/Nav/Nav.js');
 var Page = require('./components/Page/Page.js');
+var HomePage = require('./components/HomePage/HomePage.js')
 
 // Create and render container app
 var App = React.createClass({
@@ -18,10 +19,17 @@ var App = React.createClass({
     router: React.PropTypes.func
   },
   render: function() {
-    return React.createElement(Page, {
-      apiUrl: '/_api/pages',
-      pageName: this.context.router.getCurrentPath()
-    });
+    var pageName = this.context.router.getCurrentPath();
+    if (pageName === '/') {
+      return React.createElement(HomePage, {
+
+      });
+    } else {
+      return React.createElement(Page, {
+        apiUrl: '/_api/pages',
+        pageName: pageName
+      });
+    }
   }
 });
 
