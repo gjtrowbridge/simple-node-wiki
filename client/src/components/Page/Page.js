@@ -27,7 +27,7 @@ var Page = React.createClass({
   displayName: 'Page',
   getPage: function() {
     var me = this;
-    var url = me.props.apiUrl + me.props.pageName;
+    var url = me.props.apiUrlForPageName + me.props.pageName;
     $.get(url, function(response) {
       var page = response.data;
       me.setState({
@@ -42,17 +42,20 @@ var Page = React.createClass({
   },
   savePage: function() {
     var me = this;
-    var url = me.props.apiUrl + me.state.id;
+    var url = me.props.apiUrl + '/' + me.state.id;
+
     $.ajax({
-      url: url,
       type: 'PUT',
-      success: function(response) {
-        console.log(response);
-      },
-      data: {
+      url: url,
+      data: JSON.stringify({
         text: me.state.text,
         title: me.state.title,
         name: me.state.name
+      }),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(response) {
+        console.log(response);
       }
     });
   },
@@ -63,6 +66,9 @@ var Page = React.createClass({
   },
   componentDidMount: function() {
     this.getPage();
+  },
+  componentDidUpdate: function() {
+    this.savePage();
   },
   handleTextUpdate: function(e) {
     this.setState({
@@ -84,6 +90,7 @@ var Page = React.createClass({
     return helpers.converStringToPath(title);
   },
   render: function() {
+    console.log(this.state);
     if (this.state.loading) {
       return React.createElement('div',
         {

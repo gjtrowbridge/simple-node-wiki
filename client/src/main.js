@@ -26,6 +26,7 @@ var App = React.createClass({
       });
     } else {
       return React.createElement(Page, {
+        apiUrlForPageName: '/_api/pages/name',
         apiUrl: '/_api/pages',
         pageName: pageName
       });
