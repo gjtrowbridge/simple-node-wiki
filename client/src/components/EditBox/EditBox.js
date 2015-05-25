@@ -19,6 +19,7 @@ var EditBox = React.createClass({
         },
         d.textarea(
           {
+            placeholder: 'Type in markdown here',
             className: 'inner-text-area',
             defaultValue: this.props.text,
             onChange: this.props.handleTextUpdate

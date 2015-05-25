@@ -1,6 +1,8 @@
 var React = require('react');
 var DisplayBox = require('../DisplayBox/DisplayBox.js');
 var EditBox = require('../EditBox/EditBox.js');
+var TitleBar = require('../TitleBar/TitleBar.js');
+var NameBar = require('../NameBar/NameBar.js');
 var marked = require('marked');
 var d = React.DOM;
 
@@ -83,6 +85,12 @@ var Page = React.createClass({
           className: 'page'
         },
         React.createElement(
+          TitleBar,
+          {
+            title: this.state.title
+          }
+        ),
+        React.createElement(
           EditBox,
           {
             text: this.state.text,
@@ -97,6 +105,12 @@ var Page = React.createClass({
             innerHTML: this.state.text !== undefined ?
                 marked(this.state.text) : '',
             editMode: this.state.editMode
+          }
+        ),
+        React.createElement(
+          NameBar,
+          {
+            name: this.state.name
           }
         )
       );

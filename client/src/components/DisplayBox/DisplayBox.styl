@@ -1,9 +1,13 @@
 
 .display-box {
-  border: solid 4px background-color;
-  border-left: solid 2px background-color;
+  border: solid (standard-border/2) background-color;
+  border-right-width: standard-border;
   columnize(50%);
-
+  
+  .inner-text-area {
+    padding: 47px 40px;
+  }
+  
   &.display-box-expanded {
     columnize(90%);
   }

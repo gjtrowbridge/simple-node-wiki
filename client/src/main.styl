@@ -1,6 +1,7 @@
 @require '../../node_modules/normalize.css/normalize.css'
 
-background-color = #b3d5f3
+background-color = #b3d5f3;
+standard-border = 4px;
 
 *,
 *:before,
@@ -49,7 +50,9 @@ hide() {
   display:block;
 }
 
+@require './components/Page/Page.styl'
 @require './components/DisplayBox/DisplayBox.styl'
 @require './components/EditBox/EditBox.styl'
 @require './components/Nav/Nav.styl'
-@require './components/Page/Page.styl'
+@require './components/TitleBar/TitleBar.styl'
+@require './components/NameBar/NameBar.styl'
