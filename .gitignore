@@ -3,3 +3,4 @@ mockups/
 *.sqlite
 client/public/assets/js/bundle.js
 client/public/assets/styles/main.css
+*.pem
