@@ -16,7 +16,6 @@ var createApiRouter = function(express) {
   });
   
   apiRouter.post('/', function(req, res) {
-    console.log(req.body);
     res.send('Welcome to the api!');
   });
 

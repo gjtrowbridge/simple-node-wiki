@@ -36,7 +36,7 @@ var Page = React.createClass({
         name: page.name,
         id: page.id,
         loading: false,
-        editMode: true
+        editMode: false
       });
     });
   },
