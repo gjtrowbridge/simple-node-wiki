@@ -127,7 +127,7 @@ var Page = React.createClass({
           DisplayBox,
           {
             innerHTML: this.state.text !== undefined ?
-                marked(this.state.text) : '',
+                this.convertToMarkdown(this.state.text) : '',
             editMode: this.state.editMode
           }
         ),
@@ -141,5 +141,4 @@ var Page = React.createClass({
     }
   }
 });
-
 module.exports = Page;
