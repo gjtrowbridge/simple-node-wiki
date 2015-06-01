@@ -7,7 +7,8 @@ var PageSearch = React.createClass({
     return d.input(      
       {
         type: 'search',
-        className: 'page-search'
+        className: 'page-search horizontal-center',
+        placeholder: 'Search Pages'
       }
     );
   }
