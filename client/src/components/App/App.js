@@ -1,7 +1,6 @@
 var React = require('react');
 
 // Custom Components
-var Nav = require('../Nav/Nav.js');
 var Page = require('../Page/Page.js');
 var HomePage = require('../HomePage/HomePage.js')
 
