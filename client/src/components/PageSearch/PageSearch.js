@@ -26,11 +26,12 @@ var PageSearch = React.createClass({
     if (me.state.value === '') {
       return [];
     } else {
-      return this.props.pages.filter(function(page) {
+      var matchingPages = this.props.pages.filter(function(page) {
         return page.title.toLowerCase().indexOf(me.state.value) >= 0;
       }).sort(function(a, b) {
-        return a.title.length > b.title.length;
-      }).slice(0, this.props.maxResults);
+        return a.title.length - b.title.length;
+      });
+      return matchingPages.slice(0, this.props.maxResults);
     }
   },
   render: function() {
