@@ -3,7 +3,8 @@ var d = React.DOM;
 
 // Custom Components
 var Page = require('../Page/Page.js');
-var HomePage = require('../HomePage/HomePage.js')
+var HomePage = require('../HomePage/HomePage.js');
+var Nav = require('../Nav/Nav.js');
 
 // Create and render container app
 var App = React.createClass({
