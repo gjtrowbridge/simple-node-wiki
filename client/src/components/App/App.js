@@ -30,7 +30,7 @@ var App = React.createClass({
         className: 'app'
       },
       React.createElement(Nav, {
-
+        apiUrl: '/_api/pages'
       }),
       this.getPageElement()
     );

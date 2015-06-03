@@ -30,8 +30,13 @@ var PageSearch = React.createClass({
     }
   },
   renderSearchResults: function() {
-    var matchingPages = this.matchingPages();
-    console.log(matchingPages);
+    var searchResults = this.matchingPages().map(function(page) {
+      return {
+        title: page.title,
+        url: page.name
+      }
+    });
+    console.log(searchResults);
   },
   render: function() {
     var searchResults = this.renderSearchResults();
