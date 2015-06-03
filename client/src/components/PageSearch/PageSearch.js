@@ -1,6 +1,8 @@
 var React = require('react');
 var d = React.DOM;
 
+var SearchResults = require('../SearchResults/SearchResults.js');
+
 var PageSearch = React.createClass({
   displayName: 'PageSearch',
   getInitialState: function() {
@@ -16,7 +18,7 @@ var PageSearch = React.createClass({
   },
   onChange: function(e) {
     this.setState({
-      value: e.target.value
+      value: e.target.value.toLowerCase()
     });
   },
   matchingPages: function() {
@@ -26,20 +28,12 @@ var PageSearch = React.createClass({
     } else {
       return this.props.pages.filter(function(page) {
         return page.title.toLowerCase().indexOf(me.state.value) >= 0;
+      }).sort(function(a, b) {
+        return a.title.length > b.title.length;
       }).slice(0, this.props.maxResults);
     }
   },
-  renderSearchResults: function() {
-    var searchResults = this.matchingPages().map(function(page) {
-      return {
-        title: page.title,
-        url: page.name
-      }
-    });
-    console.log(searchResults);
-  },
   render: function() {
-    var searchResults = this.renderSearchResults();
     return d.div(
       {
         className: 'page-search horizontal-center',
@@ -50,6 +44,12 @@ var PageSearch = React.createClass({
           className: 'horizontal-center',
           placeholder: 'Search Pages',
           onChange: this.onChange
+        }
+      ),
+      React.createElement(
+        SearchResults,
+        {
+          pages: this.matchingPages()
         }
       )
     )

@@ -92,7 +92,7 @@ var Page = React.createClass({
   render: function() {
     console.log(this.state);
     if (this.state.loading) {
-      return React.createElement('div',
+      return d.div(
         {
           className: 'page'
         },
@@ -102,7 +102,7 @@ var Page = React.createClass({
         })
       );
     } else {
-      return React.createElement('div',
+      return d.div(
         {
           className: 'page'
         },
