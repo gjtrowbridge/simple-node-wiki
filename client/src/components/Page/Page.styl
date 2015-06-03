@@ -1,5 +1,6 @@
 
 bar-height = 6%;
+min-bar-height = 60px;
 
 .page {
   columnize(100%);
@@ -7,6 +8,7 @@ bar-height = 6%;
   background-color: background-color;
   .box {
     height: (100% - bar-height * 2);
+    max-height: 700px;
     background-color: white;
     .inner-text-area {
       width: 100%;
@@ -26,6 +28,7 @@ bar-height = 6%;
   
   .bar {
     height: bar-height;
+    min-height: min-bar-height;
     background-color: white;
   }
 }

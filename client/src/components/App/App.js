@@ -1,4 +1,5 @@
 var React = require('react');
+var d = React.DOM;
 
 // Custom Components
 var Page = require('../Page/Page.js');
@@ -10,12 +11,10 @@ var App = React.createClass({
   contextTypes: {
     router: React.PropTypes.func
   },
-  render: function() {
+  getPageElement: function() {
     var pageName = this.context.router.getCurrentPath();
     if (pageName === '/') {
-      return React.createElement(HomePage, {
-
-      });
+      return React.createElement(HomePage);
     } else {
       return React.createElement(Page, {
         apiUrlForPageName: '/_api/pages/name',
@@ -23,6 +22,17 @@ var App = React.createClass({
         pageName: pageName
       });
     }
+  },
+  render: function() {
+    return d.div(
+      {
+        className: 'app'
+      },
+      React.createElement(Nav, {
+        apiUrl: '/_api/pages'
+      }),
+      this.getPageElement()
+    );
   }
 });
 

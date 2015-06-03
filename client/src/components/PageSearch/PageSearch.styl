@@ -1,0 +1,24 @@
+
+search-width = 400px;
+
+.page-search {
+  height: 100%;
+  width: search-width;
+  position: relative;
+  input {
+    /* This shouldn't be necessary... */
+    -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+    /*            ----                */
+      
+    width: 100%;
+    centerVertically();
+    border-radius: 10px;
+    padding: 3px 10px;
+    margin: none;
+    &:focus {
+      outline-width: 0;
+    }
+  }
+}
