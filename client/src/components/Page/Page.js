@@ -17,6 +17,14 @@ var NameBar = require('../NameBar/NameBar.js');
 // Misc
 var marked = require('marked');
 var helpers = require('../../helpers.js');
+var hljs = require('highlight.js');
+
+// Set up code highlighting
+marked.setOptions({
+  highlight: function(code) {
+    return hljs.highlightAuto(code).value;
+  }
+});
 
 // jQuery is just a fast/easy way to make API requests
 // May want to switch this out later, but it's OK for now.
@@ -87,7 +95,7 @@ var Page = React.createClass({
     return marked(text, {sanitize: true});
   },
   convertTitleToPath: function(title) {
-    return helpers.converStringToPath(title);
+    return helpers.convertStringToPath(title);
   },
   render: function() {
     console.log(this.state);
