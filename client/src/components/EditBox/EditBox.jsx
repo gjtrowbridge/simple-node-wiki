@@ -1,16 +1,16 @@
 var React = require('react');
 
-var DisplayBox = React.createClass({
+var EditBox = React.createClass({
   contextTypes: {
     router: React.PropTypes.func.isRequired
   },
   render: function() {
     return (
-      <div className="display-box">
-      Display Box
+      <div className="edit-box">
+        Edit Box
       </div>
     );
   }
 });
 
-module.exports = DisplayBox;
+module.exports = EditBox;

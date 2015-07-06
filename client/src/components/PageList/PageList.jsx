@@ -1,16 +1,16 @@
 var React = require('react');
 
-var DisplayBox = React.createClass({
+var PageList = React.createClass({
   contextTypes: {
     router: React.PropTypes.func.isRequired
   },
   render: function() {
     return (
-      <div className="display-box">
-      Display Box
+      <div className="page-list">
+        PageList, {this.props.type}
       </div>
     );
   }
 });
 
-module.exports = DisplayBox;
+module.exports = PageList;

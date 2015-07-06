@@ -1,4 +1,6 @@
 var React = require('react');
+var DisplayBox = require('../DisplayBox/DisplayBox.jsx');
+var EditBox = require('../EditBox/EditBox.jsx');
 
 var WikiPage = React.createClass({
   contextTypes: {
@@ -11,13 +13,15 @@ var WikiPage = React.createClass({
     };
   },
   componentDidMount: function() {
-    // get value
+    // Query server for page data
   },
   render: function() {
     var params = this.context.router.getCurrentParams();
     return (
       <div className="wiki-page">
-        {this.state.pageName}
+        <h3>{this.state.pageName}</h3>
+        <EditBox />
+        <DisplayBox />
       </div>
     );
   }
