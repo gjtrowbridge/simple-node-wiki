@@ -10,8 +10,14 @@ var WikiPage = React.createClass({
   },
   getInitialState: function() {
     return {
-      pageName: this.context.router.getCurrentParams().page_name
+      pageName: this.context.router.getCurrentParams().page_name,
+      isLoading: true
     };
+  },
+  componentDidMount: function() {
+    // get data
+    // set initial text
+    // set loading to false
   },
   render: function() {
     return (

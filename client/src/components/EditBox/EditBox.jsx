@@ -21,7 +21,6 @@ var EditBox = React.createClass({
     }
   },
   render: function() {
-    console.log('rendering edit box');
     return (
       <div className="edit-box">
         <textarea onChange={this.props.onInputChange}>
