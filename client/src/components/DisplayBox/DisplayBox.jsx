@@ -14,14 +14,16 @@ var DisplayBox = React.createClass({
   },
   getDefaultProps: function() {
     return {
-      sanitizedHtml: ""
+      sanitizedHtml: ''
     };
   },
   render: function() {
+    var dangerousHtml = {
+      __html: this.props.sanitizedHtml
+    };
     return (
-      <div className="display-box">
-        {this.props.sanitizedHtml}
-      </div>
+      <div className="display-box"
+          dangerouslySetInnerHTML={dangerousHtml} />
     );
   }
 });

@@ -17,10 +17,11 @@ var EditBox = React.createClass({
   getDefaultProps: function() {
     return {
       onInputChange: function() {},
-      text: ""
+      text: ''
     }
   },
   render: function() {
+    console.log('rendering edit box');
     return (
       <div className="edit-box">
         <textarea onChange={this.props.onInputChange}>
