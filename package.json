@@ -24,6 +24,7 @@
     "express": "^4.12.3",
     "highlight.js": "^8.6.0",
     "jquery": "^2.1.4",
+    "keymirror": "^0.1.1",
     "marked": "^0.3.3",
     "normalize.css": "^3.0.3",
     "q": "^1.2.1",
