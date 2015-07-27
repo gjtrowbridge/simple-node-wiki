@@ -28,6 +28,7 @@
     "keymirror": "^0.1.1",
     "marked": "^0.3.3",
     "normalize.css": "^3.0.3",
+    "object-assign": "^3.0.0",
     "q": "^1.2.1",
     "react": "^0.13.2",
     "react-router": "^0.13.3",
