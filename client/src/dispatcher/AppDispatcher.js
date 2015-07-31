@@ -16,10 +16,14 @@ module.exports = {
     successType = types.success;
     failureType = types.failure;
 
-    // Dispatch an event that we are making a request
+    if (!(requestType && successType && failureType)) {
+      throw "Request, success, and failure types must all be defined!";
+    }
+
+    // Tell dispatcher that we are making a request
     this.dispatch(requestType, action);
 
-    // Dispatch an event after the request is complete
+    // Tell dispatcher when the request is complete
     promise.then(
       function(responseSuccess) {
         var info = assign({}, action, responseSuccess);
