@@ -1,4 +1,4 @@
-var Dispatcher = require('flux').Dispatcher;
+var AppDispatcher = require('../dispatcher/AppDispatcher');
 var WikiConstants = require('../constants/WikiConstants.js');
 var EventEmitter = require('events');
 var assign = require('object-assign');
@@ -7,23 +7,23 @@ var ActionTypes = WikiConstants.ActionTypes;
 var CHANGE_EVENT = WikiConstants.CHANGE_EVENT;
 
 var WikiPageStore = assign({}, EventEmitter.prototype, {
-  emitChange = function() {
+  emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener = function(callback) {
+  addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener = function(callback) {
+  removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  get: function(id) {
+  get: function(url) {
     return {
-      id: id,
-      name: 'My id is: ' + id,
-      text: 'This is text for page with id: ' + id
+      id: 1,
+      name: 'My url is: ' + url,
+      text: 'This is text for page with url: ' + url
     };
   }
 
@@ -35,7 +35,7 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
 // that we care about for Wiki Pages, we can add any necessary
 // handling here (usually, state updates here followed by emitting
 // a change event)
-WikiPageStore.dispatchToken = Dispatcher.register(function(action) {
+WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   switch (action.type) {
     case ActionTypes.SAVE_PAGE:
       // add something here
