@@ -16,9 +16,10 @@ var MarkdownEditor = React.createClass({
     initialMarkdown: ''
   },
   getInitialState: function() {
+    var initialMarkdown = this.props.initialMarkdown;
     return {
-      markdown: this.props.initialMarkdown,
-      sanitizedHtml: ''
+      markdown: initialMarkdown,
+      sanitizedHtml: this.markdownToHtml(initialMarkdown)
     }
   },
   // This is used to sanitize raw user-inputted
@@ -38,7 +39,7 @@ var MarkdownEditor = React.createClass({
   render: function() {
     return (
       <div className="markdown-editor">
-        <EditBox onInputChange={this.onInputChange} />
+        <EditBox initialMarkdown={this.state.markdown} onInputChange={this.onInputChange} />
         <DisplayBox sanitizedHtml={this.state.sanitizedHtml} />
       </div>
     );

@@ -7,9 +7,6 @@
 var React = require('react');
 
 var EditBox = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
   PropTypes: {
     onInputChange: React.PropTypes.func,
     text: React.PropTypes.string
@@ -23,7 +20,7 @@ var EditBox = React.createClass({
   render: function() {
     return (
       <div className="edit-box">
-        <textarea onChange={this.props.onInputChange}>
+        <textarea onChange={this.props.onInputChange} value={this.props.initialMarkdown}>
         </textarea>
       </div>
     );

@@ -6,9 +6,6 @@
 var React = require('react');
 
 var DisplayBox = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
   propTypes: {
     sanitizedHtml: React.PropTypes.string
   },

@@ -6,12 +6,11 @@ var MarkdownEditor = require('../MarkdownEditor/MarkdownEditor.jsx');
 var WikiPageStore = require('../../stores/WikiPageStore.js');
 
 var WikiPage = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
+  getStateFromStores: function() {
+    return WikiPageStore.get(this.props.pageName);
   },
   getInitialState: function() {
-    console.log('abc', this.props);
-    return WikiPageStore.get(this.props.pageName);
+    return this.getStateFromStores();
   },
   componentDidMount: function() {
     WikiPageStore.addChangeListener(this._onChange);
@@ -20,13 +19,13 @@ var WikiPage = React.createClass({
     WikiPageStore.removeChangeListener(this._onChange);
   },
   _onChange: function() {
-    this.setState(getStateFromStores);
+    this.setState(this.getStateFromStores());
   },
   render: function() {
     return (
       <div className="wiki-page">
         <h3>{this.props.pageName}</h3>
-        <MarkdownEditor />
+        <MarkdownEditor initialMarkdown={this.state.text} />
       </div>
     );
   }
