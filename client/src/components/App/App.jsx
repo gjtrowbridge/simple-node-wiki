@@ -2,6 +2,8 @@ var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 
+var Nav = require('../Nav/Nav.jsx');
+
 var App = React.createClass({
   contextTypes: {
     router: React.PropTypes.func.isRequired
@@ -10,7 +12,7 @@ var App = React.createClass({
     var params = this.context.router.getCurrentParams();
     return (
       <div className="app">
-        <nav>Nav here</nav>
+        <Nav />
         <RouteHandler {...params} />
       </div>
     );
