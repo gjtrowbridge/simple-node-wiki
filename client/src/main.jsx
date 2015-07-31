@@ -11,7 +11,7 @@ var WikiPage = require('./components/WikiPage/WikiPage.jsx');
 var routes = (
   <Route handler={App}>
     <DefaultRoute handler={HomePage} />
-    <Route path="pages/:page_name" handler={WikiPage} />
+    <Route path="pages/:pageName" handler={WikiPage} />
     <NotFoundRoute handler={HomePage}/>
   </Route>
 );

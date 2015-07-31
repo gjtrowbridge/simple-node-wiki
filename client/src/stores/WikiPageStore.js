@@ -19,14 +19,13 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  get: function(url) {
+  get: function(pageName) {
     return {
       id: 1,
-      name: 'My url is: ' + url,
-      text: 'This is text for page with url: ' + url
+      name: 'My url is: ' + pageName,
+      text: 'This is text for page with url: ' + pageName
     };
   }
-
 });
 
 // All actions go through the dispatcher, and the dispatcher
@@ -45,3 +44,4 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   };
 });
 
+module.exports = WikiPageStore;

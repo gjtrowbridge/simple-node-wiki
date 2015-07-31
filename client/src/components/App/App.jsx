@@ -7,10 +7,11 @@ var App = React.createClass({
     router: React.PropTypes.func.isRequired
   },
   render: function() {
+    var params = this.context.router.getCurrentParams();
     return (
       <div className="app">
         <nav>Nav here</nav>
-        <RouteHandler />
+        <RouteHandler {...params} />
       </div>
     );
   }
