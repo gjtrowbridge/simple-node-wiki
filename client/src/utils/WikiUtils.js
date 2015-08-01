@@ -1,3 +1,6 @@
+// This require causes warnings in chrome...not a big deal,
+// just marking this as the cause in case I want to fix this
+// later.
 var rp = require('request-promise');
 
 module.exports = {
