@@ -6,6 +6,8 @@ var assign = require('object-assign');
 var ActionTypes = WikiConstants.ActionTypes;
 var CHANGE_EVENT = WikiConstants.CHANGE_EVENT;
 
+var _pages = {};
+
 var WikiPageStore = assign({}, EventEmitter.prototype, {
   emitChange: function() {
     this.emit(CHANGE_EVENT);
@@ -20,11 +22,12 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
   },
 
   get: function(pageName) {
-    return {
-      id: 1,
-      name: 'My url is: ' + pageName,
-      text: 'This is text for page with url: ' + pageName
-    };
+    console.log('get', _pages);
+    if (_pages.hasOwnProperty(pageName)) {
+      return _pages[pageName];
+    } else {
+      return {};
+    }
   }
 });
 
@@ -36,8 +39,28 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
 // a change event)
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   switch (action.type) {
-    case ActionTypes.SAVE_PAGE:
-      // add something here
+    case ActionTypes.REQUEST_PAGE:
+      // Mark the page as loading
+      if (_pages.hasOwnProperty(action.pageName)) {
+        _pages[action.pageName].loading = true;
+      } else {
+        _pages[action.pageName] = { loading: true };
+      }
+
+      // Alert all listeners that a change has occurred
+      WikiPageStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_PAGE_SUCCESS:
+      // Save page data to this store
+      var pageData = action.data;
+      pageData.loading = false;
+      _pages[action.pageName] = pageData;
+
+      // Alert all listeners that a change has occurred
+      WikiPageStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_PAGE_FAILURE:
+      WikiPageStore.emitChange();
       break;
     default:
       // do nothing

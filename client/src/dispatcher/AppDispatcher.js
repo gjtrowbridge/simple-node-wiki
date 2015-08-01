@@ -28,11 +28,11 @@ module.exports = {
       function(responseSuccess) {
         var info = assign({}, action, responseSuccess);
         this.dispatch(successType, info);
-      },
+      }.bind(this),
       function(responseFailure) {
         var info = assign({}, action, responseFailure);
         this.dispatch(failureType, info);
-      }
+      }.bind(this)
     );
   }
 };
