@@ -8,6 +8,7 @@ var Nav = React.createClass({
       <nav className="nav">
         <Link to={"/"}>Home</Link>
         <SearchBar />
+        <button>+ New Page</button>
       </nav>
     );
   }
