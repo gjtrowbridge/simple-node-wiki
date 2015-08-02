@@ -30,11 +30,17 @@ var MarkdownEditor = React.createClass({
   // This will run whenever a user changes the text
   // in the EditBox
   onInputChange: function(e) {
+    // This doesn't *quite* follow the flux pattern,
+    // but it helps keep this component self-sufficient
     var markdown = e.target.value;
     this.setState({
       markdown: markdown,
       sanitizedHtml: this.markdownToHtml(markdown)
-    })
+    });
+
+    if (this.props.onAfterChange) {
+      this.props.onAfterChange(e);
+    }
   },
   render: function() {
     return (

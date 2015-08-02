@@ -3,8 +3,8 @@ var WikiConstants = require('../constants/WikiConstants.js');
 var EventEmitter = require('events');
 var assign = require('object-assign');
 
-var WikiPageActionTypes = WikiConstants.ActionTypes.WikiPage;
-var CHANGE_EVENT = WikiConstants.ActionTypes.Misc.CHANGE_EVENT;
+var ActionTypes = WikiConstants.ActionTypes;
+var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 
 var _pagesByName = {};
 var _pagesById = {};
@@ -76,49 +76,27 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
 // handling here (usually, state updates here followed by emitting
 // a change event)
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
-
-  if (WikiPageActionTypes.hasOwnProperty(action.type)) {
-    console.log('Wiki Page Action', action);
-    action.data.status = action.type;
-    WikiPageStore.mergeIntoStorage(action.data);
-    WikiPageStore.emitChange();
-  }
-
-  // switch (action.type) {
-
-  //   // Asynchronous requests for page data
-  //   case ActionTypes.REQUEST_PAGE:
-  //     WikiPageStore.mergeIntoStorage(action.data);
-  //     WikiPageStore.emitChange();
-  //     break;
-  //   case ActionTypes.REQUEST_PAGE_SUCCESS:
-  //     WikiPageStore.mergeIntoStorage(action.data);
-  //     WikiPageStore.emitChange();
-  //     break;
-  //   case ActionTypes.REQUEST_PAGE_FAILURE:
-  //     WikiPageStore.mergeIntoStorage(action.data);
-  //     WikiPageStore.emitChange();
-  //     break;
-
-  //   // Asynchronous requests for saving pages
-  //   case ActionTypes.SAVE_PAGE:
-  //     WikiPageStore.mergeIntoStorage(action.data);
-  //     WikiPageStore.emitChange();
-  //     break;
-
-  //   case ActionTypes.SAVE_PAGE_SUCCESS:
-  //     WikiPageStore.mergeIntoStorage(action.data);
-  //     WikiPageStore.emitChange();
-  //     break;
-
-  //   case ActionTypes.SAVE_PAGE_FAILURE:
-  //     WikiPageStore.mergeIntoStorage(action.data);
-  //     WikiPageStore.emitChange();
-  //     break;
-
-  //   default:
-  //     // do nothing
-  // };
+  switch (action.type) {
+    case ActionTypes.REQUEST_PAGE:
+    case ActionTypes.REQUEST_PAGE_FAILURE:
+    case ActionTypes.SAVE_PAGE:
+    case ActionTypes.SAVE_PAGE_SUCCESS:
+    case ActionTypes.SAVE_PAGE_FAILURE:
+      // Do this for any of the above cases
+      var pageData = action.pageData;
+      pageData.status = action.type;
+      WikiPageStore.mergeIntoStorage(pageData);
+      WikiPageStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_PAGE_SUCCESS:
+      var pageData = action.data;
+      pageData.status = action.type;
+      WikiPageStore.mergeIntoStorage(pageData);
+      WikiPageStore.emitChange();
+      break;
+    default:
+      // do nothing
+  };
 });
 
 module.exports = WikiPageStore;

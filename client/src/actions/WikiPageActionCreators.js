@@ -10,13 +10,13 @@ var WikiPageActionCreators = {
     var savePromise = WikiUtils.requestViaHttpAndReturnPromise(
       url, 'PUT', pageData);
     var action = {
-      data: pageData
+      pageData: pageData
     };
 
     return AppDispatcher.dispatchAsync(savePromise, {
-      request: WikiConstants.ActionTypes.WikiPage.SAVE_PAGE,
-      success: WikiConstants.ActionTypes.WikiPage.SAVE_PAGE_SUCCESS,
-      failure: WikiConstants.ActionTypes.WikiPage.SAVE_PAGE_FAILURE
+      request: WikiConstants.ActionTypes.SAVE_PAGE,
+      success: WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS,
+      failure: WikiConstants.ActionTypes.SAVE_PAGE_FAILURE
     }, action);
   },
   requestPage: function(pageData) {
@@ -24,13 +24,13 @@ var WikiPageActionCreators = {
     var pagePromise = WikiUtils.requestViaHttpAndReturnPromise(
         url, 'GET', {});
     var action = {
-      data: pageData
+      pageData: pageData
     };
 
     return AppDispatcher.dispatchAsync(pagePromise, {
-      request: WikiConstants.ActionTypes.WikiPage.REQUEST_PAGE,
-      success: WikiConstants.ActionTypes.WikiPage.REQUEST_PAGE_SUCCESS,
-      failure: WikiConstants.ActionTypes.WikiPage.REQUEST_PAGE_FAILURE
+      request: WikiConstants.ActionTypes.REQUEST_PAGE,
+      success: WikiConstants.ActionTypes.REQUEST_PAGE_SUCCESS,
+      failure: WikiConstants.ActionTypes.REQUEST_PAGE_FAILURE
     }, action);
   }
 };
