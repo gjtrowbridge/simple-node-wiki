@@ -6,7 +6,8 @@ var assign = require('object-assign');
 var ActionTypes = WikiConstants.ActionTypes;
 var CHANGE_EVENT = WikiConstants.CHANGE_EVENT;
 
-var _pages = {};
+var _pagesByName = {};
+var _pagesById = {};
 
 var WikiPageStore = assign({}, EventEmitter.prototype, {
   emitChange: function() {
@@ -21,13 +22,56 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  get: function(pageName) {
-    console.log('get', _pages);
-    if (_pages.hasOwnProperty(pageName)) {
-      return _pages[pageName];
+  getByName: function(name) {
+    if (_pagesByName.hasOwnProperty(name)) {
+      return _pagesByName[name];
     } else {
-      return {};
+      return null;
     }
+  },
+
+  get: function(id) {
+    if (_pagesById.hasOwnProperty[id]) {
+      return _pagesById[id];
+    } else {
+      return null;
+    }
+  }
+
+  // Adds page data to the internal storage objects
+  // (the added object is indexed by both ID and by name,
+  //  if those properties are defined)
+  mergeIntoStorage: function(pageData) {
+    // Merge into page storage by id if possible
+    if (pageData.hasOwnProperty('id')) {
+      var id = pageData.id;
+
+      // Remove the old page name entry from storage
+      // if it exists.  (if applicable, will be added back later)
+      // This is necessary to prevent stale page names
+      // from persisting in storage (e.g. if the name is updated)
+      var currentPageName = _pagesById[id] === undefined ?
+          undefined : _pagesById[id].name;
+      if (currentPageName !== undefined) {
+        delete _pagesByName[currentPageName];
+      }
+
+      // Add the pageData to storage at the appropriate ID
+      // Will overwrite if an object already exists in that location
+      _pagesById[id] = pageData;
+    }
+
+    // Merge into page storage by name if possible
+    if (pageData.hasOwnProperty('name')) {
+      var name = pageData.name;
+      _pagesByName[name] = pageData;
+    }
+
+  },
+
+  // Removes page data from the internal storage objects
+  removeFromStorage: function(pageData) {
+
   }
 });
 
@@ -39,12 +83,21 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
 // a change event)
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   switch (action.type) {
+    // Asynchronous requests for page data
     case ActionTypes.REQUEST_PAGE:
+      var pageData = {
+        name: action.pageName,
+        status: WikiConstants.statusTypes.LOADING
+      };
+      mergeIntoStorage(pageData)
+
       // Mark the page as loading
       if (_pages.hasOwnProperty(action.pageName)) {
-        _pages[action.pageName].loading = true;
+        _pages[action.pageName].status = WikiConstants.statusTypes.LOADING;
       } else {
-        _pages[action.pageName] = { loading: true };
+        _pages[action.pageName] = {
+          status: WikiConstants.statusTypes.LOADING
+        };
       }
 
       // Alert all listeners that a change has occurred
@@ -54,7 +107,8 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       // Save page data to this store
       var pageData = action.data;
       pageData.loading = false;
-      _pages[action.pageName] = pageData;
+
+      WikiPageStore.mergeIntoStorage(pageData);
 
       // Alert all listeners that a change has occurred
       WikiPageStore.emitChange();
@@ -62,6 +116,13 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
     case ActionTypes.REQUEST_PAGE_FAILURE:
       WikiPageStore.emitChange();
       break;
+
+
+    // Asynchronous requests for saving pages
+    case ActionTypes.SAVE_PAGE:
+      _pages[action.pageId] = WikiConstants.statusTypes.SAVING;
+      break;
+
     default:
       // do nothing
   };
