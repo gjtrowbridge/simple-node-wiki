@@ -3,8 +3,8 @@ var WikiConstants = require('../constants/WikiConstants.js');
 var EventEmitter = require('events');
 var assign = require('object-assign');
 
-var ActionTypes = WikiConstants.ActionTypes;
-var CHANGE_EVENT = WikiConstants.CHANGE_EVENT;
+var WikiPageActionTypes = WikiConstants.ActionTypes.WikiPage;
+var CHANGE_EVENT = WikiConstants.ActionTypes.Misc.CHANGE_EVENT;
 
 var _pagesByName = {};
 var _pagesById = {};
@@ -26,7 +26,7 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     if (_pagesByName.hasOwnProperty(name)) {
       return _pagesByName[name];
     } else {
-      return null;
+      return {};
     }
   },
 
@@ -34,9 +34,9 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     if (_pagesById.hasOwnProperty[id]) {
       return _pagesById[id];
     } else {
-      return null;
+      return {};
     }
-  }
+  },
 
   // Adds page data to the internal storage objects
   // (the added object is indexed by both ID and by name,
@@ -66,12 +66,6 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
       var name = pageData.name;
       _pagesByName[name] = pageData;
     }
-
-  },
-
-  // Removes page data from the internal storage objects
-  removeFromStorage: function(pageData) {
-
   }
 });
 
@@ -82,50 +76,49 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
 // handling here (usually, state updates here followed by emitting
 // a change event)
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
-  switch (action.type) {
-    // Asynchronous requests for page data
-    case ActionTypes.REQUEST_PAGE:
-      var pageData = {
-        name: action.pageName,
-        status: WikiConstants.statusTypes.LOADING
-      };
-      mergeIntoStorage(pageData)
 
-      // Mark the page as loading
-      if (_pages.hasOwnProperty(action.pageName)) {
-        _pages[action.pageName].status = WikiConstants.statusTypes.LOADING;
-      } else {
-        _pages[action.pageName] = {
-          status: WikiConstants.statusTypes.LOADING
-        };
-      }
+  if (WikiPageActionTypes.hasOwnProperty(action.type)) {
+    console.log('Wiki Page Action', action);
+    action.data.status = action.type;
+    WikiPageStore.mergeIntoStorage(action.data);
+    WikiPageStore.emitChange();
+  }
 
-      // Alert all listeners that a change has occurred
-      WikiPageStore.emitChange();
-      break;
-    case ActionTypes.REQUEST_PAGE_SUCCESS:
-      // Save page data to this store
-      var pageData = action.data;
-      pageData.loading = false;
+  // switch (action.type) {
 
-      WikiPageStore.mergeIntoStorage(pageData);
+  //   // Asynchronous requests for page data
+  //   case ActionTypes.REQUEST_PAGE:
+  //     WikiPageStore.mergeIntoStorage(action.data);
+  //     WikiPageStore.emitChange();
+  //     break;
+  //   case ActionTypes.REQUEST_PAGE_SUCCESS:
+  //     WikiPageStore.mergeIntoStorage(action.data);
+  //     WikiPageStore.emitChange();
+  //     break;
+  //   case ActionTypes.REQUEST_PAGE_FAILURE:
+  //     WikiPageStore.mergeIntoStorage(action.data);
+  //     WikiPageStore.emitChange();
+  //     break;
 
-      // Alert all listeners that a change has occurred
-      WikiPageStore.emitChange();
-      break;
-    case ActionTypes.REQUEST_PAGE_FAILURE:
-      WikiPageStore.emitChange();
-      break;
+  //   // Asynchronous requests for saving pages
+  //   case ActionTypes.SAVE_PAGE:
+  //     WikiPageStore.mergeIntoStorage(action.data);
+  //     WikiPageStore.emitChange();
+  //     break;
 
+  //   case ActionTypes.SAVE_PAGE_SUCCESS:
+  //     WikiPageStore.mergeIntoStorage(action.data);
+  //     WikiPageStore.emitChange();
+  //     break;
 
-    // Asynchronous requests for saving pages
-    case ActionTypes.SAVE_PAGE:
-      _pages[action.pageId] = WikiConstants.statusTypes.SAVING;
-      break;
+  //   case ActionTypes.SAVE_PAGE_FAILURE:
+  //     WikiPageStore.mergeIntoStorage(action.data);
+  //     WikiPageStore.emitChange();
+  //     break;
 
-    default:
-      // do nothing
-  };
+  //   default:
+  //     // do nothing
+  // };
 });
 
 module.exports = WikiPageStore;

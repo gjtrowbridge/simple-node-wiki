@@ -12,7 +12,7 @@ module.exports = {
       method: httpVerb,
       json: jsonData
     }).then(function(response) {
-      return JSON.parse(response);
+      return response;
     });
   }
 };

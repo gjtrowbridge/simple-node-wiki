@@ -8,7 +8,7 @@ var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 
 var WikiPage = React.createClass({
   getStateFromStores: function() {
-    return WikiPageStore.get(this.props.pageName);
+    return WikiPageStore.getByName(this.props.pageName);
   },
   getInitialState: function() {
     return this.getStateFromStores();
@@ -16,8 +16,20 @@ var WikiPage = React.createClass({
   requestData: function(pageName) {
     WikiPageActionCreators.requestPage(pageName);
   },
+  saveData: function() {
+    var pageData = {
+      id: this.state.id,
+      name: this.state.name,
+      text: this.state.text,
+      title: this.state.title
+    };
+    WikiPageActionCreators.savePage(pageData);
+  },
   componentWillMount: function() {
-    this.requestData(this.props.pageName);
+    var pageData = {
+      name: this.props.pageName
+    };
+    this.requestData(pageData);
   },
   componentDidMount: function() {
     WikiPageStore.addChangeListener(this._onChange);
@@ -30,14 +42,16 @@ var WikiPage = React.createClass({
   },
   render: function() {
     var innerElement;
+    console.log(this.state);
     if (this.state.text) {
-      innerElement = (<MarkdownEditor initialMarkdown={this.state.text} />);
+      innerElement = <MarkdownEditor initialMarkdown={this.state.text} />;
     } else {
       innerElement = "";
     }
     return (
       <div className="wiki-page">
         <h3>{this.props.pageName}</h3>
+        {this.state.status}
         {innerElement}
       </div>
     );
