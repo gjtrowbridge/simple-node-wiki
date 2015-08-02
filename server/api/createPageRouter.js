@@ -93,23 +93,23 @@ var createPageRouter = function(express, db) {
     );
   });
 
-  // Find a page by name and update
-  pageRouter.put('/name/:name', function(req, res) {
-    Page.update(createPageObject(req), {
-      where: {
-        name: req.params.name
-      }
-    }).done(
-      function(rows_affected) {
-        apiHelpers.respondWithData(req, res, {
-          rows_affected: rows_affected
-        });
-      },
-      function(err) {
-        apiHelpers.respondWithError(req, res, err);
-      }
-    );
-  });
+  // // Find a page by name and update
+  // pageRouter.put('/name/:name', function(req, res) {
+  //   Page.update(createPageObject(req), {
+  //     where: {
+  //       name: req.params.name
+  //     }
+  //   }).done(
+  //     function(rows_affected) {
+  //       apiHelpers.respondWithData(req, res, {
+  //         rows_affected: rows_affected
+  //       });
+  //     },
+  //     function(err) {
+  //       apiHelpers.respondWithError(req, res, err);
+  //     }
+  //   );
+  // });
 
   // Delete a page
   pageRouter.delete('/:id', function(req, res) {
