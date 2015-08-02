@@ -2,11 +2,11 @@ var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var WikiUtils = require('../utils/WikiUtils.js');
 var WikiConstants = require('../constants/WikiConstants.js');
 
-var baseUrl = "http://localhost:8080/_api";
+var apiRootUrl = WikiConstants.BASE_URL + "/_api";
 
 var WikiPageActionCreators = {
   savePage: function(pageData) {
-    var url = baseUrl + '/pages/' + pageData.id;
+    var url = apiRootUrl + '/pages/' + pageData.id;
     var savePromise = WikiUtils.requestViaHttpAndReturnPromise(
       url, 'PUT', pageData);
     var action = {
@@ -20,7 +20,7 @@ var WikiPageActionCreators = {
     }, action);
   },
   requestPage: function(pageData) {
-    var url = baseUrl + '/pages/name/' + pageData.name;
+    var url = apiRootUrl + '/pages/name/' + pageData.name;
     var pagePromise = WikiUtils.requestViaHttpAndReturnPromise(
         url, 'GET', {});
     var action = {
