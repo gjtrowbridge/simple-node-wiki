@@ -10,43 +10,19 @@ var marked = require('marked');
 
 var MarkdownEditor = React.createClass({
   propTypes: {
-    initialMarkdown: React.PropTypes.string
-  },
-  getDefaultProps: function() {
-    initialMarkdown: ''
-  },
-  getInitialState: function() {
-    var initialMarkdown = this.props.initialMarkdown;
-    return {
-      markdown: initialMarkdown,
-      sanitizedHtml: this.markdownToHtml(initialMarkdown)
-    }
+    markdownText: React.PropTypes.string.isRequired
   },
   // This is used to sanitize raw user-inputted
   // markdown and convert it to HTML
   markdownToHtml: function(markdown) {
     return marked(markdown, {sanitize: true});
   },
-  // This will run whenever a user changes the text
-  // in the EditBox
-  onInputChange: function(e) {
-    // This doesn't *quite* follow the flux pattern,
-    // but it helps keep this component self-sufficient
-    var markdown = e.target.value;
-    this.setState({
-      markdown: markdown,
-      sanitizedHtml: this.markdownToHtml(markdown)
-    });
-
-    if (this.props.onAfterChange) {
-      this.props.onAfterChange(e);
-    }
-  },
   render: function() {
     return (
       <div className="markdown-editor">
-        <EditBox initialMarkdown={this.state.markdown} onInputChange={this.onInputChange} />
-        <DisplayBox sanitizedHtml={this.state.sanitizedHtml} />
+        <EditBox markdownText={this.props.markdownText}
+            onChange={this.props.onChange} />
+        <DisplayBox sanitizedHtml={this.markdownToHtml(this.props.markdownText)} />
       </div>
     );
   }

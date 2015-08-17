@@ -47,7 +47,7 @@ var WikiPage = React.createClass({
     var innerElement;
     if (this.state.text) {
       innerElement = (
-        <MarkdownEditor initialMarkdown={this.state.text} onAfterChange={this.onEditorChange} />
+        <MarkdownEditor markdownText={this.state.text} onChange={this.onEditorChange} />
       );
     } else {
       innerElement = "Loading...";

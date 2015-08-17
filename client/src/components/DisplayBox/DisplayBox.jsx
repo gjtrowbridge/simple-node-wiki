@@ -7,12 +7,7 @@ var React = require('react');
 
 var DisplayBox = React.createClass({
   propTypes: {
-    sanitizedHtml: React.PropTypes.string
-  },
-  getDefaultProps: function() {
-    return {
-      sanitizedHtml: ''
-    };
+    sanitizedHtml: React.PropTypes.string.isRequired
   },
   render: function() {
     var dangerousHtml = {
