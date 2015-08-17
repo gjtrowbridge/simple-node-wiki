@@ -1,7 +1,6 @@
 /**
   Provides an input "editor" for typing in markdown
-  and will optionally show the resulting html in real
-  time.
+  showing the resulting html.
 */
 var React = require('react');
 var EditBox = require('../EditBox/EditBox.jsx');

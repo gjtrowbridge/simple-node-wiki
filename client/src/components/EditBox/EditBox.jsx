@@ -1,6 +1,5 @@
 /**
-  Provides a textarea for input, optionally
-  runs a handler on all inputed data on change.
+  Provides a textarea for input.
 
   Designed for use with the DisplayBox component.
 */
