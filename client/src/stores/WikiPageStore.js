@@ -66,6 +66,19 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
       var name = pageData.name;
       _pagesByName[name] = pageData;
     }
+  },
+
+  // Allows continuous saving of the markdown editor text
+  // while typing because only the status of the data is
+  // overwritten (instead of overwriting, for example,
+  // the text, with stale values)
+  mergeStatusOnlyIntoStorage: function(pageData) {
+    if (pageData.hasOwnProperty('id')) {
+      var id = pageData.id;
+      // Updating in the ID dictionary will also
+      // update in the name dictionary (since both refer to same object)
+      _pagesById[id].status = pageData.status
+    }
   }
 });
 
@@ -77,15 +90,19 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
 // a change event)
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   switch (action.type) {
-    case ActionTypes.REQUEST_PAGE:
-    case ActionTypes.REQUEST_PAGE_FAILURE:
     case ActionTypes.SAVE_PAGE:
-    case ActionTypes.SAVE_PAGE_SUCCESS:
-    case ActionTypes.SAVE_PAGE_FAILURE:
-      // Do this for any of the above cases
+    case ActionTypes.REQUEST_PAGE:
       var pageData = action.pageData;
       pageData.status = action.type;
       WikiPageStore.mergeIntoStorage(pageData);
+      WikiPageStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_PAGE_FAILURE:
+    case ActionTypes.SAVE_PAGE_SUCCESS:
+    case ActionTypes.SAVE_PAGE_FAILURE:
+      var pageData = action.pageData;
+      pageData.status = action.type;
+      WikiPageStore.mergeStatusOnlyIntoStorage(pageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_SUCCESS:

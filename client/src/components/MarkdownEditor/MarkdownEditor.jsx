@@ -10,7 +10,8 @@ var marked = require('marked');
 
 var MarkdownEditor = React.createClass({
   propTypes: {
-    markdownText: React.PropTypes.string.isRequired
+    markdownText: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired
   },
   // This is used to sanitize raw user-inputted
   // markdown and convert it to HTML
