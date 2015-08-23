@@ -111,6 +111,9 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       WikiPageStore.mergeIntoStorage(pageData);
       WikiPageStore.emitChange();
       break;
+    case ActionTypes.CREATE_PAGE:
+    case ActionTypes.CREATE_PAGE_SUCCESS:
+    case ActionTypes.CREATE_PAGE_FAILURE:
     default:
       // do nothing
   };

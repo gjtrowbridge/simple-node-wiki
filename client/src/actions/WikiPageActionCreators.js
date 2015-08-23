@@ -32,6 +32,23 @@ var WikiPageActionCreators = {
       success: WikiConstants.ActionTypes.REQUEST_PAGE_SUCCESS,
       failure: WikiConstants.ActionTypes.REQUEST_PAGE_FAILURE
     }, action);
+  },
+  createPage: function(pageData) {
+    var url = apiRootUrl + '/pages/';
+    if (pageData.text === undefined) {
+      pageData.text = "";
+    }
+    var createPromise = WikiUtils.requestViaHttpAndReturnPromise(
+        url, 'POST', pageData);
+    var action = {
+      pageData: pageData
+    };
+
+    return AppDispatcher.dispatchAsync(pagePromise, {
+      request: WikiConstants.ActionTypes.CREATE_PAGE,
+      success: WikiConstants.ActionTypes.CREATE_PAGE_SUCCESS,
+      failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
+    }, action);
   }
 };
 
