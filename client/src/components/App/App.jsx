@@ -1,8 +1,8 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var PageStoreActionCreators = require('../../actions/PageStoreActionCreators.js');
-var PageStateStore = require('../../stores/PageStateStore.js');
+var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+var AppStateStore = require('../../stores/AppStateStore.js');
 
 var NotificationBar = require('../NotificationBar/NotificationBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
@@ -12,25 +12,25 @@ var App = React.createClass({
     router: React.PropTypes.func.isRequired
   },
   notify: function() {
-    PageStoreActionCreators.showNotification('this will last 3 seconds...', 3000);
+    AppStateActionCreators.showNotification('this will last 3 seconds...', 3000);
   },
   getInitialState: function() {
     return this.getStateFromStores();
   },
   getStateFromStores: function() {
     return {
-      notifications: PageStateStore.activeNotifications(),
-      modal: PageStateStore.activeModal()
+      notifications: AppStateStore.activeNotifications(),
+      modal: AppStateStore.activeModal()
     };
   },
   _onChange: function() {
     this.setState(this.getStateFromStores());
   },
   componentDidMount: function() {
-    PageStateStore.addChangeListener(this._onChange);
+    AppStateStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
-    PageStateStore.removeChangeListener(this._onChange);
+    AppStateStore.removeChangeListener(this._onChange);
   },
   render: function() {
     var params = this.context.router.getCurrentParams();
