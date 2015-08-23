@@ -1,14 +1,21 @@
 var React = require('react');
+var PageStoreActionCreators = require('../../actions/PageStoreActionCreators.js');
 
 var NotificationBar = React.createClass({
   PropTypes: {
-    text: React.PropTypes.string.isRequired
+    text: React.PropTypes.string.isRequired,
+    notificationId: React.PropTypes.number.isRequired
+  },
+  remove: function() {
+    PageStoreActionCreators.hideNotification(this.props.notificationId);
   },
   render: function() {
     return (
-      <div class="notification-bar">
+      <li className="notification-bar">
         {this.props.text}
-      </div>
+        {this.props.notificationId}
+        <span onClick={this.remove}>X</span>
+      </li>
     );
   }
 });

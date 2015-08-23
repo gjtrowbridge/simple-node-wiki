@@ -20,6 +20,9 @@ module.exports = {
     SAVE_PAGE_FAILURE: null,
 
     SHOW_MODAL: null,
-    HIDE_MODAL: null
+    HIDE_MODAL: null,
+
+    SHOW_NOTIFICATION: null,
+    HIDE_NOTIFICATION: null
   })
 };
