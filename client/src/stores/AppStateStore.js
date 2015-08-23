@@ -7,7 +7,7 @@ var AppStateActionCreators = require('../actions/AppStateActionCreators.js');
 var ActionTypes = WikiConstants.ActionTypes;
 var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 
-var activeModal = null;
+var activeModalInnerNode = null;
 var activeNotifications = [];
 var nextNotificationId = 1;
 
@@ -24,16 +24,16 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
     this.removeListener(CHANGE_EVENT, callback);
   },
 
-  hasActiveModal: function() {
-    return activeModal !== null;
+  activeModalInnerNode: function() {
+    return activeModalInnerNode;
   },
 
-  activeModal: function() {
-    return activeModal;
+  showModal: function(innerNode) {
+    activeModalInnerNode = innerNode;
   },
 
-  showModal: function(innerElement) {
-    activeModal = innerElement;
+  hideModal: function() {
+    activeModalInnerNode = null;
   },
 
   activeNotifications: function() {
@@ -88,8 +88,12 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
   console.log('ACTION!', action)
   switch (action.type) {
     case ActionTypes.SHOW_MODAL:
+      AppStateStore.showModal(action.innerNode);
+      AppStateStore.emitChange();
       break;
     case ActionTypes.HIDE_MODAL:
+      AppStateStore.hideModal();
+      AppStateStore.emitChange();
       break;
     case ActionTypes.SHOW_NOTIFICATION:
       AppStateStore.showNotification(action.text, action.timeout);

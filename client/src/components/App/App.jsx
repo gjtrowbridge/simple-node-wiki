@@ -1,18 +1,15 @@
 var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 var AppStateStore = require('../../stores/AppStateStore.js');
 
 var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
+var Modal = require('../Modal/Modal.jsx');
 
 var App = React.createClass({
   contextTypes: {
     router: React.PropTypes.func.isRequired
-  },
-  notify: function() {
-    AppStateActionCreators.showNotification('this will last 3 seconds...', 3000);
   },
   getInitialState: function() {
     return this.getStateFromStores();
@@ -20,7 +17,7 @@ var App = React.createClass({
   getStateFromStores: function() {
     return {
       notifications: AppStateStore.activeNotifications(),
-      modal: AppStateStore.activeModal()
+      modalInnerNode: AppStateStore.activeModalInnerNode()
     };
   },
   _onChange: function() {
@@ -40,9 +37,16 @@ var App = React.createClass({
         <NotificationTopBar notifications={this.state.notifications} />
       );
     }
+    var modal = "";
+    if (this.state.modalInnerNode) {
+      modal = (
+        <Modal innerNode={this.state.modalInnerNode} />
+      );
+    }
     return (
-      <div className="app" onClick={this.notify}>
+      <div className="app">
         {notificationTopBar}
+        {modal}
         <Nav />
         <RouteHandler {...params} />
       </div>

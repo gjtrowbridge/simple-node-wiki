@@ -1,11 +1,18 @@
 var React = require('react');
+var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 
 var Modal = React.createClass({
+  PropTypes: {
+    innerNode: React.PropTypes.node.isRequired
+  },
   render: function() {
     return (
-      <div class="modal">Hi there</div>
+      <div className="modal">
+        {this.props.innerNode}
+        <span onClick={AppStateActionCreators.hideModal}>X</span>
+      </div>
     );
   }
 });
 
-module.exports = modal;
+module.exports = Modal;

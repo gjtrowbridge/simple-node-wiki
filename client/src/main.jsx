@@ -3,6 +3,7 @@ var Router = require('react-router');
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
 var NotFoundRoute = Router.NotFoundRoute;
+var Redirect = Router.Redirect;
 
 var App = require('./components/App/App.jsx');
 var HomePage = require('./components/HomePage/HomePage.jsx');
