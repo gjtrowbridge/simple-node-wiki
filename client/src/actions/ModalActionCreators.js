@@ -5,8 +5,7 @@ var ModalActionCreators = {
   showModal: function(action) {
     return AppDispatcher.dispatch(WikiConstants.SHOW_MODAL, action);
   },
-  // 
-  hideModal: function() {
+  hideModal: function(action) {
     return AppDispatcher.dispatch(WikiConstants.HIDE_MODAL, action);
   }
 };
