@@ -1,5 +1,7 @@
 var apiHelpers = require('./apiHelpers.js');
 
+// TODO: add validation to these endpoints
+// ie. names should follow a certain regex
 
 // Creates a page object from an incoming json request
 var createPageObject = function(req) {
