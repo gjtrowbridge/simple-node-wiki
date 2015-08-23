@@ -1,7 +1,7 @@
 var React = require('react');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 
-var NotificationBar = React.createClass({
+var Notification = React.createClass({
   PropTypes: {
     text: React.PropTypes.string.isRequired,
     notificationId: React.PropTypes.number.isRequired
@@ -11,7 +11,7 @@ var NotificationBar = React.createClass({
   },
   render: function() {
     return (
-      <li className="notification-bar">
+      <li className="notification">
         {this.props.text}
         {this.props.notificationId}
         <span onClick={this.remove}>X</span>
@@ -20,4 +20,4 @@ var NotificationBar = React.createClass({
   }
 });
 
-module.exports = NotificationBar;
+module.exports = Notification;

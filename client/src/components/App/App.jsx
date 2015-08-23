@@ -4,7 +4,7 @@ var RouteHandler = Router.RouteHandler;
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 var AppStateStore = require('../../stores/AppStateStore.js');
 
-var NotificationBar = require('../NotificationBar/NotificationBar.jsx');
+var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
 
 var App = React.createClass({
@@ -34,21 +34,15 @@ var App = React.createClass({
   },
   render: function() {
     var params = this.context.router.getCurrentParams();
-    var notifications = (
-      <ul className="notifications">
-        {this.state.notifications.map(function(notification) {
-          console.log(notification.notificationId);
-          return (
-            <NotificationBar text={notification.text}
-                key={notification.notificationId}
-                notificationId={notification.notificationId} />
-          );
-        })}
-      </ul>
-    );
+    var notificationTopBar = "";
+    if (this.state.notifications.length > 0) {
+      notificationTopBar = (
+        <NotificationTopBar notifications={this.state.notifications} />
+      );
+    }
     return (
       <div className="app" onClick={this.notify}>
-        {notifications}
+        {notificationTopBar}
         <Nav />
         <RouteHandler {...params} />
       </div>
