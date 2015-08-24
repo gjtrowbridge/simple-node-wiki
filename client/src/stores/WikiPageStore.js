@@ -8,6 +8,9 @@ var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 
 var _pagesByName = {};
 var _pagesById = {};
+// Stores a recently created page
+// that has not yet been navigated to
+var newlyCreatedPage = null;
 
 var WikiPageStore = assign({}, EventEmitter.prototype, {
   emitChange: function() {
@@ -38,10 +41,18 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     }
   },
 
+  newlyCreatedPage: function() {
+    return newlyCreatedPage;
+  },
+
+  _clearNewlyCreatedPage: function() {
+    newlyCreatedPage = null;
+  },
+
   // Adds page data to the internal storage objects
   // (the added object is indexed by both ID and by name,
   //  if those properties are defined)
-  mergeIntoStorage: function(pageData) {
+  _mergeIntoStorage: function(pageData) {
     // Merge into page storage by id if possible
     if (pageData.hasOwnProperty('id')) {
       var id = pageData.id;
@@ -72,7 +83,7 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
   // while typing because only the status of the data is
   // overwritten (instead of overwriting, for example,
   // the text, with stale values)
-  mergeStatusOnlyIntoStorage: function(pageData) {
+  _mergeStatusOnlyIntoStorage: function(pageData) {
     if (pageData.hasOwnProperty('id')) {
       var id = pageData.id;
       // Updating in the ID dictionary will also
@@ -94,7 +105,7 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
     case ActionTypes.REQUEST_PAGE:
       var pageData = action.pageData;
       pageData.status = action.type;
-      WikiPageStore.mergeIntoStorage(pageData);
+      WikiPageStore._mergeIntoStorage(pageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_FAILURE:
@@ -102,18 +113,29 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
     case ActionTypes.SAVE_PAGE_FAILURE:
       var pageData = action.pageData;
       pageData.status = action.type;
-      WikiPageStore.mergeStatusOnlyIntoStorage(pageData);
+      WikiPageStore._mergeStatusOnlyIntoStorage(pageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_SUCCESS:
       var pageData = action.data;
       pageData.status = action.type;
-      WikiPageStore.mergeIntoStorage(pageData);
+      WikiPageStore._mergeIntoStorage(pageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.CREATE_PAGE:
+      break;
     case ActionTypes.CREATE_PAGE_SUCCESS:
+      var pageData = action.data;
+      pageData.status = action.type;
+      WikiPageStore._mergeIntoStorage(pageData);
+      newlyCreatedPage = pageData;
+      WikiPageStore.emitChange();
+
+      newlyCreatedPage = null;
+      WikiPageStore.emitChange();
+      break;
     case ActionTypes.CREATE_PAGE_FAILURE:
+      break;
     default:
       // do nothing
   };

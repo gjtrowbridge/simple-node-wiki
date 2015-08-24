@@ -44,12 +44,16 @@ var WikiPageActionCreators = {
       pageData: pageData
     };
 
-    return AppDispatcher.dispatchAsync(pagePromise, {
+    return AppDispatcher.dispatchAsync(createPromise, {
       request: WikiConstants.ActionTypes.CREATE_PAGE,
       success: WikiConstants.ActionTypes.CREATE_PAGE_SUCCESS,
       failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
     }, action);
   }
+  // navigatedToNewlyCreatedPage: function() {
+  //   return AppDispatcher.dispatch(
+  //       WikiConstants.ActionTypes.NAVIGATED_TO_NEWLY_CREATED_PAGE, {});
+  // }
 };
 
 module.exports = WikiPageActionCreators;

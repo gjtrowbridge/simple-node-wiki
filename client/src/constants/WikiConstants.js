@@ -19,6 +19,10 @@ module.exports = {
     SAVE_PAGE_SUCCESS: null,
     SAVE_PAGE_FAILURE: null,
 
+    CREATE_PAGE: null,
+    CREATE_PAGE_SUCCESS: null,
+    CREATE_PAGE_FAILURE: null,
+
     SHOW_MODAL: null,
     HIDE_MODAL: null,
 

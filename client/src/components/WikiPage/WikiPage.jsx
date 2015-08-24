@@ -44,6 +44,9 @@ var WikiPage = React.createClass({
     this.savePage(pageData);
   },
   render: function() {
+    if (this.state.title !== undefined) {
+      document.title = this.state.title;
+    }
     var innerElement;
     if (this.state.text) {
       innerElement = (

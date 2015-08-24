@@ -2,6 +2,9 @@ var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var AppStateStore = require('../../stores/AppStateStore.js');
+var WikiPageStore = require('../../stores/WikiPageStore.js');
+var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 
 var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
@@ -17,7 +20,8 @@ var App = React.createClass({
   getStateFromStores: function() {
     return {
       notifications: AppStateStore.activeNotifications(),
-      modalInnerNode: AppStateStore.activeModalInnerNode()
+      modalInnerNode: AppStateStore.activeModalInnerNode(),
+      newlyCreatedPage: WikiPageStore.newlyCreatedPage()
     };
   },
   _onChange: function() {
@@ -25,28 +29,46 @@ var App = React.createClass({
   },
   componentDidMount: function() {
     AppStateStore.addChangeListener(this._onChange);
+    WikiPageStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
     AppStateStore.removeChangeListener(this._onChange);
+    WikiPageStore.removeChangeListener(this._onChange);
+  },
+  renderNotificationTopBar: function() {
+    if (this.state.notifications.length > 0) {
+      return (
+        <NotificationTopBar notifications={this.state.notifications} />
+      );
+    } else {
+      return "";
+    }
+  },
+  renderModal: function() {
+    if (this.state.modalInnerNode) {
+      return <Modal innerNode={this.state.modalInnerNode} />;
+    } else {
+      return "";
+    }
+  },
+  modalIsOpen: function() {
+    return this.state.modalInnerNode;
+  },
+  navigateIfNecessary: function(newlyCreatedPage) {
+    if (newlyCreatedPage !== null) {
+      this.context.router.transitionTo(
+          '/pages/' + newlyCreatedPage.name);
+    }
+  },
+  componentWillUpdate: function(nextProps, nextState) {
+    this.navigateIfNecessary(nextState.newlyCreatedPage);
   },
   render: function() {
     var params = this.context.router.getCurrentParams();
-    var notificationTopBar = "";
-    if (this.state.notifications.length > 0) {
-      notificationTopBar = (
-        <NotificationTopBar notifications={this.state.notifications} />
-      );
-    }
-    var modal = "";
-    if (this.state.modalInnerNode) {
-      modal = (
-        <Modal innerNode={this.state.modalInnerNode} />
-      );
-    }
     return (
-      <div className="app">
-        {notificationTopBar}
-        {modal}
+      <div className={"app" + this.modalIsOpen() ? " open-modal" : ""}>
+        {this.renderNotificationTopBar()}
+        {this.renderModal()}
         <Nav />
         <RouteHandler {...params} />
       </div>
