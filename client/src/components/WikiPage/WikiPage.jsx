@@ -7,8 +7,13 @@ var WikiPageStore = require('../../stores/WikiPageStore.js');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 
 var WikiPage = React.createClass({
-  getStateFromStores: function() {
-    return WikiPageStore.getByName(this.props.pageName);
+  propTypes: function() {
+    pageName: React.PropTypes.string.isRequired
+  },
+  getStateFromStores: function(overridePageName) {
+    var pageName = overridePageName !== undefined ?
+        overridePageName : this.props.pageName;
+    return WikiPageStore.getByName(pageName);
   },
   getInitialState: function() {
     return this.getStateFromStores();
@@ -19,11 +24,20 @@ var WikiPage = React.createClass({
   savePage: function(pageData) {
     WikiPageActionCreators.savePage(pageData);
   },
+  componentWillReceiveProps: function(newProps) {
+    // This is probably the wrong solution long-term,
+    // but for the time being this fixes the issue
+    // of the page not resetting state when the page name
+    // changes (as happens with back/forward navigation)
+    // It may be better to solve this with key props
+    // in a wrapper component...?
+    if (newProps.pageName !== this.state.name &&
+        newProps.pageName !== undefined) {
+      this.setState(this.getStateFromStores(newProps.pageName));
+    }
+  },
   componentWillMount: function() {
-    var pageData = {
-      name: this.props.pageName
-    };
-    this.requestPage(pageData);
+    this.requestPage({ name: this.props.pageName });
   },
   componentDidMount: function() {
     WikiPageStore.addChangeListener(this._onChange);

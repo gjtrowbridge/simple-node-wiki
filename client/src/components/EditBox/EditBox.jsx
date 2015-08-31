@@ -6,7 +6,7 @@
 var React = require('react');
 
 var EditBox = React.createClass({
-  PropTypes: {
+  propTypes: {
     onChange: React.PropTypes.func.isRequired,
     markdownText: React.PropTypes.string.isRequired
   },

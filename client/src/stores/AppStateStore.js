@@ -85,7 +85,6 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
 // handling here (usually, state updates here followed by emitting
 // a change event)
 AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
-  console.log('ACTION!', action)
   switch (action.type) {
     case ActionTypes.SHOW_MODAL:
       AppStateStore.showModal(action.innerNode);
@@ -105,6 +104,7 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
     case ActionTypes.CREATE_PAGE_SUCCESS:
       var newlyCreatedPage = action.data;
+      this.hideModal();
       AppStateStore.showNotification(
         'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000)
       AppStateStore.emitChange();
