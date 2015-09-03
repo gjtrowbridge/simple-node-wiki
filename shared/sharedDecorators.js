@@ -41,6 +41,4 @@ sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
   }
 };
 
-console.log(_.extend({},{'hi':'there', b:5}, {'hi':'no'}));
-
 module.exports = sharedDecorators;
