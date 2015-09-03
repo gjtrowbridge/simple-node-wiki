@@ -33,7 +33,7 @@ testAddDefaultParams('throws if the argument is not an object',
   assert.plan(1);
   assert.throws(function() {
     decoratedFunction(5);
-  }, /The only argument.*should be an object/);
+  }, /The only argument.*should be an object/i);
 });
 
 testAddDefaultParams('throws if required value is not provided',
@@ -41,7 +41,7 @@ testAddDefaultParams('throws if required value is not provided',
   assert.plan(1);
   assert.throws(function() {
     decoratedFunction({});
-  }, /required parameter.*was not provided/);
+  }, /required parameter.*was not provided/i);
 });
 
 testAddDefaultParams('throws if an unexpected parameter is provided',
@@ -52,7 +52,7 @@ testAddDefaultParams('throws if an unexpected parameter is provided',
       requiredValue: 5,
       unexpected_value: 2
     });
-  }, /an unexpected parameter was passed/);
+  }, /an unexpected parameter was passed/i);
 });
 
 testAddDefaultParams('gives default value if non-required value is not provided',
@@ -61,8 +61,9 @@ testAddDefaultParams('gives default value if non-required value is not provided'
   var parameters = decoratedFunction({
     requiredValue: 5
   });
-  assert.equals(0, parameters.value1);
-  assert.equals(10, parameters.value2);
+  console.log('params', parameters)
+  assert.equal(0, parameters.value1);
+  assert.equal(10, parameters.value2);
 });
 
 testAddDefaultParams('overrides default value if non-required value is provided',
@@ -73,6 +74,7 @@ testAddDefaultParams('overrides default value if non-required value is provided'
     value1: 12,
     value2: 'Ooga booga'
   });
-  assert.equals(12, parameters.value1);
-  assert.equals('Ooga booga', parameters.value2);
+  console.log('params', parameters)
+  assert.equal(12, parameters.value1);
+  assert.equal('Ooga booga', parameters.value2);
 });
