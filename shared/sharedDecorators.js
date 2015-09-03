@@ -24,7 +24,7 @@ sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
     _.each(parametersDefinition, function(value, name) {
       if (value === sharedConstants.IS_REQUIRED
           && !parameters.hasOwnProperty(name)) {
-        throw 'The required parameter: ' + key + ' was not provided!';
+        throw 'The required parameter: ' + name + ' was not provided!';
       }
     });
 

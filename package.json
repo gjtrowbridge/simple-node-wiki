@@ -10,6 +10,7 @@
     "migrate-database": "sequelize db:migrate",
     "postinstall": "npm run build & npm run migrate-database",
     "test": "tape shared/**/*_test.js | faucet || :",
+    "test:watch": "watch 'npm run test'",
     "watch": "npm run watch-css & npm run watch-js & nodemon server",
     "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
     "watch-js": "watchify -t [reactify --es6 --harmony] client/src/main.jsx -o client/public/assets/js/bundle.js"
@@ -45,6 +46,7 @@
     "sequelize-cli": "^1.7.0",
     "stylus": "^0.51.1",
     "tape": "^4.0.0",
+    "watch": "^0.16.0",
     "watchify": "^3.2.1"
   }
 }
