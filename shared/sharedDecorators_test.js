@@ -52,7 +52,7 @@ testAddDefaultParams('throws if an unexpected parameter is provided',
       requiredValue: 5,
       unexpected_value: 2
     });
-  }, /you passed an unexpected parameter/i);
+  }, /an unexpected parameter was passed/);
 });
 
 testAddDefaultParams('gives default value if non-required value is not provided',

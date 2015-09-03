@@ -11,7 +11,7 @@ var sharedDecorators = {};
   Providing additional parameters beyond those defined will
   throw an error.
 */
-sharedDecorators.addDefaultParams = function(parameterDefinition, func) {
+sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
   return function(parameters) {
     if (arguments.length !== 1) {
       throw 'This function only accepts one argument'
@@ -21,12 +21,19 @@ sharedDecorators.addDefaultParams = function(parameterDefinition, func) {
     }
 
     // Make sure all required parameters are defined
-    for (key in parameterDefinition) {
-      if (parameterDefinition[key] === sharedConstants.IS_REQUIRED
-          && !parameters.hasOwnProperty(key)) {
+    _.each(parametersDefinition, function(value, name) {
+      if (value === sharedConstants.IS_REQUIRED
+          && !parameters.hasOwnProperty(name)) {
         throw 'The required parameter: ' + key + ' was not provided!';
       }
-    }
+    });
+
+    // Make sure no unexpected parameters were defined
+    _.each(parameters, function(value, name) {
+      if (!parametersDefinition.hasOwnProperty(name)) {
+        throw 'An unexpected parameter was passed to this function!';
+      }
+    })
 
     var newParameters = {};
 
