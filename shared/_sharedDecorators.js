@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var sharedConstants = require('./sharedConstants.js');
+var sharedConstants = require('./_sharedConstants.js');
 var sharedDecorators = {};
 
 /*
