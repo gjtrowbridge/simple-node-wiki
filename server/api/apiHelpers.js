@@ -18,6 +18,16 @@ var apiHelpers = {
     res.status(status).json({
       error: err
     });
+  },
+  convertToIntWithDefault: function(toConvert, defaultValue, optMin, optMax) {
+    var result = isNaN(toConvert * 1) ? defaultValue : toConvert * 1;
+    if (optMin !== undefined) {
+      result = Math.max(optMin, result);
+    }
+    if (optMax !== undefined) {
+      result = Math.min(optMax, result);
+    }
+    return result;
   }
 };
 

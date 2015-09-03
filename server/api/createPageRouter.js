@@ -22,7 +22,12 @@ var createPageRouter = function(express, db) {
   // This will return the data for all pages
   // currently defined in the wiki
   pageRouter.get('/', function(req, res) {
-    Page.findAll()
+    var limit = apiHelpers.convertToIntWithDefault(req.query.limit, 10, 1, 10);
+    var offset = apiHelpers.convertToIntWithDefault(req.query.offset, 0, 0);
+    Page.findAll({
+      limit: limit,
+      offset: offset
+    })
     .done(
       function(pages) {
         apiHelpers.respondWithData(req, res, pages);
@@ -94,24 +99,6 @@ var createPageRouter = function(express, db) {
       }
     );
   });
-
-  // // Find a page by name and update
-  // pageRouter.put('/name/:name', function(req, res) {
-  //   Page.update(createPageObject(req), {
-  //     where: {
-  //       name: req.params.name
-  //     }
-  //   }).done(
-  //     function(rows_affected) {
-  //       apiHelpers.respondWithData(req, res, {
-  //         rows_affected: rows_affected
-  //       });
-  //     },
-  //     function(err) {
-  //       apiHelpers.respondWithError(req, res, err);
-  //     }
-  //   );
-  // });
 
   // Delete a page
   pageRouter.delete('/:id', function(req, res) {
