@@ -29,7 +29,7 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     if (_pagesByName.hasOwnProperty(name)) {
       return _pagesByName[name];
     } else {
-      return {};
+      return null;
     }
   },
 
@@ -37,7 +37,7 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     if (_pagesById.hasOwnProperty[id]) {
       return _pagesById[id];
     } else {
-      return {};
+      return null;
     }
   },
 
@@ -130,8 +130,7 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       WikiPageStore._mergeIntoStorage(pageData);
       newlyCreatedPage = pageData;
       WikiPageStore.emitChange();
-
-      newlyCreatedPage = null;
+      WikiPageStore._clearNewlyCreatedPage();
       WikiPageStore.emitChange();
       break;
     case ActionTypes.CREATE_PAGE_FAILURE:

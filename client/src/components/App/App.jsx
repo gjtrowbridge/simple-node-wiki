@@ -56,6 +56,7 @@ var App = React.createClass({
   },
   navigateIfNecessary: function(newlyCreatedPage) {
     if (newlyCreatedPage !== null) {
+      console.log('navigating');
       this.context.router.transitionTo(
           '/pages/' + newlyCreatedPage.name);
     }

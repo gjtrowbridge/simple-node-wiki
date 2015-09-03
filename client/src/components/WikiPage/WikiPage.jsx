@@ -13,7 +13,8 @@ var WikiPage = React.createClass({
   getStateFromStores: function(overridePageName) {
     var pageName = overridePageName !== undefined ?
         overridePageName : this.props.pageName;
-    return WikiPageStore.getByName(pageName);
+    var stateFromStores = WikiPageStore.getByName(pageName);
+    return stateFromStores === null ? {} : stateFromStores;
   },
   getInitialState: function() {
     return this.getStateFromStores();
@@ -37,7 +38,12 @@ var WikiPage = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.requestPage({ name: this.props.pageName });
+    var cachedPageData = this.getStateFromStores();
+    if (cachedPageData.hasOwnProperty('text')) {
+      this.setState(cachedPageData);
+    } else {
+      this.requestPage({ name: this.props.pageName });
+    }
   },
   componentDidMount: function() {
     WikiPageStore.addChangeListener(this._onChange);

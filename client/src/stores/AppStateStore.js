@@ -104,7 +104,7 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
     case ActionTypes.CREATE_PAGE_SUCCESS:
       var newlyCreatedPage = action.data;
-      this.hideModal();
+      AppStateStore.hideModal();
       AppStateStore.showNotification(
         'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000)
       AppStateStore.emitChange();
