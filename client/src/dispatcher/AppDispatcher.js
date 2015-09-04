@@ -39,13 +39,13 @@ module.exports = {
     // Tell dispatcher when the request is complete
     params.promise.then(
       function(responseSuccess) {
-        var responseAction =
-            params.transformResponseSuccess(responseSuccess, action);
+        var responseAction = params.transformResponseSuccess(
+            responseSuccess, params.action);
         this.dispatch(successType, responseAction);
       }.bind(this),
       function(responseFailure) {
-        var responseAction =
-            params.transformResponseFailure(responseSuccess, action);
+        var responseAction = params.transformResponseFailure(
+            responseFailure, params.action);
         this.dispatch(failureType, responseAction);
       }.bind(this)
     );

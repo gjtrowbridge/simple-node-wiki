@@ -19,12 +19,16 @@ var WikiPageUrlTitleForm = React.createClass({
     };
   },
   sendPageToServer: function() {
+    // Create new page
     if (this.props.wikiPageId === null) {
       WikiPageActionCreators.createPage({
-        title: this.refs.titleInput.getDOMNode().value,
         name: this.refs.urlInput.getDOMNode().value,
+        title: this.refs.titleInput.getDOMNode().value,
         text: "# " + this.refs.titleInput.getDOMNode().value
       });
+    // Edit existing page
+    } else {
+      
     }
   },
   render: function() {

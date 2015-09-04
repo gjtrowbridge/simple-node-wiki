@@ -8,50 +8,60 @@ var apiRootUrl = WikiConstants.BASE_URL + "/_api";
 var WikiPageActionCreators = {
   savePage: function(pageData) {
     var url = apiRootUrl + '/pages/' + pageData.id;
-    var savePromise = WikiUtils.requestViaHttpAndReturnPromise(
-      url, 'PUT', pageData);
-    var action = {
-      pageData: pageData
-    };
 
-    return AppDispatcher.dispatchAsync(savePromise, {
-      request: WikiConstants.ActionTypes.SAVE_PAGE,
-      success: WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS,
-      failure: WikiConstants.ActionTypes.SAVE_PAGE_FAILURE
-    }, action);
+    return AppDispatcher.dispatchAsync({
+      promise: WikiUtils.requestViaHttpAndReturnPromise(
+          url, 'PUT', pageData),
+      types: {
+        request: WikiConstants.ActionTypes.SAVE_PAGE,
+        success: WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS,
+        failure: WikiConstants.ActionTypes.SAVE_PAGE_FAILURE
+      },
+      action: {
+        pageData: pageData
+      }
+    });
   },
   requestPage: function(pageData) {
     var url = apiRootUrl + '/pages/name/' + pageData.name;
-    var pagePromise = WikiUtils.requestViaHttpAndReturnPromise(
-        url, 'GET', {});
-    var action = {
-      pageData: pageData
-    };
-
-    return AppDispatcher.dispatchAsync(pagePromise, {
-      request: WikiConstants.ActionTypes.REQUEST_PAGE,
-      success: WikiConstants.ActionTypes.REQUEST_PAGE_SUCCESS,
-      failure: WikiConstants.ActionTypes.REQUEST_PAGE_FAILURE
-    }, action);
+    return AppDispatcher.dispatchAsync({
+      promise: WikiUtils.requestViaHttpAndReturnPromise(
+          url, 'GET', {}),
+      types: {
+        request: WikiConstants.ActionTypes.REQUEST_PAGE,
+        success: WikiConstants.ActionTypes.REQUEST_PAGE_SUCCESS,
+        failure: WikiConstants.ActionTypes.REQUEST_PAGE_FAILURE
+      },
+      action: {
+        pageData: pageData
+      }
+    });
   },
-  createPage: function(pageData) {
-    var url = apiRootUrl + '/pages/';
-    if (pageData.text === undefined) {
-      pageData.text = "";
-    }
-    var createPromise = WikiUtils.requestViaHttpAndReturnPromise(
-        url, 'POST', pageData);
-    var action = {
-      pageData: pageData
+  createPage: shared.decorators.addDefaultParams({
+    name: shared.decorators.IS_REQUIRED,
+    title: shared.decorators.IS_REQUIRED,
+    text: ""
+  }, function(params) {
+    var url = apiRootUrl + '/pages';
+    var pageData = {
+      name: params.name,
+      title: params.title,
+      text: params.text
     };
-
-    return AppDispatcher.dispatchAsync(createPromise, {
-      request: WikiConstants.ActionTypes.CREATE_PAGE,
-      success: WikiConstants.ActionTypes.CREATE_PAGE_SUCCESS,
-      failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
-    }, action);
-  },
-  requestPages: shared.decorators.addDefaultParams({
+    return AppDispatcher.dispatchAsync({
+      promise: WikiUtils.requestViaHttpAndReturnPromise(
+          url, 'POST', pageData),
+      types: {
+        request: WikiConstants.ActionTypes.CREATE_PAGE,
+        success: WikiConstants.ActionTypes.CREATE_PAGE_SUCCESS,
+        failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
+      },
+      action: {
+        pageData: pageData
+      }
+    });
+  }),
+  requestPageList: shared.decorators.addDefaultParams({
     offset: 0,
     limit: 10,
     orderBy: shared.constants.IS_REQUIRED
@@ -60,12 +70,11 @@ var WikiPageActionCreators = {
         + params.limit + '&offset=' + params.offset;
     var pagePromise = WikiUtils.requestViaHttpAndReturnPromise(
         url, 'GET', {});
-    var action = {};
-    return AppDispatcher.dispatchAsync(pagePromise, {
-      request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
-      success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
-      failure: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_FAILURE
-    }, action);
+    return AppDispatcher.dispatchAsync({
+      promise: createPagePromise,
+      types: types,
+      action: {}
+    });
   })
 };
 
