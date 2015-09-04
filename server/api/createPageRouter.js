@@ -1,4 +1,5 @@
 var apiHelpers = require('./apiHelpers.js');
+var shared = require('../../shared/shared.js');
 // TODO: add validation to these endpoints
 // ie. names should follow a certain regex
 
@@ -32,9 +33,21 @@ var createPageRouter = function(express, db) {
       defaultValue: 0,
       minimum: 0
     });
+
+    var orderBy = req.query.orderBy;
+    var order;
+    if (orderBy === shared.constants.ORDER_BY_CREATED) {
+      order = [['createdAt', 'DESC']];
+    } else if (orderBy === shared.constants.ORDER_BY_MODIFIED) {
+      order = [['updatedAt', 'DESC']];
+    } else {
+      order = [];
+    }
+
     Page.findAll({
       limit: limit,
-      offset: offset
+      offset: offset,
+      order: order
     })
     .done(
       function(pages) {
