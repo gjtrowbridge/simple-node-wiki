@@ -5,7 +5,7 @@ var PagePreviewCard = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
-    id: React.PropTypes.string.isRequired
+    id: React.PropTypes.number.isRequired
   },
   render: function() {
     var link = (
