@@ -1,5 +1,4 @@
 var apiHelpers = require('./apiHelpers.js');
-
 // TODO: add validation to these endpoints
 // ie. names should follow a certain regex
 
@@ -22,8 +21,17 @@ var createPageRouter = function(express, db) {
   // This will return the data for all pages
   // currently defined in the wiki
   pageRouter.get('/', function(req, res) {
-    var limit = apiHelpers.convertToIntWithDefault(req.query.limit, 10, 1, 10);
-    var offset = apiHelpers.convertToIntWithDefault(req.query.offset, 0, 0);
+    var limit = apiHelpers.convertToIntWithDefault({
+      valueToConvert: req.query.limit,
+      defaultValue: 10,
+      minimum: 1,
+      maximum: 10
+    });
+    var offset = apiHelpers.convertToIntWithDefault({
+      valueToConvert: req.query.offset,
+      defaultValue: 0,
+      minimum: 0
+    });
     Page.findAll({
       limit: limit,
       offset: offset

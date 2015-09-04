@@ -1,3 +1,4 @@
+var shared = require('../../shared/shared.js');
 
 var apiHelpers = {
   respondWithData: function(req, res, data, status) {
@@ -19,16 +20,22 @@ var apiHelpers = {
       error: err
     });
   },
-  convertToIntWithDefault: function(toConvert, defaultValue, optMin, optMax) {
-    var result = isNaN(toConvert * 1) ? defaultValue : toConvert * 1;
-    if (optMin !== undefined) {
-      result = Math.max(optMin, result);
+  convertToIntWithDefault: shared.decorators.addDefaultParams({
+    valueToConvert: shared.constants.IS_REQUIRED,
+    defaultValue: shared.constants.IS_REQUIRED,
+    minimum: undefined,
+    maximum: undefined
+  }, function(params) {
+    var result = isNaN(params.valueToConvert * 1) ?
+        params.defaultValue : params.valueToConvert * 1;
+    if (params.minimum !== undefined) {
+      result = Math.max(params.minimum, result);
     }
-    if (optMax !== undefined) {
-      result = Math.min(optMax, result);
+    if (params.maximum !== undefined) {
+      result = Math.min(params.maximum, result);
     }
     return result;
-  }
+  })
 };
 
 module.exports = apiHelpers;
