@@ -1,6 +1,6 @@
 var React = require('react');
 var PageList = require('../PageList/PageList.jsx');
-
+var shared = require('../../../../shared/shared.js');
 
 var HomePage = React.createClass({
   contextTypes: {
@@ -10,9 +10,8 @@ var HomePage = React.createClass({
     return (
       <div className="home-page">
         Home page!
-        <PageList type="modified" limit="10" />
-        <PageList type="visited" limit="10" />
-        <PageList type="favorites" />
+        <PageList title="Recently Modified Pages" pages={[{id: 5, name: 'asana-org-chart', title: 'Org Chart'}]} />
+        <PageList title="Recently Created Pages" pages={[]} />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var WikiUtils = require('../utils/WikiUtils.js');
 var WikiConstants = require('../constants/WikiConstants.js');
+var shared = require('../../../shared/shared.js');
 
 var apiRootUrl = WikiConstants.BASE_URL + "/_api";
 
@@ -49,6 +50,9 @@ var WikiPageActionCreators = {
       success: WikiConstants.ActionTypes.CREATE_PAGE_SUCCESS,
       failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
     }, action);
+  },
+  requestPages: function() {
+
   }
   // navigatedToNewlyCreatedPage: function() {
   //   return AppDispatcher.dispatch(

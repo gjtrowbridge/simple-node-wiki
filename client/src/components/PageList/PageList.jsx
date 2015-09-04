@@ -1,13 +1,21 @@
 var React = require('react');
+var PagePreviewCard = require('../PagePreviewCard/PagePreviewCard.jsx');
 
 var PageList = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
+  propTypes: {
+    pages: React.PropTypes.array.isRequired,
+    title: React.PropTypes.string.isRequired
   },
   render: function() {
+    var pagePreviewCards = this.props.pages.map(function(page) {
+      return <PagePreviewCard {...page} />;
+    });
     return (
       <div className="page-list">
-        PageList, {this.props.type}
+        <h3>{this.props.title}</h3>
+        <ul>
+          {pagePreviewCards}
+        </ul>
       </div>
     );
   }
