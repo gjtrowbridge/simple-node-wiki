@@ -7,6 +7,7 @@ testAddDefaultParams = function(name, cb) {
     value2: 10,
     requiredValue: shared.constants.IS_REQUIRED
   }, function(parameters) {
+    parameters.context = this;
     return parameters;
   });
 
@@ -74,7 +75,18 @@ testAddDefaultParams('overrides default value if non-required value is provided'
     value1: 12,
     value2: 'Ooga booga'
   });
-  console.log('params', parameters)
   assert.equal(12, parameters.value1);
   assert.equal('Ooga booga', parameters.value2);
+});
+
+testAddDefaultParams('keeps the same context',
+    function(assert, decoratedFunction) {
+  assert.plan(1);
+  var object = {
+    decoratedFunctionAsMethod: decoratedFunction
+  };
+  var parameters = object.decoratedFunctionAsMethod({
+    requiredValue: "blah blah"
+  });
+  assert.deepEqual(object, parameters.context);
 });

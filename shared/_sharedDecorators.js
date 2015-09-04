@@ -37,7 +37,7 @@ sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
 
     var newParameters = {};
     _.extend(newParameters, parametersDefinition, parameters);
-    return func(newParameters);
+    return func.call(this, newParameters);
   }
 };
 
