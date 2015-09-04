@@ -51,13 +51,22 @@ var WikiPageActionCreators = {
       failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
     }, action);
   },
-  requestPages: function() {
-
-  }
-  // navigatedToNewlyCreatedPage: function() {
-  //   return AppDispatcher.dispatch(
-  //       WikiConstants.ActionTypes.NAVIGATED_TO_NEWLY_CREATED_PAGE, {});
-  // }
+  requestPages: shared.decorators.addDefaultParams({
+    offset: 0,
+    limit: 10,
+    orderBy: shared.constants.IS_REQUIRED
+  }, function(params) {
+    var url = apiRootUrl + '/pages?limit='
+        + params.limit + '&offset=' + params.offset;
+    var pagePromise = WikiUtils.requestViaHttpAndReturnPromise(
+        url, 'GET', {});
+    var action = {};
+    return AppDispatcher.dispatchAsync(pagePromise, {
+      request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
+      success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
+      failure: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_FAILURE
+    }, action);
+  })
 };
 
 module.exports = WikiPageActionCreators;
