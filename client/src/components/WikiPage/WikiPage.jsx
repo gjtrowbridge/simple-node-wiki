@@ -5,6 +5,8 @@ var React = require('react');
 var MarkdownEditor = require('../MarkdownEditor/MarkdownEditor.jsx');
 var WikiPageStore = require('../../stores/WikiPageStore.js');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
+var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
+var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 
 var WikiPage = React.createClass({
   propTypes: function() {
@@ -63,23 +65,34 @@ var WikiPage = React.createClass({
     };
     this.savePage(pageData);
   },
+  showEditPageModal: function() {
+    var innerNode = (
+      <WikiPageUrlTitleForm title={this.state.title}
+          wikiPageUrl={this.state.name} wikiPageId={this.state.id} />
+    );
+    AppStateActionCreators.showModal(innerNode);
+  },
   render: function() {
     if (this.state.title !== undefined) {
       document.title = this.state.title;
     }
-    var innerElement;
+    var editor;
+    var editButton;
     if (this.state.text) {
-      innerElement = (
+      editor = (
         <MarkdownEditor markdownText={this.state.text} onChange={this.onEditorChange} />
       );
+      editButton = <button onClick={this.showEditPageModal}>Edit Name & Title</button>;
     } else {
-      innerElement = "Loading...";
+      editor = "Loading...";
+      editButton = "";
     }
     return (
       <div className="wiki-page">
         <h3>{this.props.pageName}</h3>
         {this.state.status}
-        {innerElement}
+        {editor}
+        {editButton}
       </div>
     );
   }

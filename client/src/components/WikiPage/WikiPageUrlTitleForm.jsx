@@ -28,12 +28,20 @@ var WikiPageUrlTitleForm = React.createClass({
       });
     // Edit existing page
     } else {
-
+      WikiPageActionCreators.savePage({
+        id: this.props.wikiPageId,
+        name: this.refs.urlInput.getDOMNode().value,
+        title: this.refs.titleInput.getDOMNode().value,
+        text: "# " + this.refs.titleInput.getDOMNode().value
+      });
     }
   },
   render: function() {
+    var header = this.props.wikiPageId === null ?
+        'Create New Page' : 'Edit Page';
     return (
       <div className="wiki-page-url-title-form">
+        <h3>{header}</h3>
         <label htmlFor="wiki-page-title-input">Title</label>
         <input id="wiki-page-title-input"
             ref="titleInput"
