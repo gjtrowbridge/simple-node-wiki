@@ -140,16 +140,22 @@ var createPageRouter = function(express, db) {
   });
 
   // Search by title
-  pageRouter.get('/search/:keyword/:limit', function(req, res) {
+  pageRouter.get('/search/:keyword', function(req, res) {
     var limit = apiHelpers.convertToIntWithDefault({
-      valueToConvert: req.params.limit,
+      valueToConvert: req.query.limit,
       defaultValue: 10,
       minimum: 1,
       maximum: 20
     });
+    var offset = apiHelpers.convertToIntWithDefault({
+      valueToConvert: req.query.offset,
+      defaultValue: 0,
+      minimum: 0,
+    });
     var likeString = '%' + req.params.keyword + '%';
     Page.findAll({
       limit: limit,
+      offset: offset,
       where: {
         '$or': {
           title: {
