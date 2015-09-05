@@ -1,28 +1,12 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var WikiConstants = require('../constants/WikiConstants.js');
-var EventEmitter = require('events');
-var assign = require('object-assign');
-var _ = require('underscore');
 var WikiPageStore = require('./WikiPageStore.js');
-
+var StoreUtils = require('../utils/StoreUtils.js');
 var ActionTypes = WikiConstants.ActionTypes;
-var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 
 var _pageLists = {};
 
-var PageListStore = assign({}, EventEmitter.prototype, {
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
-
+var PageListStore = StoreUtils.createStore({
   getPageList: function(index) {
     return _pageLists[index];
   },

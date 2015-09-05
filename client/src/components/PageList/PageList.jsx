@@ -9,8 +9,8 @@ var PageList = React.createClass({
   render: function() {
     var pagePreviewCards = this.props.pages.map(function(page) {
       return (
-        <li>
-          <PagePreviewCard {...page} key={page.id} />
+        <li key={page.id}>
+          <PagePreviewCard {...page} />
         </li>
       );
     });

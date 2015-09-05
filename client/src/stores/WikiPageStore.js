@@ -1,11 +1,8 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var WikiConstants = require('../constants/WikiConstants.js');
-var EventEmitter = require('events');
-var assign = require('object-assign');
 var _ = require('underscore');
-
+var StoreUtils = require('../utils/StoreUtils.js');
 var ActionTypes = WikiConstants.ActionTypes;
-var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 
 var _pagesByName = {};
 var _pagesById = {};
@@ -13,19 +10,7 @@ var _pagesById = {};
 // that has not yet been navigated to
 var newlyCreatedPage = null;
 
-var WikiPageStore = assign({}, EventEmitter.prototype, {
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
-
+var WikiPageStore = StoreUtils.createStore({
   getByName: function(name) {
     if (_pagesByName.hasOwnProperty(name)) {
       return _pagesByName[name];
