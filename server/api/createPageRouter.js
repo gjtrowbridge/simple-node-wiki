@@ -139,6 +139,37 @@ var createPageRouter = function(express, db) {
     );
   });
 
+  // Search by title
+  pageRouter.get('/search/:keyword/:limit', function(req, res) {
+    var limit = apiHelpers.convertToIntWithDefault({
+      valueToConvert: req.params.limit,
+      defaultValue: 10,
+      minimum: 1,
+      maximum: 20
+    });
+    var likeString = '%' + req.params.keyword + '%';
+    Page.findAll({
+      limit: limit,
+      where: {
+        '$or': {
+          title: {
+            $like: '%' + req.params.keyword + '%'
+          },
+          text: {
+            $like: '%' + req.params.keyword + '%'
+          }
+        }
+      }
+    }).done(
+      function(pages) {
+        apiHelpers.respondWithDataOrNotFound(req, res, pages);
+      },
+      function(err) {
+        apiHelpers.respondWithError(req, res, err);
+      }
+    );
+  });
+
   return pageRouter;
 };
 
