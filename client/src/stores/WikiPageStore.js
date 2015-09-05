@@ -50,6 +50,16 @@ var WikiPageStore = assign({}, EventEmitter.prototype, {
     newlyCreatedPage = null;
   },
 
+  removePageFromStorage: function(id) {
+    var pageData = WikiPageStore.get(id);
+    var currentPageName = _pagesById[id] === undefined ?
+        undefined : _pagesById[id].name;
+    if (currentPageName !== undefined) {
+      delete _pagesByName[currentPageName];
+    }
+    delete _pagesById[id];
+  },
+
   // Adds page data to the internal storage objects
   // (the added object is indexed by both ID and by name,
   //  if those properties are defined)
@@ -142,6 +152,10 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
         page.status = action.type;
         WikiPageStore._mergeIntoStorage(page);
       });
+      WikiPageStore.emitChange();
+    case ActionTypes.DELETE_PAGE_SUCCESS:
+      var id = action.pageId;
+      WikiPageStore.removePageFromStorage(id);
       WikiPageStore.emitChange();
     default:
       // do nothing

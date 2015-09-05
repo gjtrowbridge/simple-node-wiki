@@ -123,7 +123,20 @@ var createPageRouter = function(express, db) {
 
   // Delete a page
   pageRouter.delete('/:id', function(req, res) {
-    res.status(500).send('Delete not yet implemented');
+    Page.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(page) {
+      return page.destroy();
+    }).done(
+      function(page) {
+        apiHelpers.respondWithDataOrNotFound(req, res, page);
+      },
+      function(err) {
+        apiHelpers.respondWithError(req, res, err);
+      }
+    );
   });
 
   return pageRouter;

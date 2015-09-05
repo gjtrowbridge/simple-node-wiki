@@ -27,6 +27,10 @@ module.exports = {
     CREATE_PAGE_SUCCESS: null,
     CREATE_PAGE_FAILURE: null,
 
+    DELETE_PAGE: null,
+    DELETE_PAGE_SUCCESS: null,
+    DELETE_PAGE_FAILURE: null,
+
     SHOW_MODAL: null,
     HIDE_MODAL: null,
 

@@ -38,7 +38,6 @@ var HomePage = React.createClass({
     this.setState(this.getStateFromStores());
   },
   render: function() {
-    console.log(this.state.recentlyModifiedPageList);
     return (
       <div className="home-page">
         Home page!

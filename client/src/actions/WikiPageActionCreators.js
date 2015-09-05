@@ -81,7 +81,22 @@ var WikiPageActionCreators = {
         pageListType: params.pageListType
       }
     });
-  })
+  }),
+  deletePage: function(pageId) {
+    var url = apiRootUrl + '/pages/' + pageId;
+    return AppDispatcher.dispatchAsync({
+      promise: WikiUtils.requestViaHttpAndReturnPromise(
+          url, 'DELETE', {}),
+      types: {
+        request: WikiConstants.ActionTypes.DELETE_PAGE,
+        success: WikiConstants.ActionTypes.DELETE_PAGE_SUCCESS,
+        failure: WikiConstants.ActionTypes.DELETE_PAGE_FAILURE
+      },
+      action: {
+        pageId: pageId
+      }
+    });
+  }
 };
 
 module.exports = WikiPageActionCreators;

@@ -72,20 +72,26 @@ var WikiPage = React.createClass({
     );
     AppStateActionCreators.showModal(innerNode);
   },
+  deletePage: function() {
+    WikiPageActionCreators.deletePage(this.state.id);
+  },
   render: function() {
     if (this.state.title !== undefined) {
       document.title = this.state.title;
     }
     var editor;
     var editButton;
-    if (this.state.text) {
+    var deleteButton;
+    if (this.state.text !== undefined) {
       editor = (
         <MarkdownEditor markdownText={this.state.text} onChange={this.onEditorChange} />
       );
       editButton = <button onClick={this.showEditPageModal}>Edit Name & Title</button>;
+      deleteButton = <button onClick={this.deletePage}>Delete Page</button>;
     } else {
       editor = "Loading...";
       editButton = "";
+      deleteButton = "";
     }
     return (
       <div className="wiki-page">
@@ -93,6 +99,7 @@ var WikiPage = React.createClass({
         {this.state.status}
         {editor}
         {editButton}
+        {deleteButton}
       </div>
     );
   }

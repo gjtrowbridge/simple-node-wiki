@@ -34,7 +34,6 @@ var PageListStore = assign({}, EventEmitter.prototype, {
 
 PageListStore.dispatchToken = AppDispatcher.register(function(action) {
   AppDispatcher.waitFor([WikiPageStore.dispatchToken]);
-  console.log('page list store action', action.type);
   switch (action.type) {
     case ActionTypes.REQUEST_PAGE_LIST_SUCCESS:
       var pageList = action.data;
