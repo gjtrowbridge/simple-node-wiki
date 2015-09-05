@@ -4,6 +4,9 @@ var shared = require('../../../shared/shared.js');
 var flux = new Dispatcher();
 
 module.exports = {
+  waitFor: function(ids) {
+    return flux.waitFor(ids);
+  },
   register: function(callback) {
     return flux.register(callback);
   },

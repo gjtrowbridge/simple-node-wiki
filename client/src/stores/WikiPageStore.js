@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var WikiConstants = require('../constants/WikiConstants.js');
 var EventEmitter = require('events');
 var assign = require('object-assign');
+var _ = require('underscore');
 
 var ActionTypes = WikiConstants.ActionTypes;
 var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
@@ -135,6 +136,13 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       break;
     case ActionTypes.CREATE_PAGE_FAILURE:
       break;
+    case ActionTypes.REQUEST_PAGE_LIST_SUCCESS:
+      var pages = action.data;
+      _.each(pages, function(page) {
+        page.status = action.type;
+        WikiPageStore._mergeIntoStorage(page);
+      });
+      WikiPageStore.emitChange();
     default:
       // do nothing
   };

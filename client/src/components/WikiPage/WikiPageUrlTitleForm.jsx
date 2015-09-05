@@ -28,11 +28,10 @@ var WikiPageUrlTitleForm = React.createClass({
       });
     // Edit existing page
     } else {
-      
+
     }
   },
   render: function() {
-    console.log('rendering');
     return (
       <div className="wiki-page-url-title-form">
         <label htmlFor="wiki-page-title-input">Title</label>

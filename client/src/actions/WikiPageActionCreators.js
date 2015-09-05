@@ -64,16 +64,22 @@ var WikiPageActionCreators = {
   requestPageList: shared.decorators.addDefaultParams({
     offset: 0,
     limit: 10,
-    orderBy: shared.constants.IS_REQUIRED
+    pageListType: shared.constants.IS_REQUIRED
   }, function(params) {
     var url = apiRootUrl + '/pages?limit='
-        + params.limit + '&offset=' + params.offset;
-    var pagePromise = WikiUtils.requestViaHttpAndReturnPromise(
-        url, 'GET', {});
+        + params.limit + '&offset=' + params.offset
+        + '&listType=' + params.pageListType;
     return AppDispatcher.dispatchAsync({
-      promise: createPagePromise,
-      types: types,
-      action: {}
+      promise: WikiUtils.requestViaHttpAndReturnPromise(
+          url, 'GET', {}),
+      types: {
+        request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
+        success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
+        failure: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_FAILURE
+      },
+      action: {
+        pageListType: params.pageListType
+      }
     });
   })
 };

@@ -15,6 +15,10 @@ module.exports = {
     REQUEST_PAGE_SUCCESS: null,
     REQUEST_PAGE_FAILURE: null,
 
+    REQUEST_PAGE_LIST: null,
+    REQUEST_PAGE_LIST_SUCCESS: null,
+    REQUEST_PAGE_LIST_FAILURE: null,
+
     SAVE_PAGE: null,
     SAVE_PAGE_SUCCESS: null,
     SAVE_PAGE_FAILURE: null,

@@ -34,11 +34,11 @@ var createPageRouter = function(express, db) {
       minimum: 0
     });
 
-    var orderBy = req.query.orderBy;
+    var listType = req.query.listType;
     var order;
-    if (orderBy === shared.constants.ORDER_BY_CREATED) {
+    if (listType === shared.constants.ORDER_BY_CREATED) {
       order = [['createdAt', 'DESC']];
-    } else if (orderBy === shared.constants.ORDER_BY_MODIFIED) {
+    } else if (listType === shared.constants.ORDER_BY_MODIFIED) {
       order = [['updatedAt', 'DESC']];
     } else {
       order = [];
