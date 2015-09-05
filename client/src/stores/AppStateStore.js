@@ -1,29 +1,14 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var WikiConstants = require('../constants/WikiConstants.js');
-var EventEmitter = require('events');
-var assign = require('object-assign');
 var AppStateActionCreators = require('../actions/AppStateActionCreators.js');
-
+var StoreUtils = require('../utils/StoreUtils.js');
 var ActionTypes = WikiConstants.ActionTypes;
-var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 
 var activeModalInnerNode = null;
 var activeNotifications = [];
 var nextNotificationId = 1;
 
-var AppStateStore = assign({}, EventEmitter.prototype, {
-  emitChange: function() {
-    this.emit(CHANGE_EVENT);
-  },
-
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
-
+var AppStateStore = StoreUtils.createStore({
   activeModalInnerNode: function() {
     return activeModalInnerNode;
   },

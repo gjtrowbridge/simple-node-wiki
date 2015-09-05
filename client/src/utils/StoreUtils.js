@@ -1,5 +1,8 @@
 var shared = require('../../../shared/shared.js');
 var assign = require('object-assign');
+var ActionTypes = require('../constants/WikiConstants.js').ActionTypes;
+var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
+var EventEmitter = require('events');
 
 var storeUtils = {
   createStore: function(spec) {
@@ -13,8 +16,8 @@ var storeUtils = {
       removeChangeListener: function(callback) {
         this.removeListener(CHANGE_EVENT, callback);
       },
-      mergeObjectIntoStorage: shared.decorators.addDefaultParams({
-        storage: shared.constants.IS_REQUIRED,
+      mergeObjectIntoHash: shared.decorators.addDefaultParams({
+        hash: shared.constants.IS_REQUIRED,
         index: shared.constants.IS_REQUIRED,
         newDataObject: shared.constants.IS_REQUIRED,
         deleteExistingBeforeMerge: false
@@ -24,12 +27,12 @@ var storeUtils = {
           throw 'newDataObject must be an object!';
         }
         if (params.deleteExistingBeforeMerge) {
-          delete params.storage[params.index];
+          delete params.hash[params.index];
         }
-        var existingDataObject = params.storage[params.index] || {};
+        var existingDataObject = params.hash[params.index] || {};
         var newDataObject = assign(existingDataObject, params.newDataObject);
-        params.storage[params.index] = newDataObject;
-      });
+        params.hash[params.index] = newDataObject;
+      })
     }, spec);
   }
 };
