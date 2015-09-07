@@ -17,13 +17,13 @@ var Nav = React.createClass({
     return (
       <nav className="nav" id={id}>
         <div className="nav-item">
-          <Link to={"/"} className="fill-and-center">Home</Link>
+          <Link to={"/"} className="layout-fill-and-center">Home</Link>
         </div>
         <div className="nav-item">
           <SearchBar />
         </div>
         <div className="nav-item">
-          <button className="btn btn-unobtrusive fill-and-center"
+          <button className="btn btn-unobtrusive layout-fill-and-center"
               onClick={this.showCreatePageModal}>+ New Page</button>
         </div>
       </nav>

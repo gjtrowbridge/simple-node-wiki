@@ -7,14 +7,19 @@ var React = require('react');
 
 var DisplayBox = React.createClass({
   propTypes: {
-    sanitizedHtml: React.PropTypes.string.isRequired
+    sanitizedHtml: React.PropTypes.string.isRequired,
+    extraClasses: React.PropTypes.array
   },
   render: function() {
+    var classes = ['box', 'display-box'];
+    if (this.props.extraClasses) {
+      classes = classes.concat(this.props.extraClasses);
+    }
     var dangerousHtml = {
       __html: this.props.sanitizedHtml
     };
     return (
-      <div className="display-box"
+      <div className={classes.join(' ')}
           dangerouslySetInnerHTML={dangerousHtml} />
     );
   }

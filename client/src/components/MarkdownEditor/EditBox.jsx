@@ -9,12 +9,12 @@ var EditBox = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
     markdownText: React.PropTypes.string.isRequired,
-    hidden: React.PropTypes.bool.isRequired
+    extraClasses: React.PropTypes.array
   },
   render: function() {
-    var classes = ['edit-box'];
-    if (this.props.hidden) {
-      classes.push('hidden');
+    var classes = ['box', 'edit-box'];
+    if (this.props.extraClasses) {
+      classes = classes.concat(this.props.extraClasses);
     }
     return (
       <div className={classes.join(' ')}>

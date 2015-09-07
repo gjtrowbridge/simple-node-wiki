@@ -21,11 +21,21 @@ var MarkdownEditor = React.createClass({
     return marked(markdown, {sanitize: true});
   },
   render: function() {
+    var editBoxExtraClasses;
+    var displayBoxExtraClasses;
+    if (this.props.viewMode) {
+      editBoxExtraClasses = ['hidden'];
+      displayBoxExtraClasses = ['layout-col-1-1'];
+    } else {
+      editBoxExtraClasses = ['layout-col-1-2'];
+      displayBoxExtraClasses = ['layout-col-1-2'];
+    }
     return (
       <div className="markdown-editor">
-        <EditBox hidden={this.props.viewMode} markdownText={this.props.markdownText}
+        <EditBox extraClasses={editBoxExtraClasses} markdownText={this.props.markdownText}
             onChange={this.props.onChange} />
-        <DisplayBox sanitizedHtml={this.markdownToHtml(this.props.markdownText)} />
+        <DisplayBox extraClasses={displayBoxExtraClasses}
+            sanitizedHtml={this.markdownToHtml(this.props.markdownText)} />
       </div>
     );
   }
