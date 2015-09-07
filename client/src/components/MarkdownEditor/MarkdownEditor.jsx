@@ -3,8 +3,8 @@
   showing the resulting html.
 */
 var React = require('react');
-var EditBox = require('../EditBox/EditBox.jsx');
-var DisplayBox = require('../DisplayBox/DisplayBox.jsx');
+var EditBox = require('./EditBox.jsx');
+var DisplayBox = require('./DisplayBox.jsx');
 var marked = require('marked');
 
 var MarkdownEditor = React.createClass({
