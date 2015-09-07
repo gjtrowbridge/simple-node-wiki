@@ -40,9 +40,19 @@ var HomePage = React.createClass({
   render: function() {
     return (
       <div className="home-page">
-        Home page!
+        <p>Welcome to the "personal wiki" application.</p>
+        <p>
+          Create new pages by clicking "+ New Page" in the top right,
+          or find existing pages using the search box or the lists
+          below.
+        </p>
         <PageList title="Recently Modified Pages" pages={this.state.recentlyModifiedPageList} />
         <PageList title="Recently Created Pages" pages={this.state.recentlyCreatedPageList} />
+        <p>
+          To learn more about this application or make suggestions,
+          check out the github page
+          <a target="_blank" href="https://github.com/gjtrowbridge/simple-node-wiki"> here</a>
+        </p>
       </div>
     );
   }
