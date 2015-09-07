@@ -12,11 +12,19 @@ var Nav = React.createClass({
     AppStateActionCreators.showModal(innerNode);
   },
   render: function() {
+    var id = this.props.id !== undefined ?
+        this.props.id : ""
     return (
-      <nav className="nav">
-        <Link to={"/"}>Home</Link>
-        <SearchBar />
-        <button onClick={this.showCreatePageModal}>+ New Page</button>
+      <nav className="nav" id={id}>
+        <div className="nav-item">
+          <Link to={"/"}>Home</Link>
+        </div>
+        <div className="nav-item">
+          <SearchBar />
+        </div>
+        <div className="nav-item">
+          <button onClick={this.showCreatePageModal}>+ New Page</button>
+        </div>
       </nav>
     );
   }
