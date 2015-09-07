@@ -6,6 +6,7 @@ var ActionTypes = WikiConstants.ActionTypes;
 
 var _pagesByName = {};
 var _pagesById = {};
+var _viewMode = true;
 // Stores a recently created page
 // that has not yet been navigated to
 var newlyCreatedPage = null;
@@ -43,6 +44,14 @@ var WikiPageStore = StoreUtils.createStore({
       delete _pagesByName[currentPageName];
     }
     delete _pagesById[id];
+  },
+
+  setViewMode: function(isEnabled) {
+    _viewMode = isEnabled;
+  },
+  
+  getViewMode: function() {
+    return _viewMode;
   },
 
   // Adds page data to the internal storage objects
@@ -138,10 +147,16 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
         WikiPageStore._mergeIntoStorage(page);
       });
       WikiPageStore.emitChange();
+      break;
     case ActionTypes.DELETE_PAGE_SUCCESS:
       var id = action.pageId;
       WikiPageStore.removePageFromStorage(id);
       WikiPageStore.emitChange();
+      break;
+    case ActionTypes.SET_VIEW_MODE:
+      WikiPageStore.setViewMode(action.isEnabled);
+      WikiPageStore.emitChange();
+      break;
     default:
       // do nothing
   };

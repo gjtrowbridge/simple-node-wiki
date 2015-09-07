@@ -120,6 +120,11 @@ var WikiPageActionCreators = {
         pageId: pageId
       }
     });
+  },
+  setViewMode: function(isEnabled) {
+    return AppDispatcher.dispatch(WikiConstants.ActionTypes.SET_VIEW_MODE, {
+      isEnabled: isEnabled
+    });
   }
 };
 

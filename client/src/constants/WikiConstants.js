@@ -35,6 +35,8 @@ module.exports = {
     HIDE_MODAL: null,
 
     SHOW_NOTIFICATION: null,
-    HIDE_NOTIFICATION: null
+    HIDE_NOTIFICATION: null,
+
+    SET_VIEW_MODE: null
   })
 };

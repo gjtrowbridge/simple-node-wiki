@@ -9,8 +9,6 @@ var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 
-
-
 var WikiPage = React.createClass({
   propTypes: function() {
     pageName: React.PropTypes.string.isRequired
@@ -18,8 +16,10 @@ var WikiPage = React.createClass({
   getStateFromStores: function(overridePageName) {
     var pageName = overridePageName !== undefined ?
         overridePageName : this.props.pageName;
-    var stateFromStores = WikiPageStore.getByName(pageName);
-    return stateFromStores === null ? {} : stateFromStores;
+    var result = WikiPageStore.getByName(pageName);
+    result = result === null ? {} : result;
+    result.viewMode = WikiPageStore.getViewMode();
+    return result;
   },
   getInitialState: function() {
     return this.getStateFromStores();
@@ -75,6 +75,10 @@ var WikiPage = React.createClass({
     );
     AppStateActionCreators.showModal(innerNode);
   },
+  onChangeViewModeToggle: function(e) {
+    var viewModeEnabled = !e.target.checked;
+    WikiPageActionCreators.setViewMode(viewModeEnabled);
+  },
   deletePage: function() {
     WikiPageActionCreators.deletePage(this.state.id);
   },
@@ -89,11 +93,12 @@ var WikiPage = React.createClass({
     if (this.state.text !== undefined) {
       editor = (
         <MarkdownEditor markdownText={this.state.text}
-            onChange={this.onEditorChange} viewMode={false} />
+            onChange={this.onEditorChange} viewMode={this.state.viewMode} />
       );
       editButton = <button onClick={this.showEditPageModal}>Edit Name & Title</button>;
       deleteButton = <button onClick={this.deletePage}>Delete Page</button>;
-      viewModeToggle = <OnOffSwitch onText="EDIT" offText="VIEW" />;
+      viewModeToggle = <OnOffSwitch onText="EDIT" offText="VIEW"
+          onChange={this.onChangeViewModeToggle} defaultChecked={this.state.viewMode} />;
     } else {
       editor = "Loading...";
       editButton = "";
@@ -102,8 +107,8 @@ var WikiPage = React.createClass({
     }
     return (
       <div className="wiki-page">
-        <h3>{this.props.pageName}</h3>
-        {this.state.status}
+        { /* <h3>{this.props.pageName}</h3> */}
+        { /* {this.state.status} */}
         {viewModeToggle}
         {editor}
         {editButton}

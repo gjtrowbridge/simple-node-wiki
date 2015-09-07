@@ -10,18 +10,20 @@ var React = require('react');
 var OnOffSwitch = React.createClass({
   propTypes: {
     onText: React.PropTypes.string,
-    offText: React.PropTypes.string
+    offText: React.PropTypes.string,
+    onChange: React.PropTypes.func
   },
   getDefaultProps: function() {
     return {
       onText: 'On',
-      offText: 'Off'
+      offText: 'Off',
+      onChange: function() {}
     }
   },
   render: function() {
     return (
       <div className="onoffswitch">
-        <input type="checkbox" name="onoffswitch"
+        <input type="checkbox" name="onoffswitch" onChange={this.props.onChange}
             className="onoffswitch-checkbox" id="myonoffswitch" />
         <label className="onoffswitch-label" htmlFor="myonoffswitch">
           <span className="onoffswitch-inner"
