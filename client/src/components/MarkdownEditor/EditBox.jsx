@@ -18,7 +18,8 @@ var EditBox = React.createClass({
     }
     return (
       <div className={classes.join(' ')}>
-        <textarea onChange={this.props.onChange} value={this.props.markdownText}>
+        <textarea className="edit-box-input"
+            onChange={this.props.onChange} value={this.props.markdownText}>
         </textarea>
       </div>
     );
