@@ -70,10 +70,8 @@ var App = React.createClass({
     return (
       <div className={"app" + this.modalIsOpen() ? " open-modal" : ""}>
         {this.renderModal()}
-        <div id="header">
-          {this.renderNotificationTopBar()}
-          <Nav />
-        </div>
+        {this.renderNotificationTopBar()}
+        <Nav id="main-navigation" />
         <div id="main-content">
           <RouteHandler {...params} />
         </div>
