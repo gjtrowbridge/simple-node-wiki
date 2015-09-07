@@ -23,7 +23,7 @@ var MarkdownEditor = React.createClass({
   render: function() {
     return (
       <div className="markdown-editor">
-        <EditBox hidden={!this.props.viewMode} markdownText={this.props.markdownText}
+        <EditBox hidden={this.props.viewMode} markdownText={this.props.markdownText}
             onChange={this.props.onChange} />
         <DisplayBox sanitizedHtml={this.markdownToHtml(this.props.markdownText)} />
       </div>
