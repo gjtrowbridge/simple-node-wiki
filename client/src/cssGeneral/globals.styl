@@ -14,6 +14,16 @@ border-radius()
 box-shadow()
   vendor('box-shadow', arguments)
 
+centerVertically()
+  position: relative
+  top: 50%
+  vendor('transform', translateY(-50%))
+  
+centerHorizontally(width)
+  width: width
+  margin-left: auto
+  margin-right: auto
+
 $gray = rgb(215, 215, 215)
 background-color = rgb(245, 245, 245)
 header-background-color = rgb(230, 230, 230)
