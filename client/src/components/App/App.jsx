@@ -9,6 +9,7 @@ var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
 var Modal = require('../Modal/Modal.jsx');
+var Footer = require('../Footer/Footer.jsx');
 
 var App = React.createClass({
   contextTypes: {
@@ -68,10 +69,15 @@ var App = React.createClass({
     var params = this.context.router.getCurrentParams();
     return (
       <div className={"app" + this.modalIsOpen() ? " open-modal" : ""}>
-        {this.renderNotificationTopBar()}
         {this.renderModal()}
-        <Nav />
-        <RouteHandler {...params} />
+        <div id="header">
+          {this.renderNotificationTopBar()}
+          <Nav />
+        </div>
+        <div id="main-content">
+          <RouteHandler {...params} />
+        </div>
+        <Footer />
       </div>
     );
   }
