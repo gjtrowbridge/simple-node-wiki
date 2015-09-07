@@ -30,7 +30,7 @@ var SearchBar = React.createClass({
   render: function() {
     var searchResults = this.state.searchResults.map(function(page) {
       return (
-        <li key={page.id}>
+        <li className="search-result" key={page.id}>
           <PagePreviewCard {...page} />
         </li>
       );

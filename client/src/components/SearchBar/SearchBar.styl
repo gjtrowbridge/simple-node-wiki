@@ -1,7 +1,13 @@
 
 .search-bar
-  display: inline-block
-  
+  position: relative
+  & > .search-results
+    position: absolute
+    padding: 0
+    margin: 0
+    & > .search-result
+      padding: 5px
+    
   & > input[type=search]
     border-radius(5px)
     border: solid 2px $gray
