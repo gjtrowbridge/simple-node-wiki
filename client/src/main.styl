@@ -1,59 +1,17 @@
-@require '../../node_modules/normalize.css/normalize.css'
+/* 
+  CSS in this app attempts to follow SMACSS guidelines
+  More info here: https://smacss.com
+  Note: Emphasis on *attempts*: no guarantees that I get this right :)
+*/
+
+@require './cssGeneral/base.styl'
+@require './cssGeneral/layout.styl'
+
+
 
 /*
-background-color = #b3d5f3;
-standard-border = 4px;
-
-*,
-*:before,
-*:after {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-centerVertically() {
-  position: relative;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-columnize(width) {
-  display: inline-block;
-  vertical-align: top;
-  width: width;
-}
-
-hide() {
-  display: none;
-}
-
-.col-1-1 {
-  columnize(100%);
-}
-
-.col-1-2 {
-  columnize(50%);
-}
-
-.col-1-4 {
-  columnize(25%);
-}
-
-.vertical-center {
-  centerVertically()
-}
-
-.horizontal-center {
-  margin:auto;
-  display:block;
-}
-
-.hidden {
-  hide();
-}
+@require './components/Nav/Nav.styl'
+@require './components/SearchBar/SearchBar.styl'
 
 @require './components/HomePage/HomePage.styl'
 @require './components/Page/Page.styl'
