@@ -28,7 +28,6 @@ var SearchBar = React.createClass({
     });
   },
   render: function() {
-    console.log(this.state);
     var searchResults = this.state.searchResults.map(function(page) {
       return (
         <li key={page.id}>
