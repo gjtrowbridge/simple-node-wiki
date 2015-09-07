@@ -3,10 +3,13 @@
 */
 var React = require('react');
 var MarkdownEditor = require('../MarkdownEditor/MarkdownEditor.jsx');
+var OnOffSwitch = require('../OnOffSwitch/OnOffSwitch.jsx');
 var WikiPageStore = require('../../stores/WikiPageStore.js');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+
+
 
 var WikiPage = React.createClass({
   propTypes: function() {
@@ -82,21 +85,26 @@ var WikiPage = React.createClass({
     var editor;
     var editButton;
     var deleteButton;
+    var viewModeToggle;
     if (this.state.text !== undefined) {
       editor = (
-        <MarkdownEditor markdownText={this.state.text} onChange={this.onEditorChange} />
+        <MarkdownEditor markdownText={this.state.text}
+            onChange={this.onEditorChange} viewMode={false} />
       );
       editButton = <button onClick={this.showEditPageModal}>Edit Name & Title</button>;
       deleteButton = <button onClick={this.deletePage}>Delete Page</button>;
+      viewModeToggle = <OnOffSwitch onText="EDIT" offText="VIEW" />;
     } else {
       editor = "Loading...";
       editButton = "";
       deleteButton = "";
+      viewModeToggle = "";
     }
     return (
       <div className="wiki-page">
         <h3>{this.props.pageName}</h3>
         {this.state.status}
+        {viewModeToggle}
         {editor}
         {editButton}
         {deleteButton}

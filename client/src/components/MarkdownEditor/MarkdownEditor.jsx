@@ -10,7 +10,10 @@ var marked = require('marked');
 var MarkdownEditor = React.createClass({
   propTypes: {
     markdownText: React.PropTypes.string.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    // If enabled, shows only the display box
+    // Otherwise shows both the display and edit boxes
+    viewMode: React.PropTypes.bool.isRequired
   },
   // This is used to sanitize raw user-inputted
   // markdown and convert it to HTML
@@ -20,7 +23,7 @@ var MarkdownEditor = React.createClass({
   render: function() {
     return (
       <div className="markdown-editor">
-        <EditBox markdownText={this.props.markdownText}
+        <EditBox hidden={!this.props.viewMode} markdownText={this.props.markdownText}
             onChange={this.props.onChange} />
         <DisplayBox sanitizedHtml={this.markdownToHtml(this.props.markdownText)} />
       </div>
