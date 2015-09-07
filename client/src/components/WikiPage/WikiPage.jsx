@@ -67,8 +67,8 @@ var WikiPage = React.createClass({
   },
   showEditPageModal: function() {
     var innerNode = (
-      <WikiPageUrlTitleForm title={this.state.title}
-          wikiPageUrl={this.state.name} wikiPageId={this.state.id} />
+      <WikiPageUrlTitleForm wikiPageTitle={this.state.title} wikiPageUrl={this.state.name}
+        wikiPageId={this.state.id} wikiPageText={this.state.text} />
     );
     AppStateActionCreators.showModal(innerNode);
   },
