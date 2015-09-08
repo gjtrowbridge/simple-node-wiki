@@ -1,5 +1,6 @@
 var React = require('react');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+var CloseButton = require('../CloseButton/CloseButton.jsx');
 
 var Notification = React.createClass({
   PropTypes: {
@@ -13,7 +14,7 @@ var Notification = React.createClass({
     return (
       <li className="notification">
         {this.props.text}
-        <span onClick={this.remove}>X</span>
+        <CloseButton onClick={this.remove} />
       </li>
     );
   }

@@ -1,6 +1,7 @@
 var React = require('react');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 var AreaDisabler = require('../AreaDisabler/AreaDisabler.jsx');
+var CloseButton = require('../CloseButton/CloseButton.jsx');
 
 var Modal = React.createClass({
   PropTypes: {
@@ -9,7 +10,7 @@ var Modal = React.createClass({
   render: function() {
     return (
       <div className="modal">
-        <div className="close-modal" onClick={AppStateActionCreators.hideModal}>x</div>
+        <CloseButton onClick={AppStateActionCreators.hideModal} />
         <div className="modal-inner-node">
           {this.props.innerNode}
         </div>
