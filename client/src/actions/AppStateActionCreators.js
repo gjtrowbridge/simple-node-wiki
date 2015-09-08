@@ -31,6 +31,10 @@ var AppStateActionCreators = {
     return AppDispatcher.dispatch(WikiConstants.ActionTypes.TOGGLE_SEARCH_RESULTS, {
       enableSearchResults: enableSearchResults
     });
+  },
+
+  pageTransition: function(params) {
+    return AppDispatcher.dispatch(WikiConstants.ActionTypes.PAGE_TRANSITION, params);
   }
 };
 

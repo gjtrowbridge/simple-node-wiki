@@ -39,6 +39,8 @@ module.exports = {
 
     SET_VIEW_MODE: null,
 
-    TOGGLE_SEARCH_RESULTS: null
+    TOGGLE_SEARCH_RESULTS: null,
+
+    PAGE_TRANSITION: null
   })
 };
