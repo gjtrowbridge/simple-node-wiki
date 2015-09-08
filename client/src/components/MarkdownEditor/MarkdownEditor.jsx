@@ -17,9 +17,13 @@ marked.setOptions({
 // Used in markdownToHtml to add a missing class
 // to highlighted code blocks
 // This is necessary for highlight.js's css to work
-var _codeBlockRegex = /(<code class=\"lang-[a-zA-Z]+)(\">)/g;
-var _codeBlockReplacer = function(match, p1, p2) {
-  return p1 + ' hljs' + p2;
+var _codeBlockRegex = /(<code)( class="[a-zA-Z-]+)?(")?(>)/g;
+var _codeBlockReplacer = function(match, p1, p2, p3, p4) {
+  if (p2 === undefined) {
+    return p1 + ' class="hljs"' + p4;
+  } else {
+    return p1 + p2 + ' hljs' + p3 + p4;
+  }
 };
 
 var MarkdownEditor = React.createClass({
