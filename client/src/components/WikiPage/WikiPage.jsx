@@ -98,7 +98,7 @@ var WikiPage = React.createClass({
       editButton = <button onClick={this.showEditPageModal}>Edit Name & Title</button>;
       deleteButton = <button onClick={this.deletePage}>Delete Page</button>;
       viewModeToggle = <OnOffSwitch onText="EDIT MODE" offText="VIEW MODE"
-          onChange={this.onChangeViewModeToggle} defaultChecked={this.state.viewMode} />;
+          onChange={this.onChangeViewModeToggle} defaultChecked={!this.state.viewMode} />;
     } else {
       editor = "Loading...";
       editButton = "";

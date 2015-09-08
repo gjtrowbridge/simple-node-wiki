@@ -11,7 +11,8 @@ var OnOffSwitch = React.createClass({
   propTypes: {
     onText: React.PropTypes.string,
     offText: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    defaultChecked: React.PropTypes.bool.isRequired
   },
   getDefaultProps: function() {
     return {
@@ -24,7 +25,8 @@ var OnOffSwitch = React.createClass({
     return (
       <div className="onoffswitch">
         <input type="checkbox" name="onoffswitch" onChange={this.props.onChange}
-            className="onoffswitch-checkbox" id="myonoffswitch" />
+            className="onoffswitch-checkbox" id="myonoffswitch"
+            defaultChecked={this.props.defaultChecked} />
         <label className="onoffswitch-label" htmlFor="myonoffswitch">
           <span className="onoffswitch-inner"
               data-on-text={this.props.onText}
