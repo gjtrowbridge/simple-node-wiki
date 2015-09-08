@@ -10,6 +10,7 @@ var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
 var Modal = require('../Modal/Modal.jsx');
 var Footer = require('../Footer/Footer.jsx');
+var AreaDisabler = require('../AreaDisabler/AreaDisabler.jsx');
 
 var App = React.createClass({
   contextTypes: {
@@ -53,7 +54,7 @@ var App = React.createClass({
     }
   },
   modalIsOpen: function() {
-    return this.state.modalInnerNode;
+    return !!this.state.modalInnerNode;
   },
   navigateIfNecessary: function(newlyCreatedPage) {
     if (newlyCreatedPage !== null) {
@@ -68,14 +69,17 @@ var App = React.createClass({
   render: function() {
     var params = this.context.router.getCurrentParams();
     return (
-      <div className={"app" + this.modalIsOpen() ? " open-modal" : ""}>
+      <div className='app'>
         {this.renderModal()}
-        {this.renderNotificationTopBar()}
-        <Nav id="main-navigation" />
-        <div id="main-content">
-          <RouteHandler {...params} />
+        <div className={this.modalIsOpen() ? "open-modal" : ""}>
+          <AreaDisabler shouldDisableClicks={this.modalIsOpen()} /> 
+          {this.renderNotificationTopBar()}
+          <Nav id="main-navigation" />
+          <div id="main-content">
+            <RouteHandler {...params} />
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
     );
   }

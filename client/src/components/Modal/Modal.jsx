@@ -1,5 +1,6 @@
 var React = require('react');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+var AreaDisabler = require('../AreaDisabler/AreaDisabler.jsx');
 
 var Modal = React.createClass({
   PropTypes: {
@@ -8,8 +9,10 @@ var Modal = React.createClass({
   render: function() {
     return (
       <div className="modal">
-        {this.props.innerNode}
         <span onClick={AppStateActionCreators.hideModal}>X</span>
+        <div className="modal-inner-node">
+          {this.props.innerNode}
+        </div>
       </div>
     );
   }
