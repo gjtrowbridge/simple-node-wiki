@@ -95,24 +95,29 @@ var WikiPage = React.createClass({
         <MarkdownEditor markdownText={this.state.text}
             onChange={this.onEditorChange} viewMode={this.state.viewMode} />
       );
-      editButton = <button onClick={this.showEditPageModal}>Edit Name & Title</button>;
-      deleteButton = <button onClick={this.deletePage}>Delete Page</button>;
       viewModeToggle = <OnOffSwitch onText="EDIT MODE" offText="VIEW MODE"
           onChange={this.onChangeViewModeToggle} defaultChecked={!this.state.viewMode} />;
+      editButton = <button className="btn"
+          onClick={this.showEditPageModal}>Edit Name & Title</button>;
+      deleteButton = <button className="btn"
+          onClick={this.deletePage}>Delete Page</button>;
     } else {
-      editor = "Loading...";
-      editButton = "";
-      deleteButton = "";
-      viewModeToggle = "";
+      editor = 'Loading...';
+      editButton = '';
+      deleteButton = '';
+      viewModeToggle = '';
     }
+
     return (
       <div className="wiki-page">
         { /* <h3>{this.props.pageName}</h3> */}
         { /* {this.state.status} */}
         {viewModeToggle}
         {editor}
-        {editButton}
-        {deleteButton}
+        <div className={this.state.viewMode ? "hidden" : "edit-buttons layout-col-1-2"}>
+          {editButton}
+          {deleteButton}
+        </div>
       </div>
     );
   }
