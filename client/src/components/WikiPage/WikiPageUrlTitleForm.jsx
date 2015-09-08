@@ -47,17 +47,22 @@ var WikiPageUrlTitleForm = React.createClass({
     return (
       <div className="wiki-page-url-title-form">
         <h3>{header}</h3>
-        <label htmlFor="wiki-page-title-input">Title</label>
+        <label className="wiki-page-url-title-form-label"
+            htmlFor="wiki-page-title-input">Title</label>
         <input id="wiki-page-title-input"
+            className="wiki-page-url-title-form-input"
             ref="titleInput"
             placeholder="Enter Title"
             defaultValue={this.props.wikiPageTitle} />
-        <label htmlFor="wiki-page-url-input">Page URL</label>
+        <label className="wiki-page-url-title-form-label"
+            htmlFor="wiki-page-url-input">Page URL</label>
         <input id="wiki-page-url-input"
+            className="wiki-page-url-title-form-input"
             ref="urlInput"
             placeholder="Enter URL"
             defaultValue={this.props.wikiPageUrl} />
-        <button onClick={this.sendPageToServer}>
+        <button className="btn wiki-page-url-title-form-btn"
+            onClick={this.sendPageToServer}>
           {this.props.wikiPageId === null ? 'Create' : 'Update'} Page
         </button>
       </div>
