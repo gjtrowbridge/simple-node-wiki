@@ -1,6 +1,8 @@
 var React = require('react');
 var PageListStore = require('../../stores/PageListStore.js');
+var AppStateStore = require('../../stores/AppStateStore.js');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
+var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
 var PagePreviewCard = require('../PagePreviewCard/PagePreviewCard.jsx');
 var shared = require('../../../../shared/shared.js');
 
@@ -10,13 +12,16 @@ var SearchBar = React.createClass({
   },
   componentDidMount: function() {
     PageListStore.addChangeListener(this._onChange);
+    AppStateStore.addChangeListener(this._onChange);
   },
   componentWillUnmount: function() {
     PageListStore.removeChangeListener(this._onChange);
+    AppStateStore.removeChangeListener(this._onChange);
   },
   getStateFromStores: function() {
     return {
-      searchResults: PageListStore.getPageList(shared.constants.SEARCH) || []
+      searchResults: PageListStore.getPageList(shared.constants.SEARCH) || [],
+      searchResultsAreEnabled: AppStateStore.searchResultsAreEnabled()
     };
   },
   _onChange: function() {
@@ -27,6 +32,12 @@ var SearchBar = React.createClass({
       searchTerm: e.target.value
     });
   },
+  disableSearchResults: function() {
+    AppStateActionCreators.toggleSearchResults(false);
+  },
+  enableSearchResults: function() {
+    AppStateActionCreators.toggleSearchResults(true);
+  },
   render: function() {
     var searchResults = this.state.searchResults.map(function(page) {
       return (
@@ -35,10 +46,14 @@ var SearchBar = React.createClass({
         </li>
       );
     });
+    var searchResultsClasses = ['search-results'];
+    if (!this.state.searchResultsAreEnabled) {
+      searchResultsClasses.push('hidden');
+    }
     return (
-      <div className="search-bar">
+      <div className="search-bar" onFocus={this.enableSearchResults} onBlur={this.disableSearchResults} >
         <input onChange={this.search} type="search" placeholder="Enter Search Term" />
-        <ul className="search-results">
+        <ul className={searchResultsClasses.join(' ')}>
           {searchResults}
         </ul>
       </div>

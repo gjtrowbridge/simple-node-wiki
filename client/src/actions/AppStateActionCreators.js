@@ -25,6 +25,12 @@ var AppStateActionCreators = {
     return AppDispatcher.dispatch(WikiConstants.ActionTypes.HIDE_NOTIFICATION, {
       notificationId: notificationId
     });
+  },
+
+  toggleSearchResults: function(enableSearchResults) {
+    return AppDispatcher.dispatch(WikiConstants.ActionTypes.TOGGLE_SEARCH_RESULTS, {
+      enableSearchResults: enableSearchResults
+    });
   }
 };
 

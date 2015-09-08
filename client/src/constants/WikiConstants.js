@@ -37,6 +37,8 @@ module.exports = {
     SHOW_NOTIFICATION: null,
     HIDE_NOTIFICATION: null,
 
-    SET_VIEW_MODE: null
+    SET_VIEW_MODE: null,
+
+    TOGGLE_SEARCH_RESULTS: null
   })
 };

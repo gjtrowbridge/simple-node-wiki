@@ -4,30 +4,31 @@ var AppStateActionCreators = require('../actions/AppStateActionCreators.js');
 var StoreUtils = require('../utils/StoreUtils.js');
 var ActionTypes = WikiConstants.ActionTypes;
 
-var activeModalInnerNode = null;
-var activeNotifications = [];
-var nextNotificationId = 1;
+var _activeModalInnerNode = null;
+var _activeNotifications = [];
+var _nextNotificationId = 1;
+var _searchResultsAreEnabled = true;
 
 var AppStateStore = StoreUtils.createStore({
   activeModalInnerNode: function() {
-    return activeModalInnerNode;
+    return _activeModalInnerNode;
   },
 
   showModal: function(innerNode) {
-    activeModalInnerNode = innerNode;
+    _activeModalInnerNode = innerNode;
   },
 
   hideModal: function() {
-    activeModalInnerNode = null;
+    _activeModalInnerNode = null;
   },
 
   activeNotifications: function() {
-    return activeNotifications;
+    return _activeNotifications;
   },
 
   showNotification: function(text, timeout) {
     var me = this;
-    var notificationId = nextNotificationId;
+    var notificationId = _nextNotificationId;
     var timeoutId = null;
 
     // If this notification has a timer, set
@@ -42,12 +43,12 @@ var AppStateStore = StoreUtils.createStore({
       timeoutId: timeoutId,
       text: text
     };
-    activeNotifications.push(notification);
-    nextNotificationId++;
+    _activeNotifications.push(notification);
+    _nextNotificationId++;
   },
 
   hideNotification: function(notificationId) {
-    var notification = activeNotifications.filter(function(n) {
+    var notification = _activeNotifications.filter(function(n) {
       return n.notificationId === notificationId;
     })[0];
 
@@ -57,9 +58,17 @@ var AppStateStore = StoreUtils.createStore({
     }
 
     // Remove this notification from the list
-    activeNotifications = activeNotifications.filter(function(n) {
+    _activeNotifications = _activeNotifications.filter(function(n) {
       return n.notificationId !== notificationId;
     });
+  },
+
+  toggleSearchResults: function(newValue) {
+    _searchResultsAreEnabled = newValue;
+  },
+
+  searchResultsAreEnabled: function() {
+    return _searchResultsAreEnabled;
   }
 });
 
@@ -93,6 +102,11 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       AppStateStore.showNotification(
         'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000)
       AppStateStore.emitChange();
+      break;
+    case ActionTypes.TOGGLE_SEARCH_RESULTS:
+      AppStateStore.toggleSearchResults(action.enableSearchResults);
+      AppStateStore.emitChange();
+      break;
     default:
       // do nothing
   };
