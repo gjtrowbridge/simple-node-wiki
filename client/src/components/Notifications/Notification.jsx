@@ -13,7 +13,6 @@ var Notification = React.createClass({
     return (
       <li className="notification">
         {this.props.text}
-        {this.props.notificationId}
         <span onClick={this.remove}>X</span>
       </li>
     );

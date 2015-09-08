@@ -14,9 +14,11 @@ var NotificationTopBar = React.createClass({
       );
     });
     return (
-      <ul className="notification-top-bar">
-        {notifications}
-      </ul>
+      <div className="notification-top-bar">
+        <ul className="notification-list">
+          {notifications}
+        </ul>
+      </div>
     );
   }
 });
