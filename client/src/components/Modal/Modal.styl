@@ -6,5 +6,23 @@
   left: 20%
   top: 20%
   z-index: 1000
-  & > .inner-node
+  & > .modal-inner-node
     width: 100%
+    margin: 0 5px 10px 5px
+    display: flex
+    justify-content: center
+    align-items: center
+  & > .close-modal
+    position: absolute
+    right: 0
+    top: 0
+    cursor: pointer
+    margin: 5px
+    padding: 2px
+    border-radius(50%)
+    background-color: $gray
+    width: 25px
+    height: 25px
+    text-align: center
+    border: solid 2px black
+    

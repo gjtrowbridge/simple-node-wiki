@@ -9,7 +9,7 @@ var Modal = React.createClass({
   render: function() {
     return (
       <div className="modal">
-        <span onClick={AppStateActionCreators.hideModal}>X</span>
+        <div className="close-modal" onClick={AppStateActionCreators.hideModal}>x</div>
         <div className="modal-inner-node">
           {this.props.innerNode}
         </div>
