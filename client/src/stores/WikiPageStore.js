@@ -113,7 +113,6 @@ var WikiPageStore = StoreUtils.createStore({
     // "optimistic" version
     if (_optimisticPage !== null &&
         _optimisticPage.saveRequestId === pageData.saveRequestId) {
-      console.log('caught up!');
       _optimisticPage = null;
     }
   },
