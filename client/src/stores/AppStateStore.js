@@ -100,11 +100,20 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       var newlyCreatedPage = action.data;
       AppStateStore.hideModal();
       AppStateStore.showNotification(
-        'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000)
+        'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000);
+      AppStateStore.emitChange();
+      break;
+    case ActionTypes.SAVE_PAGE:
+      AppStateStore.hideModal();
       AppStateStore.emitChange();
       break;
     case ActionTypes.TOGGLE_SEARCH_RESULTS:
       AppStateStore.toggleSearchResults(action.enableSearchResults);
+      AppStateStore.emitChange();
+      break;
+    case ActionTypes.PAGE_TRANSITION:
+      AppStateStore.hideModal();
+      AppStateStore.toggleSearchResults(false);
       AppStateStore.emitChange();
       break;
     default:

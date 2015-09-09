@@ -2,6 +2,7 @@
 // URL and title of existing pages
 var React = require('react');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
+var RouterContainer = require('../../utils/RouterContainer.js');
 
 var WikiPageUrlTitleForm = React.createClass({
   PropTypes: {
@@ -26,19 +27,32 @@ var WikiPageUrlTitleForm = React.createClass({
         '# ' + this.refs.titleInput.getDOMNode().value
     // Create new page
     if (this.props.wikiPageId === null) {
+      var name = this.refs.urlInput.getDOMNode().value;
+      var title = this.refs.titleInput.getDOMNode().value;
       WikiPageActionCreators.createPage({
-        name: this.refs.urlInput.getDOMNode().value,
-        title: this.refs.titleInput.getDOMNode().value,
-        text: text
+        name: name,
+        title: title,
+        text: text,
+        onSuccess: function() {
+          var router = RouterContainer.getRouter();
+          router.transitionTo('/pages/' + name);
+        }
       });
     // Edit existing page
     } else {
+      var newName = this.refs.urlInput.getDOMNode().value
+      var newTitle = this.refs.titleInput.getDOMNode().value
+      var onSuccess = function() {
+        var router = RouterContainer.getRouter();
+        router.transitionTo('/pages/' + newName);
+      }.bind(this);
+
       WikiPageActionCreators.savePage({
         id: this.props.wikiPageId,
-        name: this.refs.urlInput.getDOMNode().value,
-        title: this.refs.titleInput.getDOMNode().value,
-        text: text
-      });
+        name: newName,
+        title: newTitle,
+        text: text,
+      }, onSuccess);
     }
   },
   render: function() {

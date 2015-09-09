@@ -6,8 +6,11 @@ var shared = require('../../../shared/shared.js');
 var apiRootUrl = WikiConstants.BASE_URL + "/_api";
 
 var WikiPageActionCreators = {
-  savePage: function(pageData) {
+  savePage: function(pageData, optOnSuccess) {
     var url = apiRootUrl + '/pages/' + pageData.id;
+    if (optOnSuccess === undefined) {
+      optOnSuccess = function() {}
+    }
 
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
@@ -18,7 +21,8 @@ var WikiPageActionCreators = {
         failure: WikiConstants.ActionTypes.SAVE_PAGE_FAILURE
       },
       action: {
-        pageData: pageData
+        pageData: pageData,
+        onSuccess: optOnSuccess
       }
     });
   },
@@ -40,7 +44,8 @@ var WikiPageActionCreators = {
   createPage: shared.decorators.addDefaultParams({
     name: shared.decorators.IS_REQUIRED,
     title: shared.decorators.IS_REQUIRED,
-    text: ""
+    text: "",
+    onSuccess: function() {}
   }, function(params) {
     var url = apiRootUrl + '/pages';
     var pageData = {
@@ -57,7 +62,8 @@ var WikiPageActionCreators = {
         failure: WikiConstants.ActionTypes.CREATE_PAGE_FAILURE
       },
       action: {
-        pageData: pageData
+        pageData: pageData,
+        onSuccess: params.onSuccess
       }
     });
   }),

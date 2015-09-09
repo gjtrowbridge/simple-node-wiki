@@ -7,9 +7,6 @@ var ActionTypes = WikiConstants.ActionTypes;
 var _pagesByName = {};
 var _pagesById = {};
 var _viewMode = true;
-// Stores a recently created page
-// that has not yet been navigated to
-var newlyCreatedPage = null;
 
 var WikiPageStore = StoreUtils.createStore({
   getByName: function(name) {
@@ -26,14 +23,6 @@ var WikiPageStore = StoreUtils.createStore({
     } else {
       return null;
     }
-  },
-
-  newlyCreatedPage: function() {
-    return newlyCreatedPage;
-  },
-
-  _clearNewlyCreatedPage: function() {
-    newlyCreatedPage = null;
   },
 
   removePageFromStorage: function(id) {
@@ -113,8 +102,14 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       WikiPageStore._mergeIntoStorage(pageData);
       WikiPageStore.emitChange();
       break;
-    case ActionTypes.REQUEST_PAGE_FAILURE:
     case ActionTypes.SAVE_PAGE_SUCCESS:
+      var pageData = action.pageData;
+      pageData.status = action.type;
+      WikiPageStore._mergeStatusOnlyIntoStorage(pageData);
+      WikiPageStore.emitChange();
+      action.onSuccess();
+      break;
+    case ActionTypes.REQUEST_PAGE_FAILURE:
     case ActionTypes.SAVE_PAGE_FAILURE:
       var pageData = action.pageData;
       pageData.status = action.type;
@@ -133,10 +128,8 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       var pageData = action.data;
       pageData.status = action.type;
       WikiPageStore._mergeIntoStorage(pageData);
-      newlyCreatedPage = pageData;
       WikiPageStore.emitChange();
-      WikiPageStore._clearNewlyCreatedPage();
-      WikiPageStore.emitChange();
+      action.onSuccess();
       break;
     case ActionTypes.CREATE_PAGE_FAILURE:
       break;
