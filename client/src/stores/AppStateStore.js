@@ -3,6 +3,7 @@ var WikiConstants = require('../constants/WikiConstants.js');
 var AppStateActionCreators = require('../actions/AppStateActionCreators.js');
 var StoreUtils = require('../utils/StoreUtils.js');
 var ActionTypes = WikiConstants.ActionTypes;
+var RouterContainer = require('../utils/RouterContainer.js');
 
 var _activeModalInnerNode = null;
 var _activeNotifications = [];
@@ -120,6 +121,18 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       AppStateStore.hideModal();
       AppStateStore.toggleSearchResults(false);
       AppStateStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_PAGE_FAILURE:
+      if (action.statusCode === 404) {
+        AppStateStore.showNotification(
+          'A page with url: "' + action.pageData.name + '" does not exist!', 10000);
+      } else {
+        AppStateStore.showNotification(
+          'Error requesting page with url: "' + action.pageData.name + '"', 10000);
+      }
+      AppStateStore.emitChange();
+      var router = RouterContainer.getRouter();
+      router.transitionTo('home');
       break;
     default:
       // do nothing
