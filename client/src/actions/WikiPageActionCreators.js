@@ -117,7 +117,6 @@ var WikiPageActionCreators = {
     pageTitle: shared.constants.IS_REQUIRED,
     onSuccess: function() {
       var router = RouterContainer.getRouter();
-      console.log('transitioning!');
       router.transitionTo('home');
     }
   }, function(params) {
