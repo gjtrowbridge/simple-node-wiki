@@ -8,9 +8,21 @@ var _pagesByName = {};
 var _pagesById = {};
 var _viewMode = true;
 
+// If actively editing, this will be the data
+// that has not yet been saved to the server
+// (or at least has not yet received confirmation)
+// Note: this implementation relies on the assumption
+// that a given user will be editing only one page,
+// which is true in the given application.
+// (Will need a slight refactor if this changes)
+var _optimisticPage = null;
+var _nextSaveRequestId = 1;
+
 var WikiPageStore = StoreUtils.createStore({
   getByName: function(name) {
-    if (_pagesByName.hasOwnProperty(name)) {
+    if (_optimisticPage !== null && _optimisticPage.name === name) {
+      return _optimisticPage;
+    } else if (_pagesByName.hasOwnProperty(name)) {
       return _pagesByName[name];
     } else {
       return null;
@@ -18,7 +30,9 @@ var WikiPageStore = StoreUtils.createStore({
   },
 
   get: function(id) {
-    if (_pagesById.hasOwnProperty[id]) {
+    if (_optimisticPage !== null && _optimisticPage.id === id) {
+      return _optimisticPage;
+    } else if (_pagesById.hasOwnProperty[id]) {
       return _pagesById[id];
     } else {
       return null;
@@ -41,6 +55,27 @@ var WikiPageStore = StoreUtils.createStore({
   
   getViewMode: function() {
     return _viewMode;
+  },
+
+  // Only save to the optimistic data storage
+  // so only the "actual" storage has data
+  // that came directly from the server
+  _mergeIntoOptimisticStorage: function(pageData) {
+    pageData.saveRequestId = _nextSaveRequestId;
+    _optimisticPage = pageData;
+    _nextSaveRequestId++;
+  },
+
+  _mergeStatusOnlyIntoOptimisticStorage: function(pageData) {
+    // Check that the ids match up:
+    // This will likely never happen, but theoretically,
+    // for long callbacks, the user may have navigated to
+    // a different page and updated the optimistically-stored
+    // page to be a new page, in which case we don't want to
+    // update the status of it based on a now-stale request
+    if (pageData.id === _optimisticPage.id) {
+      _optimisticPage.status = pageData.status;
+    }
   },
 
   // Adds page data to the internal storage objects
@@ -71,20 +106,30 @@ var WikiPageStore = StoreUtils.createStore({
       var name = pageData.name;
       _pagesByName[name] = pageData;
     }
+
+    // If this page data object has the same request ID as the
+    // optimistically stored page data, then we know that page
+    // also now exists on the server, and no longer need the
+    // "optimistic" version
+    if (_optimisticPage !== null &&
+        _optimisticPage.saveRequestId === pageData.saveRequestId) {
+      console.log('caught up!');
+      _optimisticPage = null;
+    }
   },
 
-  // Allows continuous saving of the markdown editor text
-  // while typing because only the status of the data is
-  // overwritten (instead of overwriting, for example,
-  // the text, with stale values)
-  _mergeStatusOnlyIntoStorage: function(pageData) {
-    if (pageData.hasOwnProperty('id')) {
-      var id = pageData.id;
-      // Updating in the ID dictionary will also
-      // update in the name dictionary (since both refer to same object)
-      _pagesById[id].status = pageData.status
-    }
-  }
+  // // Allows continuous saving of the markdown editor text
+  // // while typing because only the status of the data is
+  // // overwritten (instead of overwriting, for example,
+  // // the text, with stale values)
+  // _mergeStatusOnlyIntoStorage: function(pageData) {
+  //   if (pageData.hasOwnProperty('id')) {
+  //     var id = pageData.id;
+  //     // Updating in the ID dictionary will also
+  //     // update in the name dictionary (since both refer to same object)
+  //     _pagesById[id].status = pageData.status
+  //   }
+  // }
 });
 
 // All actions go through the dispatcher, and the dispatcher
@@ -99,13 +144,13 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
     case ActionTypes.REQUEST_PAGE:
       var pageData = action.pageData;
       pageData.status = action.type;
-      WikiPageStore._mergeIntoStorage(pageData);
+      WikiPageStore._mergeIntoOptimisticStorage(pageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.SAVE_PAGE_SUCCESS:
       var pageData = action.pageData;
       pageData.status = action.type;
-      WikiPageStore._mergeStatusOnlyIntoStorage(pageData);
+      WikiPageStore._mergeIntoStorage(pageData);
       WikiPageStore.emitChange();
       action.onSuccess();
       break;
@@ -113,7 +158,7 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
     case ActionTypes.SAVE_PAGE_FAILURE:
       var pageData = action.pageData;
       pageData.status = action.type;
-      WikiPageStore._mergeStatusOnlyIntoStorage(pageData);
+      WikiPageStore._mergeStatusOnlyIntoOptimisticStorage(pageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_SUCCESS:
