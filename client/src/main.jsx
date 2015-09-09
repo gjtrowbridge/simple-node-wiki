@@ -23,7 +23,8 @@ var router = Router.run(
   React.render(<Handler />, document.body);
 
   // Certain actions trigger transitions mid-action, so all
-  // on-page-load actions must be given setTimeouts
+  // on-page-load actions must be given setTimeouts to prevent
+  // attempting to create a new action while another is happening
   setTimeout(function() {
     AppStateActionCreators.pageTransition({
       handler: Handler,

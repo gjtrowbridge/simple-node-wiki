@@ -89,7 +89,6 @@ var WikiPage = React.createClass({
     if (this.state.title !== undefined) {
       document.title = this.state.title;
     }
-    console.log('xcxc', this.state);
     var editor;
     var editButton;
     var deleteButton;
