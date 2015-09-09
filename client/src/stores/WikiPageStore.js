@@ -140,8 +140,9 @@ var WikiPageStore = StoreUtils.createStore({
 // a change event)
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   switch (action.type) {
-    case ActionTypes.SAVE_PAGE:
     case ActionTypes.REQUEST_PAGE:
+      break;
+    case ActionTypes.SAVE_PAGE:
       var pageData = action.pageData;
       pageData.status = action.type;
       WikiPageStore._mergeIntoOptimisticStorage(pageData);

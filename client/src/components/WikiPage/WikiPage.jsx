@@ -8,6 +8,7 @@ var WikiPageStore = require('../../stores/WikiPageStore.js');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+var WikiConstants = require('../../constants/WikiConstants.js');
 
 var WikiPage = React.createClass({
   propTypes: function() {
@@ -93,9 +94,16 @@ var WikiPage = React.createClass({
     var editButton;
     var deleteButton;
     var viewModeToggle;
+    var saveStatus;
     if (this.state.text !== undefined) {
+      var statusText = '';
+      if (this.state.status === WikiConstants.ActionTypes.SAVE_PAGE) {
+        statusText = 'Saving...';
+      } else if (this.state.status === WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS) {
+        statusText = 'Saved!';
+      }
       editor = (
-        <MarkdownEditor markdownText={this.state.text}
+        <MarkdownEditor markdownText={this.state.text} statusText={statusText}
             onChange={this.onEditorChange} viewMode={this.state.viewMode} />
       );
       viewModeToggle = <OnOffSwitch onText="EDIT MODE" offText="VIEW MODE"

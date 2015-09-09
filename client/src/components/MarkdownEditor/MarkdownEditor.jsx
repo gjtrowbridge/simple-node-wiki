@@ -30,6 +30,7 @@ var MarkdownEditor = React.createClass({
   propTypes: {
     markdownText: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
+    statusText: React.PropTypes.string,
     // If enabled, shows only the display box
     // Otherwise shows both the display and edit boxes
     viewMode: React.PropTypes.bool.isRequired
@@ -52,7 +53,7 @@ var MarkdownEditor = React.createClass({
     return (
       <div className="markdown-editor">
         <EditBox extraClasses={editBoxExtraClasses} markdownText={this.props.markdownText}
-            onChange={this.props.onChange} />
+            onChange={this.props.onChange} statusText={this.props.statusText} />
         <DisplayBox extraClasses={displayBoxExtraClasses}
             sanitizedHtml={this.markdownToHtml(this.props.markdownText)} />
       </div>

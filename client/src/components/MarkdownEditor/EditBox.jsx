@@ -9,7 +9,8 @@ var EditBox = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
     markdownText: React.PropTypes.string.isRequired,
-    extraClasses: React.PropTypes.array
+    extraClasses: React.PropTypes.array,
+    statusText: React.PropTypes.string
   },
   onKeyDown: function(e) {
     // Override tab key to add spacing
@@ -33,6 +34,7 @@ var EditBox = React.createClass({
     }
     return (
       <div className={classes.join(' ')}>
+      <span className="status-text">{this.props.statusText}</span>
         <textarea className="edit-box-input" onKeyDown={this.onKeyDown}
             onChange={this.props.onChange} value={this.props.markdownText}>
         </textarea>
