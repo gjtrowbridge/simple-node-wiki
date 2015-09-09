@@ -26,7 +26,7 @@ http.createServer(app).listen(port, function() {
   console.log('HTTP server listening on port:', port);
 });
 
-var httpsPort = process.env.HTTPS_PORT;
+var httpsPort = process.env.SIMPLE_WIKI_HTTPS_PORT;
 if (httpsPort) {
   // Start up the HTTPS server
   var options = {
