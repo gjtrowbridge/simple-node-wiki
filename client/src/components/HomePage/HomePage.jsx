@@ -15,14 +15,17 @@ var HomePage = React.createClass({
     };
   },
   componentWillMount: function() {
-    // setTimeout(function() {
-    //   WikiPageActionCreators.requestPageList({
-    //     pageListType: shared.constants.ORDER_BY_MODIFIED
-    //   });
-    //   WikiPageActionCreators.requestPageList({
-    //     pageListType: shared.constants.ORDER_BY_CREATED
-    //   });
-    // }, 0);
+    // Certain actions trigger transitions mid-action, so all
+    // on-page-load actions must be given setTimeouts to prevent
+    // attempting to create a new action while another is happening
+    setTimeout(function() {
+      WikiPageActionCreators.requestPageList({
+        pageListType: shared.constants.ORDER_BY_MODIFIED
+      });
+      WikiPageActionCreators.requestPageList({
+        pageListType: shared.constants.ORDER_BY_CREATED
+      });
+    }, 0);
   },
   componentDidMount: function() {
     PageListStore.addChangeListener(this._onChange);

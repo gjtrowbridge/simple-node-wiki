@@ -21,6 +21,9 @@ var routes = (
 var router = Router.run(
       routes, Router.HistoryLocation, function(Handler, state) {
   React.render(<Handler />, document.body);
+
+  // Certain actions trigger transitions mid-action, so all
+  // on-page-load actions must be given setTimeouts
   setTimeout(function() {
     AppStateActionCreators.pageTransition({
       handler: Handler,
