@@ -43,6 +43,7 @@ var HomePage = React.createClass({
     this.setState(this.getStateFromStores());
   },
   render: function() {
+    document.title = 'Simple Wiki';
     return (
       <div className="home-page">
         <p>Welcome to the "personal wiki" application.</p>
