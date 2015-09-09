@@ -15,12 +15,14 @@ var HomePage = React.createClass({
     };
   },
   componentWillMount: function() {
-    WikiPageActionCreators.requestPageList({
-      pageListType: shared.constants.ORDER_BY_MODIFIED
-    });
-    WikiPageActionCreators.requestPageList({
-      pageListType: shared.constants.ORDER_BY_CREATED
-    });
+    // setTimeout(function() {
+    //   WikiPageActionCreators.requestPageList({
+    //     pageListType: shared.constants.ORDER_BY_MODIFIED
+    //   });
+    //   WikiPageActionCreators.requestPageList({
+    //     pageListType: shared.constants.ORDER_BY_CREATED
+    //   });
+    // }, 0);
   },
   componentDidMount: function() {
     PageListStore.addChangeListener(this._onChange);

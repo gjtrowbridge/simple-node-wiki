@@ -145,6 +145,7 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       var id = action.pageId;
       WikiPageStore.removePageFromStorage(id);
       WikiPageStore.emitChange();
+      action.onSuccess();
       break;
     case ActionTypes.SET_VIEW_MODE:
       WikiPageStore.setViewMode(action.isEnabled);

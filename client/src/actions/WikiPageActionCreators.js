@@ -1,8 +1,8 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var WikiUtils = require('../utils/WikiUtils.js');
 var WikiConstants = require('../constants/WikiConstants.js');
+var RouterContainer = require('../utils/RouterContainer.js');
 var shared = require('../../../shared/shared.js');
-
 var apiRootUrl = WikiConstants.BASE_URL + "/_api";
 
 var WikiPageActionCreators = {
@@ -112,8 +112,16 @@ var WikiPageActionCreators = {
       });
     }
   }),
-  deletePage: function(pageId) {
-    var url = apiRootUrl + '/pages/' + pageId;
+  deletePage: shared.decorators.addDefaultParams({
+    pageId: shared.constants.IS_REQUIRED,
+    pageTitle: shared.constants.IS_REQUIRED,
+    onSuccess: function() {
+      var router = RouterContainer.getRouter();
+      console.log('transitioning!');
+      router.transitionTo('home');
+    }
+  }, function(params) {
+    var url = apiRootUrl + '/pages/' + params.pageId;
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
           url, 'DELETE', {}),
@@ -123,10 +131,12 @@ var WikiPageActionCreators = {
         failure: WikiConstants.ActionTypes.DELETE_PAGE_FAILURE
       },
       action: {
-        pageId: pageId
+        pageId: params.pageId,
+        pageTitle: params.pageTitle,
+        onSuccess: params.onSuccess
       }
     });
-  },
+  }),
   setViewMode: function(isEnabled) {
     return AppDispatcher.dispatch(WikiConstants.ActionTypes.SET_VIEW_MODE, {
       isEnabled: isEnabled

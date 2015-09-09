@@ -33,8 +33,8 @@ var AppStateActionCreators = {
     });
   },
 
-  pageTransition: function(params) {
-    return AppDispatcher.dispatch(WikiConstants.ActionTypes.PAGE_TRANSITION, params);
+  pageTransition: function(action) {
+    return AppDispatcher.dispatch(WikiConstants.ActionTypes.PAGE_TRANSITION, action);
   }
 };
 

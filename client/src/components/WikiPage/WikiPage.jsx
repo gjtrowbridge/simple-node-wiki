@@ -80,12 +80,16 @@ var WikiPage = React.createClass({
     WikiPageActionCreators.setViewMode(viewModeEnabled);
   },
   deletePage: function() {
-    WikiPageActionCreators.deletePage(this.state.id);
+    WikiPageActionCreators.deletePage({
+      pageId: this.state.id,
+      pageTitle: this.state.title
+    });
   },
   render: function() {
     if (this.state.title !== undefined) {
       document.title = this.state.title;
     }
+    console.log('xcxc', this.state);
     var editor;
     var editButton;
     var deleteButton;

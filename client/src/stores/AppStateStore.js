@@ -103,6 +103,11 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
         'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000);
       AppStateStore.emitChange();
       break;
+    case ActionTypes.DELETE_PAGE_SUCCESS:
+      AppStateStore.showNotification(
+        'You successfully deleted page: "' + action.pageTitle + '"', 10000);
+      AppStateStore.emitChange();
+      break;
     case ActionTypes.SAVE_PAGE:
       AppStateStore.hideModal();
       AppStateStore.emitChange();

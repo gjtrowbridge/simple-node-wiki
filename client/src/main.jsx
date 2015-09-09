@@ -12,7 +12,7 @@ var WikiPage = require('./components/WikiPage/WikiPage.jsx');
 
 var routes = (
   <Route handler={App}>
-    <DefaultRoute handler={HomePage} />
+    <DefaultRoute name="home" handler={HomePage} />
     <Route name="pages" path="pages/:pageName" handler={WikiPage} />
     <NotFoundRoute handler={HomePage}/>
   </Route>
@@ -22,7 +22,10 @@ var router = Router.run(
       routes, Router.HistoryLocation, function(Handler, state) {
   React.render(<Handler />, document.body);
   setTimeout(function() {
-    AppStateActionCreators.pageTransition(state.params);
+    AppStateActionCreators.pageTransition({
+      handler: Handler,
+      state: state
+    });
   }, 0);
 });
 
