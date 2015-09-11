@@ -1,12 +1,7 @@
 var keyMirror = require('keymirror');
 
-<<<<<<< Updated upstream
-module.exports = {
-  BASE_URL: process.env.BASE_URL || 'http://localhost:8080',
-=======
 var WikiConstants = {
   BASE_URL: window.location.protocol + '//' + window.location.host,
->>>>>>> Stashed changes
   PageListTypes: keyMirror({
     BY_RECENTLY_MODIFIED: null,
     // BY_RECENTLY_VISITED: null,
@@ -49,8 +44,5 @@ var WikiConstants = {
     PAGE_TRANSITION: null
   })
 };
-<<<<<<< Updated upstream
-=======
 
 module.exports = WikiConstants;
->>>>>>> Stashed changes
