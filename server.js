@@ -19,7 +19,7 @@ app.get('*', function(req, res) {
 });
 
 // Start up app on specified port
-var port = process.env.port || 8080;
+var port = process.env.PORT || 8080;
 
 // Start up the HTTP server
 http.createServer(app).listen(port, function() {
