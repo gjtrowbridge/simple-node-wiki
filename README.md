@@ -1,4 +1,4 @@
-# Simple Node Wiki / Note-taker
+# Simple Node Wiki / Note-taker / Journal
 
 Like the title implies, the goal here was to build a very simple wiki/note-taker/journal.
 
