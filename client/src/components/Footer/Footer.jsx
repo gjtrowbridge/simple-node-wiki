@@ -4,8 +4,8 @@ var Footer = React.createClass({
   render: function() {
     return (
       <footer id="footer" className="layout-fill-and-center">
-        <p>Created by
-          <a target="_blank" href="https://github.com/gjtrowbridge"> Greg Trowbridge</a>
+        <p>See the source code
+          <a target="_blank" href="https://github.com/gjtrowbridge/simple-node-wiki"> here</a>
         </p>
       </footer>
     );
