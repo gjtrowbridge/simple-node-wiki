@@ -22,7 +22,6 @@ To see the application in action, check out: https://simple-node-wiki-example.he
   * Otherwise: `https://github.com/gjtrowbridge/simple-node-wiki.git`
 * `cd simple-node-wiki`
 * `npm install`
-* `sequelize db:migrate`
 * `npm run start`
 * That's it!  After starting the server, use the application by navigating to http://localhost:8080
 
