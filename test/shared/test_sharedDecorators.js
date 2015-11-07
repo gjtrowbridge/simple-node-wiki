@@ -1,8 +1,6 @@
 var test = require('tape');
 var shared = require('../../shared/shared.js');
 
-console.log(shared);
-
 testAddDefaultParams = function(name, cb) {
   var decoratedFunction = shared.decorators.addDefaultParams({
     value1: 0,
