@@ -11,7 +11,7 @@
     "postinstall": "npm run build & npm run migrate-database",
     "start": "node server.js",
     "test-frontend": "jest",
-    "test": "tape shared/**/*_test.js | faucet || :",
+    "test": "export NODE_ENV='test'; find test -name \"*.js\" | xargs tape test/**/*.js | faucet || :",
     "test:watch": "watch 'npm run test'",
     "watch": "npm run watch-css & npm run watch-js & nodemon server",
     "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
