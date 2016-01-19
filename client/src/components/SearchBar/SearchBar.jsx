@@ -33,7 +33,9 @@ var SearchBar = React.createClass({
     });
   },
   disableSearchResults: function() {
-    AppStateActionCreators.toggleSearchResults(false);
+    setTimeout(function() {
+      AppStateActionCreators.toggleSearchResults(false);
+    }, 100)
   },
   enableSearchResults: function() {
     AppStateActionCreators.toggleSearchResults(true);
