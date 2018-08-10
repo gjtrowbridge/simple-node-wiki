@@ -1,16 +1,16 @@
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var NotFoundRoute = Router.NotFoundRoute;
-var AppStateActionCreators = require('./actions/AppStateActionCreators.js');
-var RouterContainer = require('./utils/RouterContainer.js');
+const React = require('react');
+const Router = require('react-router');
+const Route = Router.Route;
+const DefaultRoute = Router.DefaultRoute;
+const NotFoundRoute = Router.NotFoundRoute;
+const AppStateActionCreators = require('./actions/AppStateActionCreators.js');
+const RouterContainer = require('./utils/RouterContainer.js');
 
-var App = require('./components/App/App.jsx');
-var HomePage = require('./components/HomePage/HomePage.jsx');
-var WikiPage = require('./components/WikiPage/WikiPage.jsx');
+const App = require('./components/App/App.jsx');
+const HomePage = require('./components/HomePage/HomePage.jsx');
+const WikiPage = require('./components/WikiPage/WikiPage.jsx');
 
-var routes = (
+const routes = (
   <Route handler={App}>
     <DefaultRoute name="home" handler={HomePage} />
     <Route name="pages" path="pages/:pageName" handler={WikiPage} />
@@ -18,7 +18,7 @@ var routes = (
   </Route>
 );
 
-var router = Router.run(
+const router = Router.run(
       routes, Router.HistoryLocation, function(Handler, state) {
   React.render(<Handler />, document.body);
 

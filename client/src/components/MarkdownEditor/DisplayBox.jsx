@@ -3,19 +3,19 @@
   
   Designed for use with the EditBox component.
 */
-var React = require('react');
+const React = require('react');
 
-var DisplayBox = React.createClass({
+const DisplayBox = React.createClass({
   propTypes: {
     sanitizedHtml: React.PropTypes.string.isRequired,
     extraClasses: React.PropTypes.array
   },
   render: function() {
-    var classes = ['box', 'display-box'];
+    let classes = ['box', 'display-box'];
     if (this.props.extraClasses) {
       classes = classes.concat(this.props.extraClasses);
     }
-    var dangerousHtml = {
+    const dangerousHtml = {
       __html: this.props.sanitizedHtml
     };
     return (

@@ -1,5 +1,5 @@
 
-var helpers = {
+const helpers = {
   convertStringToPath: function(str) {
     var result = '';
     for (var i=0; i<str.length; i++) {
@@ -18,4 +18,4 @@ var helpers = {
   }
 };
 
-module.exports = helpers;
+export default helpers;
