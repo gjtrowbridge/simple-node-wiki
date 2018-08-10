@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "A basic wiki",
   "main": "server.js",
+  "engines": {
+    "node": ">=8.9.3"
+  },
   "scripts": {
     "build": "npm run build-css & npm run build-js",
     "build-css": "stylus --include-css client/src/ --out client/public/assets/styles",
