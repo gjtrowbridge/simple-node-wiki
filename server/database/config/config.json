@@ -8,7 +8,6 @@
     "storage": "server/database/test_database.sqlite"
   },
   "production": {
-    "dialect": "sqlite",
-    "storage": "server/database/prod_database.sqlite"
+    "use_env_variable": "DATABASE_URL"
   }
 }
