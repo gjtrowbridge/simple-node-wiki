@@ -1,9 +1,9 @@
 "use strict";
-module.exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, Sequelize) {
   var Page = sequelize.define("Page", {
-    title: DataTypes.STRING,
-    text: DataTypes.TEXT,
-    name: DataTypes.STRING
+    title: Sequelize.DataTypes.STRING,
+    text: Sequelize.DataTypes.TEXT,
+    name: Sequelize.DataTypes.STRING
   });
   return Page;
 };
