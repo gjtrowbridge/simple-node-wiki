@@ -6,11 +6,12 @@ var rp = require('request-promise');
 module.exports = {
   // Executes the specified HTTP request and returns
   // a promise that resolves to the response
-  requestViaHttpAndReturnPromise: function(url, httpVerb, jsonData) {
+  requestViaHttpAndReturnPromise: function(url, httpVerb, headers, jsonData) {
     return rp({
       uri: url,
       method: httpVerb,
-      json: jsonData
+      json: jsonData,
+      headers: headers
     }).then(function(response) {
       return response;
     });

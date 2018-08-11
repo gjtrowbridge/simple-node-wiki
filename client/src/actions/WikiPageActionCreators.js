@@ -11,10 +11,13 @@ var WikiPageActionCreators = {
     if (optOnSuccess === undefined) {
       optOnSuccess = function() {}
     }
-
+    var headers = {};
+    if (localStorage.jwt) {
+      headers.jwt = jwt;
+    }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'PUT', pageData),
+          url, 'PUT', headers, pageData),
       types: {
         request: WikiConstants.ActionTypes.SAVE_PAGE,
         success: WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS,
@@ -28,9 +31,13 @@ var WikiPageActionCreators = {
   },
   requestPage: function(pageData) {
     var url = apiRootUrl + '/pages/name/' + pageData.name;
+    var headers = {};
+    if (localStorage.jwt) {
+      headers.jwt = jwt;
+    }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'GET', {}),
+          url, 'GET', headers, {}),
       types: {
         request: WikiConstants.ActionTypes.REQUEST_PAGE,
         success: WikiConstants.ActionTypes.REQUEST_PAGE_SUCCESS,
@@ -53,9 +60,13 @@ var WikiPageActionCreators = {
       title: params.title,
       text: params.text
     };
+    var headers = {};
+    if (localStorage.jwt) {
+      headers.jwt = jwt;
+    }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'POST', pageData),
+          url, 'POST', headers, pageData),
       types: {
         request: WikiConstants.ActionTypes.CREATE_PAGE,
         success: WikiConstants.ActionTypes.CREATE_PAGE_SUCCESS,
@@ -75,9 +86,13 @@ var WikiPageActionCreators = {
     var url = apiRootUrl + '/pages?limit='
         + params.limit + '&offset=' + params.offset
         + '&listType=' + params.pageListType;
+    var headers = {};
+    if (localStorage.jwt) {
+      headers.jwt = jwt;
+    }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'GET', {}),
+          url, 'GET', headers, {}),
       types: {
         request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
         success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
@@ -98,9 +113,13 @@ var WikiPageActionCreators = {
     } else {
       var url = apiRootUrl + '/pages/search/' + params.searchTerm
           + "?limit=" + params.limit + '&offset=' + params.offset;
+      var headers = {};
+      if (localStorage.jwt) {
+        headers.jwt = jwt;
+      }
       return AppDispatcher.dispatchAsync({
         promise: WikiUtils.requestViaHttpAndReturnPromise(
-            url, 'GET', {}),
+            url, 'GET', headers, {}),
         types: {
           request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
           success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
@@ -121,9 +140,13 @@ var WikiPageActionCreators = {
     }
   }, function(params) {
     var url = apiRootUrl + '/pages/' + params.pageId;
+    var headers = {};
+    if (localStorage.jwt) {
+      headers.jwt = jwt;
+    }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'DELETE', {}),
+          url, 'DELETE', headers, {}),
       types: {
         request: WikiConstants.ActionTypes.DELETE_PAGE,
         success: WikiConstants.ActionTypes.DELETE_PAGE_SUCCESS,
