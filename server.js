@@ -20,7 +20,7 @@ var authData = auth(
 app.use('/_auth', authData.authRouter);
 
 // Add api endpoints
-app.use('/_api', api(express));
+app.use('/_api', api(express, authData.addUserToReqMiddleware));
 
 // Serve static files
 app.use('/_public', express.static(__dirname + '/client/public'));

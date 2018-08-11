@@ -4,7 +4,7 @@ var db = require('../database/models/index.js');
 
 
 // This router is the entry point for all API endpoints
-var createApiRouter = function(express) {
+var createApiRouter = function(express, addUserToReqMiddleware) {
   var apiRouter = express.Router().use(bodyParser.json());
 
   // Allow CORS
@@ -16,6 +16,16 @@ var createApiRouter = function(express) {
   
   apiRouter.post('/', function(req, res) {
     res.send('Welcome to the api!');
+  });
+
+  apiRouter.get('/user', addUserToReqMiddleware, function(req, res) {
+    res.json({
+      user: {
+        email: req.user.email,
+        createdAt: req.user.createdAt,
+        updatedAt: req.user.updatedAt
+      }
+    });
   });
 
   // Add end points for handling CRUD operations for pages

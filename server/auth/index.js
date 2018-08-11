@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var passportJWT = require('passport-jwt');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+var db = require('../database/models/index.js');
 var helpers = require('./helpers');
 
 var algorithm = 'HS512';
