@@ -13,7 +13,7 @@ var WikiPageActionCreators = {
     }
     var headers = {};
     if (localStorage.jwt) {
-      headers.jwt = jwt;
+      headers.jwt = localStorage.jwt;
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
@@ -33,7 +33,7 @@ var WikiPageActionCreators = {
     var url = apiRootUrl + '/pages/name/' + pageData.name;
     var headers = {};
     if (localStorage.jwt) {
-      headers.jwt = jwt;
+      headers.jwt = localStorage.jwt;
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
@@ -62,7 +62,7 @@ var WikiPageActionCreators = {
     };
     var headers = {};
     if (localStorage.jwt) {
-      headers.jwt = jwt;
+      headers.jwt = localStorage.jwt;
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
@@ -88,7 +88,7 @@ var WikiPageActionCreators = {
         + '&listType=' + params.pageListType;
     var headers = {};
     if (localStorage.jwt) {
-      headers.jwt = jwt;
+      headers.jwt = localStorage.jwt;
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
@@ -115,7 +115,7 @@ var WikiPageActionCreators = {
           + "?limit=" + params.limit + '&offset=' + params.offset;
       var headers = {};
       if (localStorage.jwt) {
-        headers.jwt = jwt;
+        headers.jwt = localStorage.jwt;
       }
       return AppDispatcher.dispatchAsync({
         promise: WikiUtils.requestViaHttpAndReturnPromise(
@@ -142,7 +142,7 @@ var WikiPageActionCreators = {
     var url = apiRootUrl + '/pages/' + params.pageId;
     var headers = {};
     if (localStorage.jwt) {
-      headers.jwt = jwt;
+      headers.jwt = localStorage.jwt;
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(

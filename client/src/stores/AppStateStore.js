@@ -39,7 +39,7 @@ var AppStateStore = StoreUtils.createStore({
         AppStateActionCreators.hideNotification(notificationId);
       }, timeout);
     }
-    notification = {
+    var notification = {
       notificationId: notificationId,
       timeoutId: timeoutId,
       text: text
