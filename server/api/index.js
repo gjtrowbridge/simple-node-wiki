@@ -1,4 +1,3 @@
-var Sequelize = require('sequelize');
 var bodyParser = require('body-parser');
 var createPageRouter = require('./createPageRouter.js');
 var db = require('../database/models/index.js');
