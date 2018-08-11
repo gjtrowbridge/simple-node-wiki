@@ -1,7 +1,9 @@
 "use strict";
 
-const Sequelize = require("sequelize");
-const env       = process.env.NODE_ENV || "development";
+const Sequelize = require('sequelize');
+const definePage = require('./page');
+
+const env       = process.env.NODE_ENV || 'development';
 const config    = require(__dirname + '/../config/config.json')[env];
 
 let sequelize;
@@ -11,8 +13,10 @@ if (config.use_env_variable) {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
+const Page = definePage(sequelize, Sequelize);
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-
-module.exports = db;
+module.exports = {
+  Page,
+  sequelize,
+  Sequelize,
+};
