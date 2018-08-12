@@ -13,7 +13,7 @@ var Nav = React.createClass({
   },
   render: function() {
     var id = this.props.id !== undefined ?
-        this.props.id : ""
+        this.props.id : "";
     return (
       <nav className="nav" id={id}>
         <div className="nav-item">

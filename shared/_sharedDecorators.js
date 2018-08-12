@@ -33,7 +33,7 @@ sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
       if (!parametersDefinition.hasOwnProperty(name)) {
         throw 'An unexpected parameter was passed to this function!';
       }
-    })
+    });
 
     var newParameters = {};
     _.extend(newParameters, parametersDefinition, parameters);

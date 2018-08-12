@@ -6,6 +6,26 @@ var shared = require('../../../shared/shared.js');
 var apiRootUrl = WikiConstants.BASE_URL + '/_api';
 
 var WikiPageActionCreators = {
+  checkUser: function() {
+    var url = apiRootUrl + '/user';
+    var headers = {};
+    if (localStorage.jwt) {
+      headers.jwt = localStorage.jwt;
+    }
+    return AppDispatcher.dispatchAsync({
+      promise: WikiUtils.requestViaHttpAndReturnPromise(
+        url, 'GET', headers),
+      types: {
+        request: WikiConstants.ActionTypes.REQUEST_USER,
+        success: WikiConstants.ActionTypes.REQUEST_USER_SUCCESS,
+        failure: WikiConstants.ActionTypes.REQUEST_USER_FAILURE
+      },
+      action: {},
+      transformResponseSuccess: function(responseSuccess, action) {
+        return Object.assign({}, action, JSON.parse(responseSuccess));
+      }
+    });
+  },
   savePage: function(pageData, optOnSuccess) {
     var url = apiRootUrl + '/pages/' + pageData.id;
     if (optOnSuccess === undefined) {

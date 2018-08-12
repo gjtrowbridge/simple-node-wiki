@@ -9,10 +9,19 @@ var _activeModalInnerNode = null;
 var _activeNotifications = [];
 var _nextNotificationId = 1;
 var _searchResultsAreEnabled = true;
+var _activeUser = null;
 
 var AppStateStore = StoreUtils.createStore({
   activeModalInnerNode: function() {
     return _activeModalInnerNode;
+  },
+
+  activeUser: function() {
+    return _activeUser;
+  },
+
+  setActiveUser: function(user) {
+    _activeUser = user;
   },
 
   showModal: function(innerNode) {
@@ -34,7 +43,7 @@ var AppStateStore = StoreUtils.createStore({
 
     // If this notification has a timer, set
     // it to remove itself when time expires
-    if (timeout !== null) {
+    if (timeout !== null && timeout !== undefined) {
       timeoutId = setTimeout(function() {
         AppStateActionCreators.hideNotification(notificationId);
       }, timeout);
@@ -80,6 +89,7 @@ var AppStateStore = StoreUtils.createStore({
 // handling here (usually, state updates here followed by emitting
 // a change event)
 AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
+  console.log('xcxc receiving action', action);
   switch (action.type) {
     case ActionTypes.SHOW_MODAL:
       AppStateStore.showModal(action.innerNode);
@@ -120,6 +130,17 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
     case ActionTypes.PAGE_TRANSITION:
       AppStateStore.hideModal();
       AppStateStore.toggleSearchResults(false);
+      AppStateStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_USER_SUCCESS:
+      AppStateStore.setActiveUser(action.user);
+      AppStateStore.showNotification('You are logged in as ' + action.user.email, 5000);
+      AppStateStore.emitChange();
+      break;
+    case ActionTypes.REQUEST_USER_FAILURE:
+      AppStateStore.setActiveUser(null);
+      AppStateStore.showNotification('You are not logged in. Please log in to see your wiki pages.', null);
+      localStorage.removeItem('jwt');
       AppStateStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_FAILURE:

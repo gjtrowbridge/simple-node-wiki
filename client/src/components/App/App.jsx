@@ -2,6 +2,7 @@ var React = require('react');
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
 var AppStateStore = require('../../stores/AppStateStore.js');
+var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 
 var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
 var Nav = require('../Nav/Nav.jsx');
@@ -27,6 +28,9 @@ var App = React.createClass({
   },
   componentDidMount: function() {
     AppStateStore.addChangeListener(this._onChange);
+    setTimeout(function() {
+      WikiPageActionCreators.checkUser();
+    }, 0);
   },
   componentWillUnmount: function() {
     AppStateStore.removeChangeListener(this._onChange);

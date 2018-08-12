@@ -32,8 +32,8 @@ var initializeAuth = function(
           email = profile.emails[0].value;
         }
         return helpers.findOrCreateUserAfterGoogleAuth(
-          email,
           profile.id,
+          email,
           cb
         );
       }
@@ -100,8 +100,8 @@ var initializeAuth = function(
 
     authRouter.get('/freeToken', function (req, res) {
       helpers.findOrCreateUserAfterGoogleAuth(
-        'example@example.com',
         '1',
+        'example@example.com',
         getDoneCallback(res)
       );
     });

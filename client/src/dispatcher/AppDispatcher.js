@@ -28,9 +28,9 @@ module.exports = {
       return assign({}, action, responseFailure);
     }
   }, function(params) {
-    requestType = params.types.request;
-    successType = params.types.success;
-    failureType = params.types.failure;
+    var requestType = params.types.request;
+    var successType = params.types.success;
+    var failureType = params.types.failure;
 
     if (!(requestType && successType && failureType)) {
       throw "Request, success, and failure types must all be defined!";
