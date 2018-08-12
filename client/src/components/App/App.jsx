@@ -62,7 +62,7 @@ var App = React.createClass({
         <div className={this.modalIsOpen() ? "open-modal" : ""}>
           <AreaDisabler shouldDisableClicks={this.modalIsOpen()} /> 
           {this.renderNotificationTopBar()}
-          <Nav id="main-navigation" />
+          <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
           <div id="main-content">
             <RouteHandler {...params} />
           </div>

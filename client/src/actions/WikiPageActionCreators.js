@@ -26,6 +26,9 @@ var WikiPageActionCreators = {
       }
     });
   },
+  logoutUser: function() {
+    return AppDispatcher.dispatch(WikiConstants.ActionTypes.LOGOUT_USER, {});
+  },
   savePage: function(pageData, optOnSuccess) {
     var url = apiRootUrl + '/pages/' + pageData.id;
     if (optOnSuccess === undefined) {

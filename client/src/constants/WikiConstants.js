@@ -15,6 +15,8 @@ var WikiConstants = {
     REQUEST_USER_SUCCESS: null,
     REQUEST_USER_FAILURE: null,
 
+    LOGOUT_USER: null,
+
     REQUEST_PAGE: null,
     REQUEST_PAGE_SUCCESS: null,
     REQUEST_PAGE_FAILURE: null,

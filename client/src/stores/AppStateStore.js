@@ -22,6 +22,9 @@ var AppStateStore = StoreUtils.createStore({
 
   setActiveUser: function(user) {
     _activeUser = user;
+    if (user === null) {
+      localStorage.removeItem('jwt');
+    }
   },
 
   showModal: function(innerNode) {
@@ -132,15 +135,20 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       AppStateStore.toggleSearchResults(false);
       AppStateStore.emitChange();
       break;
+    case ActionTypes.LOGOUT_USER:
+      var user = AppStateStore.activeUser();
+      AppStateStore.setActiveUser(null);
+      AppStateStore.showNotification(user.email + ' was logged out.');
+      AppStateStore.emitChange();
+      break;
     case ActionTypes.REQUEST_USER_SUCCESS:
       AppStateStore.setActiveUser(action.user);
-      AppStateStore.showNotification('You are logged in as ' + action.user.email, 5000);
+      AppStateStore.showNotification('You are logged in as ' + action.user.email, 10000);
       AppStateStore.emitChange();
       break;
     case ActionTypes.REQUEST_USER_FAILURE:
       AppStateStore.setActiveUser(null);
       AppStateStore.showNotification('You are not logged in. Please log in to see your wiki pages.', null);
-      localStorage.removeItem('jwt');
       AppStateStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_FAILURE:

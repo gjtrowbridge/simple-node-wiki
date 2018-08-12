@@ -1,6 +1,7 @@
 var React = require('react');
 var Link = require('react-router').Link;
-var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
+var AppStateActionCreators = require('../../actions/AppStateActionCreators');
+var WikiPageActionCreators = require('../../actions/WikiPageActionCreators');
 var SearchBar = require('../SearchBar/SearchBar.jsx');
 var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
 
@@ -11,9 +12,29 @@ var Nav = React.createClass({
     );
     AppStateActionCreators.showModal(innerNode);
   },
+  logout: function() {
+    WikiPageActionCreators.logoutUser();
+  },
   render: function() {
     var id = this.props.id !== undefined ?
         this.props.id : "";
+    var userComponent;
+    var user = this.props.user;
+    if (user) {
+      userComponent = (
+        <button className="btn btn-unobtrusive layout-fill-and-center"
+                onClick={this.logout}
+        >
+          Logout
+        </button>
+      );
+    } else {
+      userComponent = (
+        <a className="google-login layout-fill-and-center" href="_auth/google/callback">
+          <img src={"https://evernote.com/img/home/google-logo.svg"} />Sign up/in with Google
+        </a>
+      );
+    }
     return (
       <nav className="nav" id={id}>
         <div className="nav-item">
@@ -24,7 +45,10 @@ var Nav = React.createClass({
         </div>
         <div className="nav-item">
           <button className="btn btn-unobtrusive layout-fill-and-center"
-              onClick={this.showCreatePageModal}>+ New Page</button>
+                                onClick={this.showCreatePageModal}>+ New Page</button>
+        </div>
+        <div className="nav-item">
+          {userComponent}
         </div>
       </nav>
     );
