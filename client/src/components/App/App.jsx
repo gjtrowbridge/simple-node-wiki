@@ -20,7 +20,7 @@ var App = React.createClass({
   getStateFromStores: function() {
     return {
       notifications: AppStateStore.activeNotifications(),
-      modalInnerNode: AppStateStore.activeModalInnerNode()
+      modalInnerNode: AppStateStore.activeModalInnerNode(),
     };
   },
   _onChange: function() {

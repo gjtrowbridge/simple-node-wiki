@@ -29,7 +29,7 @@ var createApiRouter = function(express, addUserToReqMiddleware) {
   });
 
   // Add end points for handling CRUD operations for pages
-  apiRouter.use('/pages', createPageRouter(express, db));
+  apiRouter.use('/pages', createPageRouter(express, db, addUserToReqMiddleware));
 
   return apiRouter;
 };

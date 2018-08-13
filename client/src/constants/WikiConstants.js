@@ -9,6 +9,8 @@ var WikiConstants = {
     BY_RECENTLY_CREATED: null
   }),
   ActionTypes: keyMirror({
+    CLEAR_SEARCH: null,
+
     CHANGE_EVENT: null,
 
     REQUEST_USER: null,

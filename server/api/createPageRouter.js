@@ -8,12 +8,13 @@ var createPageObject = function(req) {
   return {
     title: req.body.title,
     text: req.body.text,
-    name: req.body.name
+    name: req.body.name,
+    userId: req.user.id,
   };
 };
 
 // Creates and returns a router that handles all 'page' related endpoints
-var createPageRouter = function(express, db) {
+var createPageRouter = function(express, db, addUserToReqMiddleware) {
   var pageRouter = express.Router();
 
   var Page = db.Page;
@@ -21,7 +22,7 @@ var createPageRouter = function(express, db) {
 
   // This will return the data for all pages
   // currently defined in the wiki
-  pageRouter.get('/', function(req, res) {
+  pageRouter.get('/', addUserToReqMiddleware, function(req, res) {
     var limit = apiHelpers.convertToIntWithDefault({
       valueToConvert: req.query.limit,
       defaultValue: 10,
@@ -47,7 +48,10 @@ var createPageRouter = function(express, db) {
     Page.findAll({
       limit: limit,
       offset: offset,
-      order: order
+      order: order,
+      where: {
+        userId: req.user.id,
+      },
     })
     .done(
       function(pages) {
@@ -60,10 +64,11 @@ var createPageRouter = function(express, db) {
   });
 
   // Get a page by id
-  pageRouter.get('/:id', function(req, res) {
+  pageRouter.get('/:id', addUserToReqMiddleware, function(req, res) {
     Page.findOne({
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: req.user.id,
       }
     }).done(
       function(page) {
@@ -76,10 +81,11 @@ var createPageRouter = function(express, db) {
   });
 
   // Get a page by name
-  pageRouter.get('/name/:name', function(req, res) {
+  pageRouter.get('/name/:name', addUserToReqMiddleware, function(req, res) {
     Page.findOne({
       where: {
-        name: req.params.name
+        name: req.params.name,
+        userId: req.user.id,
       }
     }).done(
       function(page) {
@@ -92,7 +98,7 @@ var createPageRouter = function(express, db) {
   });
 
   // Create a new page
-  pageRouter.post('/', function(req, res) {
+  pageRouter.post('/', addUserToReqMiddleware, function(req, res) {
     Page.create(createPageObject(req)).done(
       function(page) {
         apiHelpers.respondWithData(req, res, page, 201);
@@ -104,10 +110,11 @@ var createPageRouter = function(express, db) {
   });
 
   // Find a page by id and update
-  pageRouter.put('/:id', function(req, res) {
+  pageRouter.put('/:id', addUserToReqMiddleware, function(req, res) {
     Page.update(createPageObject(req), {
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: req.user.id,
       }
     }).done(
       function(rows_affected) {
@@ -122,10 +129,11 @@ var createPageRouter = function(express, db) {
   });
 
   // Delete a page
-  pageRouter.delete('/:id', function(req, res) {
+  pageRouter.delete('/:id', addUserToReqMiddleware, function(req, res) {
     Page.findOne({
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: req.user.id,
       }
     }).then(function(page) {
       return page.destroy();
@@ -140,7 +148,7 @@ var createPageRouter = function(express, db) {
   });
 
   // Search by title
-  pageRouter.get('/search/:keyword', function(req, res) {
+  pageRouter.get('/search/:keyword', addUserToReqMiddleware, function(req, res) {
     var limit = apiHelpers.convertToIntWithDefault({
       valueToConvert: req.query.limit,
       defaultValue: 10,
@@ -157,6 +165,7 @@ var createPageRouter = function(express, db) {
       limit: limit,
       offset: offset,
       where: {
+        userId: req.user.id,
         '$or': {
           title: {
             $like: '%' + req.params.keyword + '%'

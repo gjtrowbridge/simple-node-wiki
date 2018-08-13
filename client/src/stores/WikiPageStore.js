@@ -19,6 +19,10 @@ var _optimisticPage = null;
 var _nextSaveRequestId = 1;
 
 var WikiPageStore = StoreUtils.createStore({
+  clear: function() {
+    _pagesById = {};
+    _pagesByName = {};
+  },
   getByName: function(name) {
     if (_optimisticPage !== null && _optimisticPage.name === name) {
       return _optimisticPage;
@@ -140,6 +144,14 @@ var WikiPageStore = StoreUtils.createStore({
 WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   switch (action.type) {
     case ActionTypes.REQUEST_PAGE:
+      break;
+    case ActionTypes.REQUEST_USER_FAILURE:
+      WikiPageStore.clear();
+      WikiPageStore.emitChange();
+      break;
+    case ActionTypes.LOGOUT_USER:
+      WikiPageStore.clear();
+      WikiPageStore.emitChange();
       break;
     case ActionTypes.SAVE_PAGE:
       var pageData = action.pageData;

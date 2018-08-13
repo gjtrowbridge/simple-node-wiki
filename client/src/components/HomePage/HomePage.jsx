@@ -11,7 +11,7 @@ var HomePage = React.createClass({
   getInitialState: function() {
     return {
       recentlyModifiedPageList: [],
-      recentlyCreatedPageList: []
+      recentlyCreatedPageList: [],
     };
   },
   componentWillMount: function() {
@@ -36,7 +36,7 @@ var HomePage = React.createClass({
   getStateFromStores: function() {
     return {
       recentlyModifiedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_MODIFIED) || [],
-      recentlyCreatedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_CREATED) || []
+      recentlyCreatedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_CREATED) || [],
     }
   },
   _onChange: function() {

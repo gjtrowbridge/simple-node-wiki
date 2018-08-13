@@ -17,6 +17,8 @@ if (config.use_env_variable) {
 const Page = definePage(sequelize, Sequelize);
 const User = defineUser(sequelize, Sequelize);
 
+User.hasMany(Page);
+
 
 module.exports = {
   Page,
