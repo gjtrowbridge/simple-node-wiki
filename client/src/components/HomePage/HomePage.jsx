@@ -53,8 +53,8 @@ var HomePage = React.createClass({
           or find existing pages using the search box or the lists
           below.
         </p>
-        <PageList title={'Recently Modified Pages (' + (AppStateStore.activeUser() || 'Must Log In To View')  + ')'} pages={this.state.recentlyModifiedPageList} />
-        <PageList title={'Recently Created Pages (' + (AppStateStore.activeUser() || 'Must Log In To View')  + ')'} pages={this.state.recentlyCreatedPageList} />
+        <PageList title={'Recently Modified Pages (' + (AppStateStore.activeUser().email || 'Must Log In To View')  + ')'} pages={this.state.recentlyModifiedPageList} />
+        <PageList title={'Recently Created Pages (' + (AppStateStore.activeUser().email || 'Must Log In To View')  + ')'} pages={this.state.recentlyCreatedPageList} />
         <p>
           To learn more about this application or make suggestions,
           check out the github page
