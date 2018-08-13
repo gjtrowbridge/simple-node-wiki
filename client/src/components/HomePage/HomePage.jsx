@@ -45,6 +45,10 @@ var HomePage = React.createClass({
   },
   render: function() {
     document.title = 'Simple Wiki';
+    var activeUserNote = '(must login to view)';
+    if (AppStateStore.activeUser()) {
+      activeUserNote = '(' + AppStateStore.activeUser().email + ')';
+    }
     return (
       <div className="home-page">
         <p>Welcome to the "personal wiki" application.</p>
@@ -53,8 +57,8 @@ var HomePage = React.createClass({
           or find existing pages using the search box or the lists
           below.
         </p>
-        <PageList title={'Recently Modified Pages (' + (AppStateStore.activeUser().email || 'Must Log In To View')  + ')'} pages={this.state.recentlyModifiedPageList} />
-        <PageList title={'Recently Created Pages (' + (AppStateStore.activeUser().email || 'Must Log In To View')  + ')'} pages={this.state.recentlyCreatedPageList} />
+        <PageList title={'Recently Modified Pages ' + activeUserNote} pages={this.state.recentlyModifiedPageList} />
+        <PageList title={'Recently Created Pages ' + activeUserNote} pages={this.state.recentlyCreatedPageList} />
         <p>
           To learn more about this application or make suggestions,
           check out the github page
