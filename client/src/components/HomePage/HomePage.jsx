@@ -1,7 +1,8 @@
 var React = require('react');
 var PageList = require('../PageList/PageList.jsx');
 var shared = require('../../../../shared/shared.js');
-var PageListStore = require('../../stores/PageListStore.js');
+var PageListStore = require('../../stores/PageListStore');
+var AppStateStore = require('../../stores/AppStateStore');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
 
 var HomePage = React.createClass({
@@ -52,8 +53,8 @@ var HomePage = React.createClass({
           or find existing pages using the search box or the lists
           below.
         </p>
-        <PageList title="Recently Modified Pages" pages={this.state.recentlyModifiedPageList} />
-        <PageList title="Recently Created Pages" pages={this.state.recentlyCreatedPageList} />
+        <PageList title={'Recently Modified Pages (' + (AppStateStore.activeUser() || 'Must Log In To View')  + ')'} pages={this.state.recentlyModifiedPageList} />
+        <PageList title={'Recently Created Pages (' + (AppStateStore.activeUser() || 'Must Log In To View')  + ')'} pages={this.state.recentlyCreatedPageList} />
         <p>
           To learn more about this application or make suggestions,
           check out the github page
