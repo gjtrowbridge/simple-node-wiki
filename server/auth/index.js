@@ -84,32 +84,33 @@ var initializeAuth = function(
     }
   );
 
-  // Only if the environment is development or test, add the ability to sign
-  // in for "free".
-  if (!isProduction) {
-    const getDoneCallback = function (res) {
-      return function (error, user) {
-        if (error) {
-          res.status(500).send(error)
-        } else {
-          const jwt = helpers.createJWTFromUser(user, secretKeyJWT, algorithm);
-          res.send(getRedirectHTMLWithEmbeddedJWT(jwt));
-        }
-      };
-    };
-
-    authRouter.get('/freeToken', function (req, res) {
-      helpers.findOrCreateUserAfterGoogleAuth(
-        '1',
-        'example@example.com',
-        getDoneCallback(res)
-      );
-    });
-  }
-
   return {
     authRouter,
-    addUserToReqMiddleware: passport.authenticate('jwt', { session: false}),
+    addUserToReqMiddleware: function(req, res, next) {
+      if (isProduction) {
+        return passport.authenticate('jwt', {session: false})(req, res, next);
+      } else {
+        // If on a local, dev, or other non-production environment, allow auto-login
+        // without JWT or Google OAuth
+        helpers.findOrCreateUserAfterGoogleAuth(
+          '1',
+          'user@localhost',
+          function(error, user) {
+            req.user = {
+              id: user.id,
+              email: user.email,
+              createdAt: user.createdAt,
+              updatedAt: user.updatedAt,
+            };
+            if (error) {
+              res.status(500).send(error);
+            } else {
+              next();
+            }
+          }
+        );
+      }
+    }
   };
 };
 
