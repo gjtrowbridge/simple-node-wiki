@@ -11,7 +11,7 @@ Other goals:
 
 Node/Express/SQL back-end, React/Flux front-end.
 ***
-To see the application in action, check out: https://simple-node-wiki-example.herokuapp.com/
+To see the application in action, check out: https://simple-node-wiki.herokuapp.com/
 ***
 
 ### To Install And Use Locally
@@ -28,8 +28,6 @@ To see the application in action, check out: https://simple-node-wiki-example.he
 * That's it!  After starting the server, use the application by navigating to http://localhost:8090
 
 ### To Install And Use on Heroku
-
-##### (NOTE: Since the app currently uses SQLite exclusively, deploying to Heroku will work, but Heroku clears the filesystem at least once every 24 hours, so it is NOT YET recommended to use Heroku with this application if you want persistent data...which you probably do).  This will be updated soon, so stay tuned (and do feel free to check out the demo site at the link above).
 
 * Make sure you have a Heroku account and the Heroku toolbelt CLI installed.
 * `git clone`
