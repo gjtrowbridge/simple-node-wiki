@@ -1,8 +1,9 @@
 const React = require('react');
-const Router = require('react-router');
-const Route = Router.Route;
-const DefaultRoute = Router.DefaultRoute;
-const NotFoundRoute = Router.NotFoundRoute;
+const ReactRouterDom = require('react-router-dom');
+const Router = ReactRouterDom.BrowserRouter;
+const Route = ReactRouterDom.Route;
+const DefaultRoute = ReactRouterDom.DefaultRoute;
+const NotFoundRoute = ReactRouterDom.NotFoundRoute;
 const AppStateActionCreators = require('./actions/AppStateActionCreators.js');
 const RouterContainer = require('./utils/RouterContainer.js');
 
