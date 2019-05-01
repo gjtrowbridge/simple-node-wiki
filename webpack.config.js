@@ -27,6 +27,14 @@ module.exports = {
       }
     ]
   },
+  devtool: 'inline-source-map',
+  resolve: {
+    alias: {
+      'Root': __dirname,
+      'Components': path.join(__dirname, 'client/src/components'),
+      'Stores': path.join(__dirname, 'client/src/stores'),
+    },
+  },
   devServer: {
     contentBase: path.join(__dirname, 'client/public'),
     publicPath: '/_public/assets/js/',

@@ -1,17 +1,15 @@
+const keyMirror = require('keymirror');
 const _ = require('underscore');
-const sharedConstants = require('./_sharedConstants.js');
-const sharedDecorators = {};
 
-/*
-  Accepts a parameterDefinition object that defines
-  what properties are accepted by the function and optionally
-  provides default values.
+const constants = keyMirror({
+  IS_REQUIRED: true,
+  ORDER_BY_MODIFIED: true,
+  ORDER_BY_CREATED: true,
+  SEARCH: true
+});
+const decorators = {};
 
-  Not providing an IS_REQUIRED value will throw an error.
-  Providing additional parameters beyond those defined will
-  throw an error.
-*/
-sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
+decorators.addDefaultParams = function(parametersDefinition, func) {
   return function(parameters) {
     if (arguments.length !== 1) {
       throw 'This function only accepts one argument'
@@ -22,8 +20,8 @@ sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
 
     // Make sure all required parameters are defined
     _.each(parametersDefinition, function(value, name) {
-      if (value === sharedConstants.IS_REQUIRED
-          && !parameters.hasOwnProperty(name)) {
+      if (value === constants.IS_REQUIRED
+        && !parameters.hasOwnProperty(name)) {
         throw 'The required parameter: ' + name + ' was not provided!';
       }
     });
@@ -41,4 +39,4 @@ sharedDecorators.addDefaultParams = function(parametersDefinition, func) {
   }
 };
 
-module.exports = sharedDecorators;
+export { constants, decorators };

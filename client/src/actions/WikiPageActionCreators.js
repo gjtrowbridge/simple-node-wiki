@@ -2,7 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher.js');
 var WikiUtils = require('../utils/WikiUtils.js');
 var WikiConstants = require('../constants/WikiConstants.js');
 var RouterContainer = require('../utils/RouterContainer.js');
-var shared = require('../../../shared/shared.js');
+const shared = require('../../../shared/shared.js');
 var apiRootUrl = WikiConstants.BASE_URL + '/_api';
 
 var WikiPageActionCreators = {

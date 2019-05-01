@@ -1,5 +1,5 @@
 var React = require('react');
-var Link = require('react-router').Link;
+const { Link } = require('react-router-dom');
 var AppStateActionCreators = require('../../actions/AppStateActionCreators');
 var WikiPageActionCreators = require('../../actions/WikiPageActionCreators');
 var SearchBar = require('../SearchBar/SearchBar.jsx');
