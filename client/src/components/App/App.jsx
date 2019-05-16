@@ -1,41 +1,41 @@
 var React = require('react');
-var Router = require('react-router');
-var RouteHandler = Router.RouteHandler;
-var AppStateStore = require('../../stores/AppStateStore.js');
-var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
+import AppStateStore from '../../stores/AppStateStore.js';
+import WikiPageActionCreators from '../../actions/WikiPageActionCreators.js';
 
-var NotificationTopBar = require('../Notifications/NotificationTopBar.jsx');
-var Nav = require('../Nav/Nav.jsx');
-var Modal = require('../Modal/Modal.jsx');
-var Footer = require('../Footer/Footer.jsx');
-var AreaDisabler = require('../AreaDisabler/AreaDisabler.jsx');
+import NotificationTopBar from '../Notifications/NotificationTopBar.jsx';
+import Nav from '../Nav/Nav.jsx';
+import Modal from '../Modal/Modal.jsx';
+import Footer from '../Footer/Footer.jsx';
+import AreaDisabler from '../AreaDisabler/AreaDisabler.jsx';
 
-var App = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return this.getStateFromStores();
-  },
-  getStateFromStores: function() {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this._onChange = this._onChange.bind(this);
+    this.renderNotificationTopBar = this.renderNotificationTopBar.bind(this);
+    this.renderModal = this.renderModal.bind(this);
+    this.modalIsOpen = this.modalIsOpen.bind(this);
+    this.state = this.getStateFromStores();
+  }
+  getStateFromStores() {
     return {
       notifications: AppStateStore.activeNotifications(),
       modalInnerNode: AppStateStore.activeModalInnerNode(),
     };
-  },
-  _onChange: function() {
+  }
+  _onChange() {
     this.setState(this.getStateFromStores());
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     AppStateStore.addChangeListener(this._onChange);
     setTimeout(function() {
       WikiPageActionCreators.checkUser();
     }, 0);
-  },
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     AppStateStore.removeChangeListener(this._onChange);
-  },
-  renderNotificationTopBar: function() {
+  }
+  renderNotificationTopBar() {
     if (this.state.notifications.length > 0) {
       return (
         <NotificationTopBar notifications={this.state.notifications} />
@@ -43,19 +43,18 @@ var App = React.createClass({
     } else {
       return "";
     }
-  },
-  renderModal: function() {
+  }
+  renderModal() {
     if (this.state.modalInnerNode) {
       return <Modal innerNode={this.state.modalInnerNode} />;
     } else {
       return "";
     }
-  },
-  modalIsOpen: function() {
+  }
+  modalIsOpen() {
     return !!this.state.modalInnerNode;
-  },
-  render: function() {
-    var params = this.context.router.getCurrentParams();
+  }
+  render() {
     return (
       <div className='app'>
         {this.renderModal()}
@@ -64,13 +63,13 @@ var App = React.createClass({
           {this.renderNotificationTopBar()}
           <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
           <div id="main-content">
-            <RouteHandler {...params} />
+            {this.props.children}
           </div>
           <Footer />
         </div>
       </div>
     );
   }
-});
+}
 
-module.exports = App;
+export default App;

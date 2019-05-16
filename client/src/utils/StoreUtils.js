@@ -1,6 +1,7 @@
-var shared = require('../../../shared/shared.js');
+import shared from 'Src/utils/shared_port.js';
 var assign = require('object-assign');
-var ActionTypes = require('../constants/WikiConstants.js').ActionTypes;
+import wikiConstants from '../constants/WikiConstants.js';
+const ActionTypes = wikiConstants.ActionTypes;
 var CHANGE_EVENT = ActionTypes.CHANGE_EVENT;
 var EventEmitter = require('events');
 
@@ -37,4 +38,4 @@ var storeUtils = {
   }
 };
 
-module.exports = storeUtils;
+export default storeUtils;

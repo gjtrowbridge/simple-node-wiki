@@ -1,12 +1,9 @@
 var React = require('react');
-var PagePreviewCard = require('../PagePreviewCard/PagePreviewCard.jsx');
+import PagePreviewCard from '../PagePreviewCard/PagePreviewCard.jsx';
+import PropTypes from 'prop-types';
 
-var PageList = React.createClass({
-  propTypes: {
-    pages: React.PropTypes.array.isRequired,
-    title: React.PropTypes.string.isRequired
-  },
-  render: function() {
+class PageList extends React.Component {
+  render() {
     var pagePreviewCards = this.props.pages.map(function(page) {
       return (
         <li key={page.id}>
@@ -23,6 +20,11 @@ var PageList = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = PageList;
+PageList.propTypes = {
+    pages: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired
+};
+
+export default PageList;

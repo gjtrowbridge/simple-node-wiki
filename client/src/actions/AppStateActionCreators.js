@@ -1,5 +1,5 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher.js');
-var WikiConstants = require('../constants/WikiConstants.js');
+import AppDispatcher from '../dispatcher/AppDispatcher.js';
+import WikiConstants from '../constants/WikiConstants.js';
 
 var AppStateActionCreators = {
   // innerNode should be any render-able item
@@ -38,4 +38,4 @@ var AppStateActionCreators = {
   }
 };
 
-module.exports = AppStateActionCreators;
+export default AppStateActionCreators;

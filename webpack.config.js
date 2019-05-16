@@ -31,6 +31,7 @@ module.exports = {
   resolve: {
     alias: {
       'Root': __dirname,
+      'Src': path.join(__dirname, 'client/src'),
       'Components': path.join(__dirname, 'client/src/components'),
       'Stores': path.join(__dirname, 'client/src/stores'),
     },

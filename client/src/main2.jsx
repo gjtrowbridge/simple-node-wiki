@@ -2,10 +2,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const ReactRouterDom = require('react-router-dom');
 const { BrowserRouter, Route, Link } = ReactRouterDom;
-// const Nav = require('Components/Nav/Nav.jsx');
-// const AppStateStore = require('Stores/AppStateStore.js');
-const sharedDecorators = require('Root/shared/_sharedDecorators.js');
-
+import Nav from 'Components/Nav/Nav.jsx';
+import AppStateStore from 'Stores/AppStateStore.js';
 
 class Example extends React.Component {
   render() {
@@ -30,7 +28,7 @@ class Example2 extends React.Component {
 function RootRouter() {
   return (
     <BrowserRouter>
-      {/*<Nav id="main-navigation" user={AppStateStore.activeUser()}/>*/}
+      <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
       <Route path="/" exact component={Example} />
       <Route path="/example2" component={Example2} />
     </BrowserRouter>

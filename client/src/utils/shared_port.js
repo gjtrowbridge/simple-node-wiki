@@ -39,4 +39,10 @@ decorators.addDefaultParams = function(parametersDefinition, func) {
   }
 };
 
+const shared = {
+  constants,
+  decorators,
+};
+
 export { constants, decorators };
+export default shared;

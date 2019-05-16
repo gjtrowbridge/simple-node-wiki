@@ -1,9 +1,10 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var WikiConstants = require('../constants/WikiConstants.js');
-var AppStateActionCreators = require('../actions/AppStateActionCreators.js');
-var StoreUtils = require('../utils/StoreUtils.js');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import WikiConstants from '../constants/WikiConstants.js';
+import AppStateActionCreators from '../actions/AppStateActionCreators.js';
+import StoreUtils from '../utils/StoreUtils.js';
 var ActionTypes = WikiConstants.ActionTypes;
-var RouterContainer = require('../utils/RouterContainer.js');
+import { transitionTo } from 'Src/utils/HistoryContainer';
+
 
 var _activeModalInnerNode = null;
 var _activeNotifications = [];
@@ -160,12 +161,11 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
           'Error requesting page with url: "' + action.pageData.name + '"', 10000);
       }
       AppStateStore.emitChange();
-      var router = RouterContainer.getRouter();
-      router.transitionTo('home');
+      transitionTo('');
       break;
     default:
       // do nothing
   };
 });
 
-module.exports = AppStateStore;
+export default AppStateStore;

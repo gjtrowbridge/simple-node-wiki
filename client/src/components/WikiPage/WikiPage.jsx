@@ -2,36 +2,44 @@
   All documents on the wiki are displayed with this component.
 */
 var React = require('react');
-var MarkdownEditor = require('../MarkdownEditor/MarkdownEditor.jsx');
-var OnOffSwitch = require('../OnOffSwitch/OnOffSwitch.jsx');
-var WikiPageStore = require('../../stores/WikiPageStore.js');
-var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
-var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
-var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
-var WikiConstants = require('../../constants/WikiConstants.js');
+import MarkdownEditor from '../MarkdownEditor/MarkdownEditor.jsx';
+import OnOffSwitch from '../OnOffSwitch/OnOffSwitch.jsx';
+import WikiPageStore from '../../stores/WikiPageStore.js';
+import WikiPageActionCreators from '../../actions/WikiPageActionCreators.js';
+import WikiPageUrlTitleForm from '../WikiPage/WikiPageUrlTitleForm.jsx';
+import AppStateActionCreators from '../../actions/AppStateActionCreators.js';
+import WikiConstants from '../../constants/WikiConstants.js';
 
-var WikiPage = React.createClass({
-  propTypes: function() {
-    pageName: React.PropTypes.string.isRequired
-  },
-  getStateFromStores: function(overridePageName) {
+class WikiPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.getStateFromStores = this.getStateFromStores.bind(this);
+    this.requestPage = this.requestPage.bind(this);
+    this.savePage = this.savePage.bind(this);
+    this._onChange = this._onChange.bind(this);
+    this.onEditorChange = this.onEditorChange.bind(this);
+    this.onChangeViewModeToggle = this.onChangeViewModeToggle.bind(this);
+    this.showEditPageModal = this.showEditPageModal.bind(this);
+    this.deletePage = this.deletePage.bind(this);
+
+    this.state = this.getStateFromStores();
+  }
+  getStateFromStores(overridePageName) {
     var pageName = overridePageName !== undefined ?
         overridePageName : this.props.pageName;
     var result = WikiPageStore.getByName(pageName);
     result = result === null ? {} : result;
     result.viewMode = WikiPageStore.getViewMode();
     return result;
-  },
-  getInitialState: function() {
-    return this.getStateFromStores();
-  },
-  requestPage: function(pageName) {
+  }
+  requestPage(pageName) {
     WikiPageActionCreators.requestPage(pageName);
-  },
-  savePage: function(pageData) {
+  }
+  savePage(pageData) {
     WikiPageActionCreators.savePage(pageData);
-  },
-  componentWillReceiveProps: function(newProps) {
+  }
+  componentWillReceiveProps(newProps) {
     // This is probably the wrong solution long-term,
     // but for the time being this fixes the issue
     // of the page not resetting state when the page name
@@ -42,25 +50,25 @@ var WikiPage = React.createClass({
         newProps.pageName !== undefined) {
       this.setState(this.getStateFromStores(newProps.pageName));
     }
-  },
-  componentWillMount: function() {
+  }
+  componentWillMount() {
     var cachedPageData = this.getStateFromStores();
     if (cachedPageData.hasOwnProperty('text')) {
       this.setState(cachedPageData);
     } else {
       this.requestPage({ name: this.props.pageName });
     }
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     WikiPageStore.addChangeListener(this._onChange);
-  },
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     WikiPageStore.removeChangeListener(this._onChange);
-  },
-  _onChange: function() {
+  }
+  _onChange() {
     this.setState(this.getStateFromStores());
-  },
-  onEditorChange: function(e) {
+  }
+  onEditorChange(e) {
     var pageData = {
       id: this.state.id,
       name: this.state.name,
@@ -68,25 +76,25 @@ var WikiPage = React.createClass({
       title: this.state.title
     };
     this.savePage(pageData);
-  },
-  showEditPageModal: function() {
+  }
+  showEditPageModal() {
     var innerNode = (
       <WikiPageUrlTitleForm wikiPageTitle={this.state.title} wikiPageUrl={this.state.name}
         wikiPageId={this.state.id} wikiPageText={this.state.text} />
     );
     AppStateActionCreators.showModal(innerNode);
-  },
-  onChangeViewModeToggle: function(e) {
+  }
+  onChangeViewModeToggle(e) {
     var viewModeEnabled = !e.target.checked;
     WikiPageActionCreators.setViewMode(viewModeEnabled);
-  },
-  deletePage: function() {
+  }
+  deletePage() {
     WikiPageActionCreators.deletePage({
       pageId: this.state.id,
       pageTitle: this.state.title
     });
-  },
-  render: function() {
+  }
+  render() {
     if (this.state.title !== undefined) {
       document.title = this.state.title;
     }
@@ -132,6 +140,10 @@ var WikiPage = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = WikiPage;
+WikiPage.propTypes = {
+  pageName: React.PropTypes.string.isRequired,
+};
+
+export default WikiPage;

@@ -4,12 +4,12 @@ const Router = ReactRouterDom.BrowserRouter;
 const Route = ReactRouterDom.Route;
 const DefaultRoute = ReactRouterDom.DefaultRoute;
 const NotFoundRoute = ReactRouterDom.NotFoundRoute;
-const AppStateActionCreators = require('./actions/AppStateActionCreators.js');
-const RouterContainer = require('./utils/RouterContainer.js');
+import AppStateActionCreators from './actions/AppStateActionCreators.js';
+import RouterContainer from './utils/RouterContainer.js';
 
-const App = require('./components/App/App.jsx');
-const HomePage = require('./components/HomePage/HomePage.jsx');
-const WikiPage = require('./components/WikiPage/WikiPage.jsx');
+import App from './components/App/App.jsx';
+import HomePage from './components/HomePage/HomePage.jsx';
+import WikiPage from './components/WikiPage/WikiPage.jsx';
 
 const routes = (
   <Route handler={App}>

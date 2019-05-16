@@ -4,15 +4,14 @@
   Designed for use with the DisplayBox component.
 */
 var React = require('react');
+import PropTypes from 'prop-types';
 
-var EditBox = React.createClass({
-  propTypes: {
-    onChange: React.PropTypes.func.isRequired,
-    markdownText: React.PropTypes.string.isRequired,
-    extraClasses: React.PropTypes.array,
-    statusText: React.PropTypes.string
-  },
-  onKeyDown: function(e) {
+class EditBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onKeyDown = this.onKeyDown.bind(this);
+  }
+  onKeyDown(e) {
     // Override tab key to add spacing
     if (e.keyCode === 9) {
       e.preventDefault();
@@ -26,8 +25,8 @@ var EditBox = React.createClass({
       target.selectionStart = start + toInsert.length;
       target.selectionEnd = start + toInsert.length;
     }
-  },
-  render: function() {
+  }
+  render() {
     var classes = ['box', 'edit-box'];
     if (this.props.extraClasses) {
       classes = classes.concat(this.props.extraClasses);
@@ -41,6 +40,13 @@ var EditBox = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = EditBox;
+EditBox.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  markdownText: PropTypes.string.isRequired,
+  extraClasses: PropTypes.array,
+  statusText: PropTypes.string
+};
+
+export default EditBox;

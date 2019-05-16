@@ -1,9 +1,9 @@
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('object-assign');
-var shared = require('../../../shared/shared.js');
+import shared from 'Src/utils/shared_port.js';
 var flux = new Dispatcher();
 
-module.exports = {
+export default {
   waitFor: function(ids) {
     return flux.waitFor(ids);
   },

@@ -1,7 +1,7 @@
 var React = require('react');
 
-var Footer = React.createClass({
-  render: function() {
+class Footer extends React.Component {
+  render() {
     return (
       <footer id="footer" className="layout-fill-and-center">
         <p>See the source code
@@ -10,6 +10,6 @@ var Footer = React.createClass({
       </footer>
     );
   }
-});
+}
 
-module.exports = Footer;
+export default Footer;

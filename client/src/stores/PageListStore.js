@@ -1,9 +1,9 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var WikiConstants = require('../constants/WikiConstants.js');
-var WikiPageStore = require('./WikiPageStore.js');
-var StoreUtils = require('../utils/StoreUtils.js');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import WikiConstants from '../constants/WikiConstants.js';
+import WikiPageStore from './WikiPageStore.js';
+import StoreUtils from '../utils/StoreUtils.js';
 var ActionTypes = WikiConstants.ActionTypes;
-var shared = require('../../../shared/shared.js');
+import shared from 'Src/utils/shared_port.js';
 
 var _pageLists = {};
 
@@ -50,4 +50,4 @@ PageListStore.dispatchToken = AppDispatcher.register(function(action) {
   };
 });
 
-module.exports = PageListStore;
+export default PageListStore;

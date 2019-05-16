@@ -1,30 +1,19 @@
 // Used for creating new pages and editing the
 // URL and title of existing pages
 var React = require('react');
-var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
-var RouterContainer = require('../../utils/RouterContainer.js');
+import WikiPageActionCreators from '../../actions/WikiPageActionCreators.js';
+import { transitionTo } from 'Src/utils/HistoryContainer';
+import PropTypes from 'prop-types';
 
-var WikiPageUrlTitleForm = React.createClass({
-  PropTypes: {
-    wikiPageTitle: React.PropTypes.string,
-    wikiPageUrl: React.PropTypes.string,
-    wikiPageText: React.PropTypes.string,
-    // If null, this helps create a new page
-    // If defined, this helps edit an existing page
-    wikiPageId: React.PropTypes.any.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      wikiPageTitle: '',
-      wikiPageUrl: '',
-      wikiPageId: null,
-      wikiPageText: null
-    };
-  },
-  sendPageToServer: function() {
+class WikiPageUrlTitleForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.sendPageToServer = this.sendPageToServer.bind(this);
+  }
+  sendPageToServer() {
     var text = this.props.wikiPageText !== null ?
         this.props.wikiPageText :
-        '# ' + this.refs.titleInput.getDOMNode().value
+        '# ' + this.refs.titleInput.getDOMNode().value;
     // Create new page
     if (this.props.wikiPageId === null) {
       var name = this.refs.urlInput.getDOMNode().value;
@@ -34,8 +23,7 @@ var WikiPageUrlTitleForm = React.createClass({
         title: title,
         text: text,
         onSuccess: function() {
-          var router = RouterContainer.getRouter();
-          router.transitionTo('/pages/' + name);
+          transitionTo('/pages/' + name);
         }
       });
     // Edit existing page
@@ -43,8 +31,7 @@ var WikiPageUrlTitleForm = React.createClass({
       var newName = this.refs.urlInput.getDOMNode().value
       var newTitle = this.refs.titleInput.getDOMNode().value
       var onSuccess = function() {
-        var router = RouterContainer.getRouter();
-        router.transitionTo('/pages/' + newName);
+        transitionTo('/pages/' + newName);
       }.bind(this);
 
       WikiPageActionCreators.savePage({
@@ -54,8 +41,8 @@ var WikiPageUrlTitleForm = React.createClass({
         text: text,
       }, onSuccess);
     }
-  },
-  render: function() {
+  }
+  render() {
     var header = this.props.wikiPageId === null ?
         'Create New Page' : 'Edit Page';
     return (
@@ -82,6 +69,22 @@ var WikiPageUrlTitleForm = React.createClass({
       </div>
     )
   }
-});
+}
 
-module.exports = WikiPageUrlTitleForm;
+WikiPageUrlTitleForm.propTypes = {
+  wikiPageTitle: PropTypes.string,
+  wikiPageUrl: PropTypes.string,
+  wikiPageText: PropTypes.string,
+  // If null, this helps create a new page
+  // If defined, this helps edit an existing page
+  wikiPageId: PropTypes.any.isRequired
+};
+
+WikiPageUrlTitleForm.defaultProps = {
+  wikiPageTitle: '',
+  wikiPageUrl: '',
+  wikiPageId: null,
+  wikiPageText: null,
+};
+
+export default WikiPageUrlTitleForm;

@@ -1,21 +1,26 @@
 var React = require('react');
-var PageList = require('../PageList/PageList.jsx');
-var shared = require('../../../../shared/shared.js');
-var PageListStore = require('../../stores/PageListStore');
-var AppStateStore = require('../../stores/AppStateStore');
-var WikiPageActionCreators = require('../../actions/WikiPageActionCreators.js');
+import PageList from '../PageList/PageList.jsx';
+import shared from 'Src/utils/shared_port.js';
+import PageListStore from '../../stores/PageListStore';
+import AppStateStore from '../../stores/AppStateStore';
+import WikiPageActionCreators from '../../actions/WikiPageActionCreators.js';
 
-var HomePage = React.createClass({
-  contextTypes: {
-    router: React.PropTypes.func.isRequired
-  },
-  getInitialState: function() {
-    return {
+class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       recentlyModifiedPageList: [],
       recentlyCreatedPageList: [],
     };
-  },
-  componentWillMount: function() {
+    this._onChange = this._onChange.bind(this);
+  }
+  getStateFromStores() {
+    return {
+      recentlyModifiedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_MODIFIED) || [],
+      recentlyCreatedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_CREATED) || [],
+    }
+  }
+  componentWillMount() {
     // Certain actions trigger transitions mid-action, so all
     // on-page-load actions must be given setTimeouts to prevent
     // attempting to create a new action while another is happening
@@ -27,23 +32,17 @@ var HomePage = React.createClass({
         pageListType: shared.constants.ORDER_BY_CREATED
       });
     }, 0);
-  },
-  componentDidMount: function() {
+  }
+  componentDidMount() {
     PageListStore.addChangeListener(this._onChange);
-  },
-  componentWillUnmount: function() {
+  }
+  componentWillUnmount() {
     PageListStore.removeChangeListener(this._onChange);
-  },
-  getStateFromStores: function() {
-    return {
-      recentlyModifiedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_MODIFIED) || [],
-      recentlyCreatedPageList: PageListStore.getPageList(shared.constants.ORDER_BY_CREATED) || [],
-    }
-  },
-  _onChange: function() {
+  }
+  _onChange() {
     this.setState(this.getStateFromStores());
-  },
-  render: function() {
+  }
+  render() {
     document.title = 'Simple Wiki';
     var activeUserNote = '(must login to view)';
     if (AppStateStore.activeUser()) {
@@ -67,6 +66,6 @@ var HomePage = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = HomePage;
+export default HomePage;
