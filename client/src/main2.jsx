@@ -1,36 +1,18 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const ReactRouterDom = require('react-router-dom');
-const { BrowserRouter, Route, Link } = ReactRouterDom;
-import Nav from 'Components/Nav/Nav.jsx';
-import AppStateStore from 'Stores/AppStateStore.js';
-
-class Example extends React.Component {
-  render() {
-    return (
-      <div>
-        This is a rendered component1234!
-      </div>
-    )
-  }
-}
-
-class Example2 extends React.Component {
-  render() {
-    return (
-      <div>
-        This is the second example!
-      </div>
-    )
-  }
-}
+const {
+  BrowserRouter,
+  Route,
+  Link,
+  Switch,
+} = ReactRouterDom;
+import App from 'Components/App/App.jsx';
 
 function RootRouter() {
   return (
     <BrowserRouter>
-      <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
-      <Route path="/example2" component={Example2} />
-      <Route path="/" component={Example} />
+      <App />
     </BrowserRouter>
   );
 }

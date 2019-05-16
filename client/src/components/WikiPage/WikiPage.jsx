@@ -2,6 +2,7 @@
   All documents on the wiki are displayed with this component.
 */
 var React = require('react');
+import PropTypes from 'prop-types';
 import MarkdownEditor from '../MarkdownEditor/MarkdownEditor.jsx';
 import OnOffSwitch from '../OnOffSwitch/OnOffSwitch.jsx';
 import WikiPageStore from '../../stores/WikiPageStore.js';
@@ -143,7 +144,7 @@ class WikiPage extends React.Component {
 }
 
 WikiPage.propTypes = {
-  pageName: React.PropTypes.string.isRequired,
+  pageName: PropTypes.string.isRequired,
 };
 
 export default WikiPage;

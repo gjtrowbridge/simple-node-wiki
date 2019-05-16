@@ -3,6 +3,7 @@
   showing the resulting html.
 */
 var React = require('react');
+import PropTypes from 'prop-types';
 import EditBox from './EditBox.jsx';
 import DisplayBox from './DisplayBox.jsx';
 var marked = require('marked');

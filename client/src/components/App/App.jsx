@@ -1,12 +1,27 @@
 var React = require('react');
 import AppStateStore from '../../stores/AppStateStore.js';
 import WikiPageActionCreators from '../../actions/WikiPageActionCreators.js';
+import {
+  Route,
+  Switch,
+} from 'react-router-dom';
 
+import WikiPage from 'Components/WikiPage/WikiPage.jsx';
+import HomePage from 'Components/HomePage/HomePage.jsx';
 import NotificationTopBar from '../Notifications/NotificationTopBar.jsx';
 import Nav from '../Nav/Nav.jsx';
 import Modal from '../Modal/Modal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import AreaDisabler from '../AreaDisabler/AreaDisabler.jsx';
+
+class WikiPageWrapper extends React.Component {
+  render() {
+    return (
+      <WikiPage pageName={this.props.match.params.pageName}/>
+    );
+  }
+}
+
 
 class App extends React.Component {
   constructor(props) {
@@ -63,7 +78,10 @@ class App extends React.Component {
           {this.renderNotificationTopBar()}
           <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
           <div id="main-content">
-            {this.props.children}
+            <Switch>
+              <Route path="/pages/:pageName" component={WikiPageWrapper} />
+              <Route component={HomePage} />
+            </Switch>
           </div>
           <Footer />
         </div>
