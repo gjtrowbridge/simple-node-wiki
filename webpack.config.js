@@ -38,8 +38,15 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'client/public'),
-    publicPath: '/_public/assets/js/',
+    historyApiFallback: true,
+    proxy: [
+      {
+        context: ['/_api', '/_auth', '/_public'],
+        target: 'http://localhost:8090',
+      },
+    ],
     port: 9000,
+    publicPath: '/_public/assets/js/',
   },
   mode: 'development',
   target: 'web',

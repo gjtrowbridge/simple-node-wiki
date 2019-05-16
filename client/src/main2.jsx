@@ -29,8 +29,8 @@ function RootRouter() {
   return (
     <BrowserRouter>
       <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
-      <Route path="/" exact component={Example} />
       <Route path="/example2" component={Example2} />
+      <Route path="/" component={Example} />
     </BrowserRouter>
   );
 }
