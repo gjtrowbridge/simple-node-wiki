@@ -22,7 +22,7 @@ var WikiPageActionCreators = {
       },
       action: {},
       transformResponseSuccess: function(responseSuccess, action) {
-        return Object.assign({}, action, JSON.parse(responseSuccess));
+        return Object.assign({}, action, responseSuccess);
       }
     });
   },
@@ -115,7 +115,7 @@ var WikiPageActionCreators = {
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'GET', headers, {}),
+          url, 'GET', headers),
       types: {
         request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
         success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
@@ -142,7 +142,7 @@ var WikiPageActionCreators = {
       }
       return AppDispatcher.dispatchAsync({
         promise: WikiUtils.requestViaHttpAndReturnPromise(
-            url, 'GET', headers, {}),
+            url, 'GET', headers),
         types: {
           request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
           success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,

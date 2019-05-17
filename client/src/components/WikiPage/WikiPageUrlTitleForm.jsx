@@ -9,15 +9,17 @@ class WikiPageUrlTitleForm extends React.Component {
   constructor(props) {
     super(props);
     this.sendPageToServer = this.sendPageToServer.bind(this);
+    this.urlInput = React.createRef();
+    this.titleInput = React.createRef();
   }
   sendPageToServer() {
     var text = this.props.wikiPageText !== null ?
         this.props.wikiPageText :
-        '# ' + this.refs.titleInput.getDOMNode().value;
+        '# ' + this.titleInput.current.value;
     // Create new page
     if (this.props.wikiPageId === null) {
-      var name = this.refs.urlInput.getDOMNode().value;
-      var title = this.refs.titleInput.getDOMNode().value;
+      var name = this.urlInput.current.value;
+      var title = this.titleInput.current.value;
       WikiPageActionCreators.createPage({
         name: name,
         title: title,
@@ -28,8 +30,8 @@ class WikiPageUrlTitleForm extends React.Component {
       });
     // Edit existing page
     } else {
-      var newName = this.refs.urlInput.getDOMNode().value
-      var newTitle = this.refs.titleInput.getDOMNode().value
+      var newName = this.urlInput.current.value;
+      var newTitle = this.titleInput.current.value;
       var onSuccess = function() {
         transitionTo('/pages/' + newName);
       }.bind(this);
@@ -52,14 +54,14 @@ class WikiPageUrlTitleForm extends React.Component {
             htmlFor="wiki-page-title-input">Title</label>
         <input id="wiki-page-title-input"
             className="wiki-page-url-title-form-input"
-            ref="titleInput"
+            ref={this.titleInput}
             placeholder="Enter Title"
             defaultValue={this.props.wikiPageTitle} />
         <label className="wiki-page-url-title-form-label"
             htmlFor="wiki-page-url-input">Page URL</label>
         <input id="wiki-page-url-input"
             className="wiki-page-url-title-form-input"
-            ref="urlInput"
+            ref={this.urlInput}
             placeholder="Enter URL"
             defaultValue={this.props.wikiPageUrl} />
         <button className="btn wiki-page-url-title-form-btn"
@@ -77,7 +79,7 @@ WikiPageUrlTitleForm.propTypes = {
   wikiPageText: PropTypes.string,
   // If null, this helps create a new page
   // If defined, this helps edit an existing page
-  wikiPageId: PropTypes.any.isRequired
+  wikiPageId: PropTypes.any,
 };
 
 WikiPageUrlTitleForm.defaultProps = {

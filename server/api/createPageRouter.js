@@ -5,6 +5,7 @@ var shared = require('../../shared/shared.js');
 
 // Creates a page object from an incoming json request
 var createPageObject = function(req) {
+  console.log('xcxc request', req.body);
   return {
     title: req.body.title,
     text: req.body.text,
