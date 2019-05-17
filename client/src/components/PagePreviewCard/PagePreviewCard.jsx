@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 
 class PagePreviewCard extends React.Component {
   render() {
+    const linkTo = `/pages/${this.props.name}`;
     var link = (
-      <Link key={this.props.id} to="pages" params={{pageName: this.props.name}}>
+      <Link key={this.props.id} to={linkTo}>
         {this.props.title}
       </Link>
     );
