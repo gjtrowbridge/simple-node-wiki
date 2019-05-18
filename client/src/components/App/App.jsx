@@ -4,7 +4,9 @@ import WikiPageActionCreators from '../../actions/WikiPageActionCreators.js';
 import {
   Route,
   Switch,
+  withRouter,
 } from 'react-router-dom';
+import { setHistory } from 'Src/utils/HistoryContainer.js';
 
 import WikiPage from 'Components/WikiPage/WikiPage.jsx';
 import HomePage from 'Components/HomePage/HomePage.jsx';
@@ -42,6 +44,7 @@ class App extends React.Component {
     this.setState(this.getStateFromStores());
   }
   componentDidMount() {
+    setHistory(this.props.history);
     AppStateStore.addChangeListener(this._onChange);
     setTimeout(function() {
       WikiPageActionCreators.checkUser();
@@ -90,4 +93,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
