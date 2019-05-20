@@ -4,13 +4,10 @@
   Designed for use with the EditBox component.
 */
 const React = require('react');
+import PropTypes from 'prop-types';
 
-const DisplayBox = React.createClass({
-  propTypes: {
-    sanitizedHtml: React.PropTypes.string.isRequired,
-    extraClasses: React.PropTypes.array
-  },
-  render: function() {
+class DisplayBox extends React.Component {
+  render() {
     let classes = ['box', 'display-box'];
     if (this.props.extraClasses) {
       classes = classes.concat(this.props.extraClasses);
@@ -23,6 +20,11 @@ const DisplayBox = React.createClass({
           dangerouslySetInnerHTML={dangerousHtml} />
     );
   }
-});
+}
 
-module.exports = DisplayBox;
+DisplayBox.propTypes = {
+  sanitizedHtml: PropTypes.string.isRequired,
+  extraClasses: PropTypes.array,
+};
+
+export default DisplayBox;

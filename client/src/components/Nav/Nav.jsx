@@ -1,21 +1,21 @@
 var React = require('react');
-var Link = require('react-router').Link;
-var AppStateActionCreators = require('../../actions/AppStateActionCreators');
-var WikiPageActionCreators = require('../../actions/WikiPageActionCreators');
-var SearchBar = require('../SearchBar/SearchBar.jsx');
-var WikiPageUrlTitleForm = require('../WikiPage/WikiPageUrlTitleForm.jsx');
+const { Link } = require('react-router-dom');
+import AppStateActionCreators from '../../actions/AppStateActionCreators';
+import WikiPageActionCreators from '../../actions/WikiPageActionCreators';
+import SearchBar from '../SearchBar/SearchBar.jsx';
+import WikiPageUrlTitleForm from '../WikiPage/WikiPageUrlTitleForm.jsx';
 
-var Nav = React.createClass({
-  showCreatePageModal: function() {
+class Nav extends React.Component {
+  showCreatePageModal() {
     var innerNode = (
       <WikiPageUrlTitleForm />
     );
     AppStateActionCreators.showModal(innerNode);
-  },
-  logout: function() {
+  }
+  logout() {
     WikiPageActionCreators.logoutUser();
-  },
-  render: function() {
+  }
+  render() {
     var id = this.props.id !== undefined ?
         this.props.id : "";
     var userComponent;
@@ -53,6 +53,6 @@ var Nav = React.createClass({
       </nav>
     );
   }
-});
+}
 
-module.exports = Nav;
+export default Nav;

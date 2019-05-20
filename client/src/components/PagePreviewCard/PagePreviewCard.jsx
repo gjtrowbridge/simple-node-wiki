@@ -1,15 +1,12 @@
 var React = require('react');
-var Link = require('react-router').Link;
+const { Link } = require('react-router-dom');
+import PropTypes from 'prop-types';
 
-var PagePreviewCard = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    title: React.PropTypes.string.isRequired,
-    id: React.PropTypes.number.isRequired
-  },
-  render: function() {
+class PagePreviewCard extends React.Component {
+  render() {
+    const linkTo = `/pages/${this.props.name}`;
     var link = (
-      <Link key={this.props.id} to="pages" params={{pageName: this.props.name}}>
+      <Link key={this.props.id} to={linkTo}>
         {this.props.title}
       </Link>
     );
@@ -19,6 +16,12 @@ var PagePreviewCard = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = PagePreviewCard;
+PagePreviewCard.propTypes = {
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired
+};
+
+export default PagePreviewCard;

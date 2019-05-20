@@ -1,11 +1,9 @@
 var React = require('react');
-var Notification = require('./Notification.jsx');
+import Notification from './Notification.jsx';
+import PropTypes from 'prop-types';
 
-var NotificationTopBar = React.createClass({
-  PropTypes: {
-    notifications: React.PropTypes.array.isRequired
-  },
-  render: function() {
+class NotificationTopBar extends React.Component {
+  render() {
     var notifications = this.props.notifications.map(function(n) {
       return (
         <Notification text={n.text}
@@ -21,6 +19,10 @@ var NotificationTopBar = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = NotificationTopBar;
+NotificationTopBar.propTypes = {
+  notifications: PropTypes.array.isRequired,
+};
+
+export default NotificationTopBar;

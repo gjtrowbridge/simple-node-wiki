@@ -6,22 +6,10 @@
 */
 
 var React = require('react');
+import PropTypes from 'prop-types';
 
-var OnOffSwitch = React.createClass({
-  propTypes: {
-    onText: React.PropTypes.string,
-    offText: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    defaultChecked: React.PropTypes.bool.isRequired
-  },
-  getDefaultProps: function() {
-    return {
-      onText: 'On',
-      offText: 'Off',
-      onChange: function() {}
-    }
-  },
-  render: function() {
+class OnOffSwitch extends React.Component {
+  render() {
     return (
       <div className="onoffswitch">
         <input type="checkbox" name="onoffswitch" onChange={this.props.onChange}
@@ -36,6 +24,19 @@ var OnOffSwitch = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = OnOffSwitch;
+OnOffSwitch.propTypes = {
+  onText: PropTypes.string,
+  offText: PropTypes.string,
+  onChange: PropTypes.func,
+  defaultChecked: PropTypes.bool.isRequired,
+};
+
+OnOffSwitch.defaultProps = {
+  onText: 'On',
+  offText: 'Off',
+  onChange: function() {}
+};
+
+export default OnOffSwitch;

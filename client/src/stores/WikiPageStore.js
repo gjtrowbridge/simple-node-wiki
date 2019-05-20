@@ -1,7 +1,7 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var WikiConstants = require('../constants/WikiConstants.js');
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import WikiConstants from '../constants/WikiConstants.js';
 var _ = require('underscore');
-var StoreUtils = require('../utils/StoreUtils.js');
+import StoreUtils from '../utils/StoreUtils.js';
 var ActionTypes = WikiConstants.ActionTypes;
 
 var _pagesByName = {};
@@ -213,4 +213,4 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
   };
 });
 
-module.exports = WikiPageStore;
+export default WikiPageStore;

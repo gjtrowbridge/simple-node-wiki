@@ -3,18 +3,20 @@
 */
 
 var React = require('react');
+import PropTypes from 'prop-types';
 
-var AreaDisabler = React.createClass({
-  propTypes: {
-    shouldDisableClicks: React.PropTypes.bool.isRequired
-  },
-  stopEvent: function(e) {
+class AreaDisabler extends React.Component {
+  constructor(props) {
+    super(props);
+    this.stopEvent = this.stopEvent.bind(this);
+  }
+  stopEvent(e) {
     if (this.props.shouldDisableClicks) {
       e.preventDefault();
       e.stopPropagation();
     }
-  },
-  render: function() {
+  }
+  render() {
     var classes = ['area-disabler'];
     if (!this.props.shouldDisableClicks) {
       classes.push('hidden');
@@ -32,6 +34,9 @@ var AreaDisabler = React.createClass({
       </div>
     );
   }
-});
+}
+AreaDisabler.propTypes = {
+  shouldDisableClicks: PropTypes.bool.isRequired
+};
 
-module.exports = AreaDisabler;
+export default AreaDisabler;

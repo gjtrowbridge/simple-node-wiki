@@ -53,4 +53,4 @@ var WikiConstants = {
   })
 };
 
-module.exports = WikiConstants;
+export default WikiConstants;

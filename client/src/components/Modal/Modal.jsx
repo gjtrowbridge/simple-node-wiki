@@ -1,13 +1,11 @@
 var React = require('react');
-var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
-var AreaDisabler = require('../AreaDisabler/AreaDisabler.jsx');
-var CloseButton = require('../CloseButton/CloseButton.jsx');
+import PropTypes from 'prop-types';
+import AppStateActionCreators from '../../actions/AppStateActionCreators.js';
+import AreaDisabler from '../AreaDisabler/AreaDisabler.jsx';
+import CloseButton from '../CloseButton/CloseButton.jsx';
 
-var Modal = React.createClass({
-  PropTypes: {
-    innerNode: React.PropTypes.node.isRequired
-  },
-  render: function() {
+class Modal extends React.Component {
+  render() {
     return (
       <div className="modal">
         <CloseButton onClick={AppStateActionCreators.hideModal} />
@@ -17,6 +15,10 @@ var Modal = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = Modal;
+Modal.propTypes = {
+  innerNode: PropTypes.node.isRequired
+};
+
+export default Modal;

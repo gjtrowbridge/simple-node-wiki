@@ -1,16 +1,17 @@
 var React = require('react');
-var AppStateActionCreators = require('../../actions/AppStateActionCreators.js');
-var CloseButton = require('../CloseButton/CloseButton.jsx');
+import AppStateActionCreators from '../../actions/AppStateActionCreators.js';
+import CloseButton from '../CloseButton/CloseButton.jsx';
+import PropTypes from 'prop-types';
 
-var Notification = React.createClass({
-  PropTypes: {
-    text: React.PropTypes.string.isRequired,
-    notificationId: React.PropTypes.number.isRequired
-  },
-  remove: function() {
+class Notification extends React.Component {
+  constructor(props) {
+    super(props);
+    this.remove = this.remove.bind(this);
+  }
+  remove() {
     AppStateActionCreators.hideNotification(this.props.notificationId);
-  },
-  render: function() {
+  }
+  render() {
     return (
       <li className="notification">
         {this.props.text}
@@ -18,6 +19,11 @@ var Notification = React.createClass({
       </li>
     );
   }
-});
+}
 
-module.exports = Notification;
+Notification.propTypes = {
+  text: PropTypes.string.isRequired,
+  notificationId: PropTypes.number.isRequired,
+};
+
+export default Notification;

@@ -1,8 +1,8 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher.js');
-var WikiUtils = require('../utils/WikiUtils.js');
-var WikiConstants = require('../constants/WikiConstants.js');
-var RouterContainer = require('../utils/RouterContainer.js');
-var shared = require('../../../shared/shared.js');
+import AppDispatcher from '../dispatcher/AppDispatcher.js';
+import WikiUtils from '../utils/WikiUtils.js';
+import WikiConstants from '../constants/WikiConstants.js';
+import { transitionTo } from 'Src/utils/HistoryContainer';
+import shared from 'Src/utils/shared_port.js';
 var apiRootUrl = WikiConstants.BASE_URL + '/_api';
 
 var WikiPageActionCreators = {
@@ -22,7 +22,7 @@ var WikiPageActionCreators = {
       },
       action: {},
       transformResponseSuccess: function(responseSuccess, action) {
-        return Object.assign({}, action, JSON.parse(responseSuccess));
+        return Object.assign({}, action, responseSuccess);
       }
     });
   },
@@ -115,7 +115,7 @@ var WikiPageActionCreators = {
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'GET', headers, {}),
+          url, 'GET', headers),
       types: {
         request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
         success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
@@ -142,7 +142,7 @@ var WikiPageActionCreators = {
       }
       return AppDispatcher.dispatchAsync({
         promise: WikiUtils.requestViaHttpAndReturnPromise(
-            url, 'GET', headers, {}),
+            url, 'GET', headers),
         types: {
           request: WikiConstants.ActionTypes.REQUEST_PAGE_LIST,
           success: WikiConstants.ActionTypes.REQUEST_PAGE_LIST_SUCCESS,
@@ -158,8 +158,7 @@ var WikiPageActionCreators = {
     pageId: shared.constants.IS_REQUIRED,
     pageTitle: shared.constants.IS_REQUIRED,
     onSuccess: function() {
-      var router = RouterContainer.getRouter();
-      router.transitionTo('home');
+      transitionTo('');
     }
   }, function(params) {
     var url = apiRootUrl + '/pages/' + params.pageId;
@@ -189,4 +188,4 @@ var WikiPageActionCreators = {
   }
 };
 
-module.exports = WikiPageActionCreators;
+export default WikiPageActionCreators;
