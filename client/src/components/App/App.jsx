@@ -15,6 +15,7 @@ import Nav from '../Nav/Nav.jsx';
 import Modal from '../Modal/Modal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import AreaDisabler from '../AreaDisabler/AreaDisabler.jsx';
+import CodeMirrorExample from 'Components/CodeMirrorExample/CodeMirrorExample.jsx';
 
 class WikiPageWrapper extends React.Component {
   render() {
@@ -23,7 +24,6 @@ class WikiPageWrapper extends React.Component {
     );
   }
 }
-
 
 class App extends React.Component {
   constructor(props) {
@@ -82,6 +82,7 @@ class App extends React.Component {
           <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
           <div id="main-content">
             <Switch>
+              <Route path="/codemirror" component={CodeMirrorExample} />
               <Route path="/pages/:pageName" component={WikiPageWrapper} />
               <Route component={HomePage} />
             </Switch>
