@@ -3,11 +3,11 @@ const path = require('path');
 module.exports = {
   context: __dirname,
   entry: {
-    main: './client/src/main2.jsx',
+    main: './client/src/main.jsx',
   },
   output: {
     path: path.join(__dirname, 'client/public/assets/js'),
-    filename: 'bundle2.js',
+    filename: 'bundle.js',
   },
   module: {
     rules: [

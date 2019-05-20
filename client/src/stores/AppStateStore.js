@@ -93,7 +93,7 @@ var AppStateStore = StoreUtils.createStore({
 // handling here (usually, state updates here followed by emitting
 // a change event)
 AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
-  console.log('xcxc receiving action', action);
+  console.log('Receiving action', action);
   switch (action.type) {
     case ActionTypes.SHOW_MODAL:
       AppStateStore.showModal(action.innerNode);
