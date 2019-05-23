@@ -19,8 +19,13 @@ const User = defineUser(sequelize, Sequelize);
 
 User.hasMany(Page);
 
+const models = {
+  Page,
+  User,
+};
 
 module.exports = {
+  models,
   Page,
   User,
   sequelize,
