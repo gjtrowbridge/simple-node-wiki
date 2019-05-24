@@ -17,7 +17,7 @@ var createPageObject = function(req) {
 var createPageRouter = function(express, db, addUserToReqMiddleware) {
   var pageRouter = express.Router();
 
-  var Page = db.Page;
+  const Page = db.models.Page;
   var sequelize = db.sequelize;
 
   // This will return the data for all pages
@@ -98,15 +98,30 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
   });
 
   // Create a new page
-  pageRouter.post('/', addUserToReqMiddleware, function(req, res) {
-    Page.create(createPageObject(req)).done(
-      function(page) {
-        apiHelpers.respondWithData(req, res, page, 201);
+  pageRouter.post('/', addUserToReqMiddleware, async function(req, res) {
+    const pageData = createPageObject(req);
+    const page = await Page.findOne({
+      where: {
+        name: pageData.name
       },
-      function(err) {
-        apiHelpers.respondWithError(req, res, err);
-      }
-    );
+    });
+    if (page === null) {
+      Page.create(createPageObject(req)).done(
+        function(page) {
+          apiHelpers.respondWithData(req, res, page, 201);
+        },
+        function(err) {
+          apiHelpers.respondWithError(req, res, err);
+        }
+      );
+    } else {
+      apiHelpers.respondWithError(
+        req,
+        res,
+        `page with name "${pageData.name}" already exists`,
+        400,
+      );
+    }
   });
 
   // Find a page by id and update

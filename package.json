@@ -15,6 +15,7 @@
     "start": "node server.js",
     "start-in-test-env": "NODE_ENV=test bash -c 'node server.js'",
     "test:server": "NODE_ENV=test bash -c 'sequelize db:migrate:undo:all && sequelize db:migrate && tape tests/server/**/test_*.js | tap-spec || true'",
+    "test:server:fast": "NODE_ENV=test bash -c 'tape tests/server/**/test_*.js | tap-spec || true'",
     "watch": "npm run watch-css & npm run watch-js & nodemon server",
     "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
     "watch-js": "npx webpack-dev-server"
