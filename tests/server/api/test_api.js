@@ -6,7 +6,7 @@ const request = require('supertest');
 test('tests are working correctly', (t) => {
   testUtils.clearDatabase(t).then(() => {
     request(app).post('/_api/').then((res) => {
-      console.log('xcxc res', res);
+      console.log(res.body, res.status);
     });
     t.end();
   });

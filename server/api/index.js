@@ -15,7 +15,9 @@ var createApiRouter = function(express, addUserToReqMiddleware) {
   });
   
   apiRouter.post('/', function(req, res) {
-    res.send('Welcome to the api!');
+    res.json({
+      message: 'Welcome to the api!',
+    });
   });
 
   apiRouter.get('/user', addUserToReqMiddleware, function(req, res) {
