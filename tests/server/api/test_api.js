@@ -1,10 +1,13 @@
 const test = require('tape');
 const testUtils = require('../../testUtils');
+const app = require('../../../app.js');
+const request = require('supertest');
 
 test('tests are working correctly', (t) => {
   testUtils.clearDatabase(t).then(() => {
-    t.strictEqual(1, 1);
-    t.notStrictEqual(1, 2);
+    request(app).post('/_api/').then((res) => {
+      console.log('xcxc res', res);
+    });
     t.end();
   });
 });
