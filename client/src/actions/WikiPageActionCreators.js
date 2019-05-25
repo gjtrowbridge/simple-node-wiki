@@ -38,16 +38,20 @@ var WikiPageActionCreators = {
     if (localStorage.jwt) {
       headers.jwt = localStorage.jwt;
     }
+    const pageDataWithTimestamp = {
+      ...pageData,
+      clientTimestamp: Number(new Date()),
+    };
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'PUT', headers, pageData),
+          url, 'PUT', headers, pageDataWithTimestamp),
       types: {
         request: WikiConstants.ActionTypes.SAVE_PAGE,
         success: WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS,
-        failure: WikiConstants.ActionTypes.SAVE_PAGE_FAILURE
+        failure: WikiConstants.ActionTypes.SAVE_PAGE_FAILURE,
       },
       action: {
-        pageData: pageData,
+        pageData: pageDataWithTimestamp,
         onSuccess: optOnSuccess
       }
     });

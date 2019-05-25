@@ -11,6 +11,15 @@ export default {
       headers,
       body,
     }).then((response) => {
+      if (response.status >= 400) {
+        // TODO: Make this less horrifyingly terrible
+        throw {
+          error: 'invalid status',
+          pageData: {
+            status: response.status,
+          },
+        };
+      }
       return response.json();
     });
   }
