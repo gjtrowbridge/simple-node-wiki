@@ -69,11 +69,11 @@ class WikiPage extends React.Component {
   _onChange() {
     this.setState(this.getStateFromStores());
   }
-  onEditorChange(e) {
+  onEditorChange(newText) {
     var pageData = {
       id: this.state.id,
       name: this.state.name,
-      text: e.target.value,
+      text: newText,
       title: this.state.title
     };
     this.savePage(pageData);
