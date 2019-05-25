@@ -1,7 +1,5 @@
 var apiHelpers = require('./apiHelpers.js');
 var shared = require('../../shared/shared.js');
-// TODO: add validation to these endpoints
-// ie. names should follow a certain regex
 
 // Creates a page object from an incoming json request
 // TODO: switch to actually building a model instance instead of creating a vanilla obj
@@ -102,28 +100,20 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
   // Create a new page
   pageRouter.post('/', addUserToReqMiddleware, async function(req, res) {
     const pageData = createPageObject(req);
-    const page = await Page.findOne({
-      where: {
-        name: pageData.name
-      },
-    });
-    // TODO: switch to using Page.create without Page.findOne and switch on error type.
-    if (page === null) {
-      Page.create(createPageObject(req)).done(
-        function(page) {
-          apiHelpers.respondWithData(req, res, page, 201);
-        },
-        function(err) {
-          apiHelpers.respondWithError(req, res, err);
-        }
-      );
-    } else {
-      apiHelpers.respondWithError(
-        req,
-        res,
-        `page with name "${pageData.name}" already exists`,
-        400,
-      );
+    try {
+      const page = await Page.create(pageData);
+      apiHelpers.respondWithData(req, res, page, 201);
+    } catch (e) {
+      if (e instanceof db.Sequelize.UniqueConstraintError) {
+        apiHelpers.respondWithError(
+          req,
+          res,
+          `page with name "${pageData.name}" already exists`,
+          400,
+        );
+      } else {
+        apiHelpers.respondWithError(req, res, e);
+      }
     }
   });
 
