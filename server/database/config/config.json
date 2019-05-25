@@ -1,11 +1,15 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "server/database/dev_database.sqlite"
+    "dialect": "postgres",
+    "host": "/var/run/postgresql",
+    "username": "greg",
+    "database": "simple_node_wiki_dev"
   },
   "test": {
-    "dialect": "sqlite",
-    "storage": "server/database/test_database.sqlite"
+    "dialect": "postgres",
+    "host": "/var/run/postgresql",
+    "username": "greg",
+    "database": "simple_node_wiki_test"
   },
   "production": {
     "use_env_variable": "DATABASE_URL",
