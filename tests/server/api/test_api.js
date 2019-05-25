@@ -9,7 +9,7 @@ test('POST /_api/pages should create a page', async (t) => {
     const pageData = {
       title: 'This is a title',
       text: 'some text',
-      name: 'some name',
+      name: 'some-name',
     };
 
     await testUtils.clearDatabase(t);
@@ -37,7 +37,7 @@ test('POST /_api/pages with duplicate name should return 400 and not create page
     const pageData = {
       title: 'This is a title',
       text: 'some text',
-      name: 'some name',
+      name: 'some-name',
     };
 
     await testUtils.clearDatabase(t);
@@ -69,13 +69,13 @@ test('PUT /_api/pages/:id should tiebreak using client timestamp', async (t) => 
     const pageData1 = {
       title: 'This is an older title',
       text: 'this is older text',
-      name: 'this is an older name',
+      name: 'this-is-an-older-name',
       clientTimestamp: 1,
     };
     const pageData2 = {
       title: 'This is a newer title',
       text: 'this is newer text',
-      name: 'this is a newer name',
+      name: 'this-is-a-newer-name',
       clientTimestamp: 2,
     };
 
