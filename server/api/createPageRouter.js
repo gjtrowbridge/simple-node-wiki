@@ -4,8 +4,10 @@ var shared = require('../../shared/shared.js');
 // ie. names should follow a certain regex
 
 // Creates a page object from an incoming json request
+// TODO: switch to actually building a model instance instead of creating a vanilla obj
 var createPageObject = function(req) {
   return {
+    clientTimestamp: req.body.clientTimestamp,
     title: req.body.title,
     text: req.body.text,
     name: req.body.name,
@@ -105,6 +107,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
         name: pageData.name
       },
     });
+    // TODO: switch to using Page.create without Page.findOne and switch on error type.
     if (page === null) {
       Page.create(createPageObject(req)).done(
         function(page) {
@@ -124,23 +127,65 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
     }
   });
 
-  // Find a page by id and update
-  pageRouter.put('/:id', addUserToReqMiddleware, function(req, res) {
-    Page.update(createPageObject(req), {
-      where: {
-        id: req.params.id,
-        userId: req.user.id,
+  // Find a page by id and update if clientTimestamp indicates that the
+  // page is not out of date
+  pageRouter.put('/:id', addUserToReqMiddleware, async function(req, res) {
+    // Get page data
+    const pageData = createPageObject(req);
+
+    // Create transaction
+    const t = await db.sequelize.transaction({ autocommit: false });
+    try {
+      // Select page with given ID
+      const existingPage = await Page.findOne({
+        where: {
+          id: req.params.id,
+          userId: req.user.id,
+        },
+        lock: t.LOCK.UPDATE,
+        transaction: t,
+      });
+      // If page does not exist, rollback transaction and return 400
+      if (existingPage === null) {
+        apiHelpers.respondWithError(
+          req,
+          res,
+          `page with id: ${req.params.id} was not found for this user`,
+          404,
+        );
+        await t.rollback();
+        return;
       }
-    }).done(
-      function(rows_affected) {
-        apiHelpers.respondWithData(req, res, {
-          rows_affected: rows_affected
-        });
-      },
-      function(err) {
-        apiHelpers.respondWithError(req, res, err);
+      // If page exists but is already on newer client timestamp, rollback transaction
+      // and return 400
+      if (existingPage.clientTimestamp !== null && existingPage.clientTimestamp >= pageData.clientTimestamp) {
+        apiHelpers.respondWithError(
+          req,
+          res,
+          `page with id: ${req.params.id} has a more up-to-date version already saved to the server`,
+          400,
+        );
+        await t.rollback();
+        return;
       }
-    );
+      // Otherwise, update page
+      const [rowsAffected] = await Page.update(pageData, {
+        where: {
+          id: req.params.id,
+          userId: req.user.id,
+        },
+        transaction: t,
+      });
+      // Close transaction
+      const commitResult = await t.commit();
+      apiHelpers.respondWithData(req, res, {
+        rows_affected: rowsAffected[0],
+      });
+    } catch (e) {
+      await t.rollback();
+      console.error(`ERROR (PUT /pages/:id): ${e}`);
+      apiHelpers.respondWithError(req, res, e);
+    }
   });
 
   // Delete a page

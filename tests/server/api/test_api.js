@@ -48,7 +48,6 @@ test('POST /_api/pages with duplicate name should return 400 and not create page
     t.strictEqual(res1.statusCode, 201, 'first page saved should return 201');
     const res2 = await request(app).post('/_api/pages').send(pageData);
     t.strictEqual(res2.statusCode, 400, 'saving page with duplicate name should return 400');
-    console.log('xcxc', res2.body);
 
     const pages = await db.models.Page.findAll();
     t.strictEqual(pages.length, 1, 'only the first page should have saved');
@@ -61,9 +60,42 @@ test('POST /_api/pages with duplicate name should return 400 and not create page
 
 test('PUT /_api/pages/:id should tiebreak using client timestamp', async (t) => {
   try {
+    const pageData0 = {
+      title: 'Original Title',
+      text: 'original text',
+      name: 'original_name',
+      clientTimestamp: null,
+    };
+    const pageData1 = {
+      title: 'This is an older title',
+      text: 'this is older text',
+      name: 'this is an older name',
+      clientTimestamp: 1,
+    };
+    const pageData2 = {
+      title: 'This is a newer title',
+      text: 'this is newer text',
+      name: 'this is a newer name',
+      clientTimestamp: 2,
+    };
+
+    await testUtils.clearDatabase(t);
+    const pagesBefore = await db.models.Page.findAll();
+    t.strictEqual(pagesBefore.length, 0, 'should be 0 pages at start of test');
+
+    const res = await request(app).post('/_api/pages').send(pageData0);
+    t.strictEqual(res.status, 201);
+
+    const res1 = await request(app).put(`/_api/pages/${res.body.data.id}`).send(pageData1);
+    t.strictEqual(res1.statusCode, 200, 'updating page with less up-to-date clientTimestamp should work initially');
+    const res2 = await request(app).put(`/_api/pages/${res.body.data.id}`).send(pageData2);
+    t.strictEqual(res2.statusCode, 200, 'updating page with more up-to-date clientTimestamp should work');
+
+    const res3 = await request(app).put(`/_api/pages/${res.body.data.id}`).send(pageData1);
+    t.strictEqual(res3.statusCode, 400, 'updating page with less up-to-date clientTimestamp should fail');
 
   } catch (e) {
-
+    t.fail(e);
   }
   t.end();
 });
