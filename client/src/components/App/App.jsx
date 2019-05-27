@@ -16,6 +16,8 @@ import Modal from '../Modal/Modal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import AreaDisabler from '../AreaDisabler/AreaDisabler.jsx';
 
+require('Components/App/App.scss');
+
 class WikiPageWrapper extends React.Component {
   render() {
     return (
