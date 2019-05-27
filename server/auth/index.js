@@ -50,7 +50,7 @@ var initializeAuth = function(
     },
     function (jwtPayload, done) {
       const returnIfError = new Error(`could not get user from JWT, user id: ${jwtPayload.id}`);
-      db.User.findById(jwtPayload.id).then(function(user) {
+      db.User.findByPk(jwtPayload.id).then(function(user) {
         if (!user) {
           done(returnIfError, null);
         } else {
