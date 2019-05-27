@@ -5,26 +5,15 @@
 */
 const React = require('react');
 import PropTypes from 'prop-types';
-import CodeMirror from 'codemirror';
+import { Controlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/mode/markdown/markdown.js';
 
 class EditBox extends React.Component {
-  componentDidMount() {
-    const {
-      onChange,
-      markdownText,
-    } = this.props;
-    const editBoxTextArea = document.getElementById('edit-box-text-area');
-    const editor = CodeMirror.fromTextArea(editBoxTextArea, {
-      lineNumbers: true,
-      mode: 'markdown',
-    });
-    editor.setValue(markdownText);
-    editor.on('change', () => {
-      onChange(editor.getValue());
-    });
-  }
   render() {
+    const {
+      markdownText,
+      onChange,
+    } = this.props;
     let classes = ['box', 'edit-box'];
     if (this.props.extraClasses) {
       classes = classes.concat(this.props.extraClasses);
@@ -32,6 +21,19 @@ class EditBox extends React.Component {
     return (
       <div className={classes.join(' ')}>
       <span className="status-text">{this.props.statusText}</span>
+        <CodeMirror
+          value={markdownText}
+          onBeforeChange={(editor, data, value) => {
+            onChange(value);
+          }}
+          options={{
+            mode: 'markdown',
+            lineNumbers: true,
+            showCursorWhenSelecting: true,
+            cursorBlinkRate: 530,
+          }}
+
+        />
         <textarea id="edit-box-text-area" className="edit-box-input">
         </textarea>
       </div>

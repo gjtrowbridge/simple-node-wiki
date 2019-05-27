@@ -16,6 +16,9 @@ import Modal from '../Modal/Modal.jsx';
 import Footer from '../Footer/Footer.jsx';
 import AreaDisabler from '../AreaDisabler/AreaDisabler.jsx';
 
+import { Controlled as CodeMirror } from 'react-codemirror2';
+import 'codemirror/mode/markdown/markdown.js';
+
 class WikiPageWrapper extends React.Component {
   render() {
     return (
@@ -24,6 +27,30 @@ class WikiPageWrapper extends React.Component {
   }
 }
 
+class CodeMirrorWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      markdown: '#some markdown'
+    }
+  }
+  render() {
+    return (
+      <CodeMirror
+        value={this.state.markdown}
+        onBeforeChange={(editor, data, value) => {
+          this.setState({
+            markdown: value,
+          });
+        }}
+        options={{
+          mode: 'markdown',
+          lineNumbers: true,
+        }}
+      />
+    );
+  }
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -33,6 +60,8 @@ class App extends React.Component {
     this.renderModal = this.renderModal.bind(this);
     this.modalIsOpen = this.modalIsOpen.bind(this);
     this.state = this.getStateFromStores();
+    this.state.codeVal = '# starting value from code editor';
+    console.log('xcxc', this.state);
   }
   getStateFromStores() {
     return {
@@ -42,6 +71,9 @@ class App extends React.Component {
   }
   _onChange() {
     this.setState(this.getStateFromStores());
+    this.setState({
+      codeVal: 'some code val',
+    });
   }
   componentDidMount() {
     setHistory(this.props.history);
@@ -82,6 +114,7 @@ class App extends React.Component {
           <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
           <div id="main-content">
             <Switch>
+              <Route path="/code" component={CodeMirrorWrapper} />
               <Route path="/pages/:pageName" component={WikiPageWrapper} />
               <Route component={HomePage} />
             </Switch>
