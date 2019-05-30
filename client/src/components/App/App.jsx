@@ -77,9 +77,9 @@ class App extends React.Component {
   render() {
     return (
       <div className='app'>
+        <AreaDisabler shouldDisableClicks={this.modalIsOpen()} />
         {this.renderModal()}
-        <div className={this.modalIsOpen() ? "open-modal" : ""}>
-          <AreaDisabler shouldDisableClicks={this.modalIsOpen()} /> 
+        <div id="non-modal-container" className={this.modalIsOpen() ? "open-modal" : "no-modal"}>
           {this.renderNotificationTopBar()}
           <Nav id="main-navigation" user={AppStateStore.activeUser()}/>
           <div id="main-content">
