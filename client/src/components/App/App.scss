@@ -1,3 +1,65 @@
+$hue:200;
+
+// highlight color
+$color1: hsla($hue, 35%, 45%, 1);
+// text color
+$color2: hsla($hue, 50%, 0%, 1);
+// background color
+$color3: hsla($hue, 50%, 98%, 1);
+// accent color 1 (could be text color)
+$color4: hsla($hue, 85%, 15%, 1);
+// accent color 2 (nav color?)
+$color5: hsla($hue, 100%, 50%, 0.35);
+
+// Colors and basic layout
 html {
-  font-size: 1em;
+  font-color: $color2;
+  position: relative;
+  height: 100%;
+  body {
+    &, #mount_point, #non-modal-container {
+      height: 100%;
+    }
+    margin: 0;
+    background-color: $color3;
+
+    #non-modal-container {
+      display: flex;
+      flex-direction: column;
+      #main-content {
+        flex: 1 0 auto;
+      }
+      footer {
+        flex-shrink: 0;
+        background-color: $color5;
+      }
+      nav {
+        flex-shrink: 0;
+        background-color: $color4;
+      }
+    }
+
+  }
+  .area-disabler {
+    &.hidden {
+      display: none;
+    }
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
 }
+
+footer {
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  div.nav-item {
+    flex: 1 1 0;
+  }
+}
+

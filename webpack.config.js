@@ -33,9 +33,7 @@ module.exports = {
           // css-loader
           {
             loader: 'css-loader',
-            options: {
-              modules: true
-            }
+            options: {}
           },
           // sass-loader
           { loader: 'sass-loader' }
