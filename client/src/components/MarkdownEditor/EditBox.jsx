@@ -9,6 +9,12 @@ import CodeMirror from 'codemirror';
 import 'codemirror/mode/markdown/markdown.js';
 
 class EditBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editor: null,
+    };
+  }
   componentDidMount() {
     const {
       onChange,
@@ -23,6 +29,15 @@ class EditBox extends React.Component {
     editor.on('change', () => {
       onChange(editor.getValue());
     });
+    this.setState({
+      editor,
+    });
+  }
+  componentDidUpdate() {
+    const editor = this.state.editor;
+    if (editor) {
+      editor.refresh();
+    }
   }
   render() {
     let classes = ['box', 'edit-box'];
