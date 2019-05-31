@@ -5,7 +5,7 @@ $color1: hsla($hue, 35%, 45%, 1);
 // text color
 $color2: hsla($hue, 50%, 0%, 1);
 // background color
-$color3: hsla($hue, 50%, 92%, 1);
+$color3: hsla($hue, 20%, 96%, 1);
 // accent color 1 (could be text color)
 $color4: hsla($hue, 85%, 15%, 1);
 // accent color 2 (nav color?)
@@ -15,13 +15,21 @@ $color5: hsla($hue, 100%, 50%, 0.35);
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Pier Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: url("/_public/assets/fonts/pier-regular.otf");
+}
+
 // Colors and basic layout
 html {
+  font-family: 'Pier Sans', 'sans-serif';
   color: $color2;
   position: relative;
   height: 100%;
   body {
-    &, #mount_point, #non-modal-container {
+    &, #mount_point, #non-modal-container, .app {
       height: 100%;
     }
     margin: 0;
@@ -55,6 +63,9 @@ $ad-z-index: 100;
   width: 100%;
   position: absolute;
   z-index: $ad-z-index;
+}
+#non-modal-container.open-modal {
+  opacity: 0.4;
 }
 
 // Modal stuff
@@ -156,15 +167,16 @@ nav {
       top: 4px;
       // code mirror z-index is 2, so this is necessary
       z-index: 3;
-      color: lighten($color2, 35%)
+      color: lighten($color2, 35%);
+      font-size: 0.8em;
     }
   }
   .display-box {
+    padding: 20px;
     &.display-box-view-mode {
       max-width: 960px;
       width:100%;
       margin: 0 auto;
-      padding: 20px;
     }
     background-color: white;
   }
