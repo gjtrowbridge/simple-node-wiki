@@ -285,6 +285,39 @@ nav {
   margin: auto;
 }
 
+// Notifications
+$close-button-dimension: 4em;
+.notification-top-bar {
+  font-size: 1.1em;
+  background-color: $color5;
+  ul.notification-list {
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    li.notification {
+      &:first-child{
+        border-top: none;
+      }
+      border-top: dashed 1px $color4;
+      padding: 1em;
+      position: relative;
+      button.close-button {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0, -50%);
+        height: $close-button-dimension;
+        width: $close-button-dimension;
+        text-transform: capitalize;
+        background-color: transparent;
+        font-weight: 600;
+        outline: none;
+      }
+    }
+  }
+}
+
 // Global misc rules
 .hidden {
   display: none;
