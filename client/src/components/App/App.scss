@@ -100,9 +100,15 @@ nav {
     flex-grow: 1;
 
     // Search results
-    .search-bar .search-results {
-      position: absolute;
-      margin: 0px;
+    .search-bar {
+      .search-results {
+        margin: 0px;
+        position: absolute;
+      }
+      input {
+        padding: 0.25em;
+        border-radius: 4px;
+      }
     }
 
     // Links in Nav
@@ -117,4 +123,13 @@ nav {
     }
   }
 }
+
+// Wiki Page Stuff
+
+
+// Global misc rules
+.hidden {
+  display: none;
+}
+
 
