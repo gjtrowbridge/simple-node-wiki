@@ -15,10 +15,14 @@ var createPageObject = function(req) {
 
 // Creates and returns a router that handles all 'page' related endpoints
 var createPageRouter = function(express, db, addUserToReqMiddleware) {
-  var pageRouter = express.Router();
+  const pageRouter = express.Router();
 
-  const Page = db.models.Page;
-  var sequelize = db.sequelize;
+  const {
+    models,
+    sequelize,
+    Sequelize,
+  } = db;
+  const { Page } = models;
 
   // This will return the data for all pages
   // currently defined in the wiki
@@ -198,41 +202,41 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
   });
 
   // Search by title
-  pageRouter.get('/search/:keyword', addUserToReqMiddleware, function(req, res) {
-    var limit = apiHelpers.convertToIntWithDefault({
+  pageRouter.get('/search/:keyword', addUserToReqMiddleware, async function(req, res) {
+    const limit = apiHelpers.convertToIntWithDefault({
       valueToConvert: req.query.limit,
       defaultValue: 10,
       minimum: 1,
       maximum: 20
     });
-    var offset = apiHelpers.convertToIntWithDefault({
+    const offset = apiHelpers.convertToIntWithDefault({
       valueToConvert: req.query.offset,
       defaultValue: 0,
       minimum: 0,
     });
-    var likeString = '%' + req.params.keyword + '%';
-    Page.findAll({
-      limit: limit,
-      offset: offset,
-      where: {
-        userId: req.user.id,
-        '$or': {
-          title: {
-            $like: '%' + req.params.keyword + '%'
-          },
-          text: {
-            $like: '%' + req.params.keyword + '%'
+    const likeString = '%' + req.params.keyword + '%';
+    try {
+      const pages = await Page.findAll({
+        limit: limit,
+        offset: offset,
+        where: {
+          userId: req.user.id,
+          [Sequelize.Op.or]: {
+            title: {
+              [Sequelize.Op.like]: '%' + req.params.keyword + '%'
+            },
+            text: {
+              [Sequelize.Op.like]: '%' + req.params.keyword + '%'
+            }
           }
         }
-      }
-    }).done(
-      function(pages) {
-        apiHelpers.respondWithDataOrNotFound(req, res, pages);
-      },
-      function(err) {
-        apiHelpers.respondWithError(req, res, err);
-      }
-    );
+      });
+
+      apiHelpers.respondWithDataOrNotFound(req, res, pages);
+    } catch (e) {
+      console.log('Error searching for wiki page:', e);
+      apiHelpers.respondWithError(req, res, e);
+    }
   });
 
   return pageRouter;
