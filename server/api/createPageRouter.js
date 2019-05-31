@@ -223,10 +223,10 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
           userId: req.user.id,
           [Sequelize.Op.or]: {
             title: {
-              [Sequelize.Op.like]: '%' + req.params.keyword + '%'
+              [Sequelize.Op.iLike]: '%' + req.params.keyword + '%'
             },
             text: {
-              [Sequelize.Op.like]: '%' + req.params.keyword + '%'
+              [Sequelize.Op.iLike]: '%' + req.params.keyword + '%'
             }
           }
         }
