@@ -56,6 +56,7 @@ class SearchBar extends React.Component {
     }
     return (
       <div className="search-bar" onFocus={this.enableSearchResults} onBlur={this.disableSearchResults} >
+
         <input onChange={this.search} type="search" placeholder="Enter Search Term" />
         <ul className={searchResultsClasses.join(' ')}>
           {searchResults}

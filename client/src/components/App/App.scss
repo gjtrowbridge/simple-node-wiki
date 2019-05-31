@@ -13,7 +13,7 @@ $color5: hsla($hue, 100%, 50%, 0.35);
 
 // Colors and basic layout
 html {
-  font-color: $color2;
+  color: $color2;
   position: relative;
   height: 100%;
   body {
@@ -40,26 +40,81 @@ html {
     }
 
   }
-  .area-disabler {
-    &.hidden {
-      display: none;
-    }
-    height: 100%;
-    width: 100%;
-    position: absolute;
+}
+// Modal stuff
+$ad-z-index: 100;
+.area-disabler {
+  &.hidden {
+    display: none;
   }
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: $ad-z-index;
 }
 
+// Modal stuff
+.modal {
+  // Will allow it to be on top of area disabler
+  // This will allow users to interact with the modal
+  z-index: $ad-z-index + 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  background-color: white;
+  box-shadow: $color4 2px 2px 6px 3px;
+  border-radius: 4px;
+  padding: 20px;
+
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+}
+
+// Footer stuff
 footer {
   text-align: center;
 }
 
+// Nav stuff
 nav {
+  a {
+    &, &:visited {
+      color: white;
+      text-decoration: none;
+    }
+    &:hover {
+      color: $color1;
+    }
+  }
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   div.nav-item {
-    flex: 1 1 0;
+    min-height: 3em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+
+    // Search results
+    .search-bar .search-results {
+      position: absolute;
+      margin: 0px;
+    }
+
+    // Links in Nav
+    &:hover {
+      background-color: $color1;
+    }
+
+    // Google image thumbnail stuff
+    img {
+      width: 1.5em;
+      padding-right: 1em;
+    }
   }
 }
 
