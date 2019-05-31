@@ -60,8 +60,7 @@ class HomePage extends React.Component {
         <PageList title={'Recently Created Pages ' + activeUserNote} pages={this.state.recentlyCreatedPageList} />
         <p>
           To learn more about this application or make suggestions,
-          check out the github page
-          <a target="_blank" href="https://github.com/gjtrowbridge/simple-node-wiki"> here</a>
+          check out the github page <a target="_blank" href="https://github.com/gjtrowbridge/simple-node-wiki">here</a>.
         </p>
       </div>
     );
