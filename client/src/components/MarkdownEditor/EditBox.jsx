@@ -24,6 +24,7 @@ class EditBox extends React.Component {
     const editor = CodeMirror.fromTextArea(editBoxTextArea, {
       lineNumbers: true,
       mode: 'markdown',
+      lineWrapping: true,
     });
     editor.setValue(markdownText);
     editor.on('change', () => {
@@ -35,6 +36,7 @@ class EditBox extends React.Component {
   }
   componentDidUpdate() {
     const editor = this.state.editor;
+    editor.setSize(null, '100%');
     if (editor) {
       editor.refresh();
     }

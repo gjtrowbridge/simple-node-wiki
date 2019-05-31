@@ -5,11 +5,15 @@ $color1: hsla($hue, 35%, 45%, 1);
 // text color
 $color2: hsla($hue, 50%, 0%, 1);
 // background color
-$color3: hsla($hue, 50%, 98%, 1);
+$color3: hsla($hue, 50%, 92%, 1);
 // accent color 1 (could be text color)
 $color4: hsla($hue, 85%, 15%, 1);
 // accent color 2 (nav color?)
 $color5: hsla($hue, 100%, 50%, 0.35);
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
 
 // Colors and basic layout
 html {
@@ -126,7 +130,124 @@ nav {
 }
 
 // Wiki Page Stuff
+.markdown-editor {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .box {
+    &.box-edit-mode {
+      min-width: 48%;
+      margin-right: 0.5%
+    }
+  }
+  .edit-box {
+    background-color: white;
+    position: relative;
+    margin: 0 0.5%;
+    &.box-edit-mode {
+      margin-left: 0.5%;
+    }
+    .Code-Mirror {
+      height: 100%;
+    }
+    .status-text {
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      // code mirror z-index is 2, so this is necessary
+      z-index: 3;
+      color: lighten($color2, 35%)
+    }
+  }
+  .display-box {
+    &.display-box-view-mode {
+      max-width: 960px;
+      width:100%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    background-color: white;
+  }
+}
 
+// On / Off Switch
+.onoffswitch {
+  position: relative;
+  width: 90px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  margin: 6px auto;
+}
+.onoffswitch-checkbox {
+  display: none;
+}
+.onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #999;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.onoffswitch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 30px;
+  padding: 0;
+  line-height: 30px;
+  font-size: 14px;
+  color: #fff;
+  font-family: Trebuchet, Arial, sans-serif;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: attr(data-on-text);
+  padding-left: 10px;
+  background-color: #34a7c1;
+  color: #fff;
+}
+.onoffswitch-inner:after {
+  content: attr(data-off-text);
+  padding-right: 10px;
+  background-color: #eee;
+  color: #999;
+  text-align: right;
+}
+.onoffswitch-switch {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  display: block;
+  width: 18px;
+  margin: 6px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 56px;
+  border: 2px solid #999;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+  right: 0px;
+}
 
 // Global misc rules
 .hidden {
