@@ -11,6 +11,8 @@ $color4: hsla($hue, 85%, 15%, 1);
 // accent color 2 (nav color?)
 $color5: hsla($hue, 100%, 50%, 0.35);
 
+$close-button-dimension: 3em;
+
 *, *:after, *:before {
   box-sizing: border-box;
 }
@@ -80,10 +82,21 @@ $ad-z-index: 100;
   background-color: white;
   box-shadow: $color4 2px 2px 6px 3px;
   border-radius: 4px;
-  padding: 20px;
+  padding: 2em;
 
   transform: translate(-50%, -50%);
   margin: 0 auto;
+
+  .close-button {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    height: $close-button-dimension;
+    width: $close-button-dimension;
+    padding: 0;
+    text-transform: capitalize;
+    color: $color2;
+  }
 }
 
 // Footer stuff
@@ -287,7 +300,7 @@ nav {
 }
 
 // Notifications
-$close-button-dimension: 3em;
+
 .notification-top-bar {
   font-size: 1.1em;
   background-color: $color5;
@@ -318,6 +331,30 @@ $close-button-dimension: 3em;
       }
     }
   }
+}
+
+.wiki-page-url-title-form {
+  div.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+    input {
+      padding: 0.25em;
+    }
+  }
+  button {
+    width: 100%;
+    padding: 0.5em;
+    background-color: $color5;
+    color: $color2;
+    &:hover {
+      background-color: $color1;
+      color: white;
+    }
+  }
+  width: 22em;
 }
 
 // Global misc rules
