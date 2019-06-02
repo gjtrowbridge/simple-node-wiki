@@ -49,21 +49,25 @@ class WikiPageUrlTitleForm extends React.Component {
         'Create New Page' : 'Edit Page';
     return (
       <div className="wiki-page-url-title-form">
-        <h3>{header}</h3>
-        <label className="wiki-page-url-title-form-label"
-            htmlFor="wiki-page-title-input">Title</label>
-        <input id="wiki-page-title-input"
-            className="wiki-page-url-title-form-input"
-            ref={this.titleInput}
-            placeholder="Enter Title"
-            defaultValue={this.props.wikiPageTitle} />
-        <label className="wiki-page-url-title-form-label"
-            htmlFor="wiki-page-url-input">Page URL</label>
-        <input id="wiki-page-url-input"
-            className="wiki-page-url-title-form-input"
-            ref={this.urlInput}
-            placeholder="Enter URL"
-            defaultValue={this.props.wikiPageUrl} />
+        <h2>{header}</h2>
+        <div className="row">
+          <label className="wiki-page-url-title-form-label"
+              htmlFor="wiki-page-title-input">Title:</label>
+          <input id="wiki-page-title-input"
+              className="wiki-page-url-title-form-input"
+              ref={this.titleInput}
+              placeholder="Enter Title"
+              defaultValue={this.props.wikiPageTitle} />
+        </div>
+        <div className="row">
+          <label className="wiki-page-url-title-form-label"
+              htmlFor="wiki-page-url-input">Page URL:</label>
+          <input id="wiki-page-url-input"
+              className="wiki-page-url-title-form-input"
+              ref={this.urlInput}
+              placeholder="Enter URL"
+              defaultValue={this.props.wikiPageUrl} />
+        </div>
         <button className="btn wiki-page-url-title-form-btn"
             onClick={this.sendPageToServer}>
           {this.props.wikiPageId === null ? 'Create' : 'Update'} Page
