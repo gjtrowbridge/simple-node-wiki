@@ -172,46 +172,68 @@ nav {
 }
 
 // Wiki Page Stuff
-.markdown-editor {
+.wiki-page {
+  height: 100%;
+  padding-top: 6px;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  .box {
-    &.box-edit-mode {
-      min-width: 48%;
-      margin-right: 0.5%
-    }
+  flex-direction: column;
+  justify-content: space-between;
+
+  // page layout
+  div.onoffswitch {
+    flex-grow: 0;
+    margin-top: 0;
   }
-  .edit-box {
-    background-color: white;
-    position: relative;
-    margin: 0 0.5%;
-    &.box-edit-mode {
-      margin-left: 0.5%;
-    }
-    .Code-Mirror {
-      height: 100%;
-    }
-    .status-text {
-      position: absolute;
-      right: 4px;
-      top: 4px;
-      // code mirror z-index is 2, so this is necessary
-      z-index: 3;
-      color: lighten($color2, 35%);
-      font-size: 0.8em;
-    }
+  div.markdown-editor {
+    flex-grow: 1;
   }
-  .display-box {
-    padding: 20px;
-    &.display-box-view-mode {
-      max-width: 960px;
-      width:100%;
-      margin: 0 auto;
+  div.edit-buttons {
+    flex-grow: 0;
+  }
+
+
+  .markdown-editor {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .box {
+      &.box-edit-mode {
+        min-width: 48%;
+        margin-right: 0.5%
+      }
     }
-    background-color: white;
+    .edit-box {
+      background-color: white;
+      position: relative;
+      margin: 0 0.5%;
+      &.box-edit-mode {
+        margin-left: 0.5%;
+      }
+      .Code-Mirror {
+        height: 100%;
+      }
+      .status-text {
+        position: absolute;
+        right: 4px;
+        top: 4px;
+        // code mirror z-index is 2, so this is necessary
+        z-index: 3;
+        color: lighten($color2, 35%);
+        font-size: 0.8em;
+      }
+    }
+    .display-box {
+      padding: 20px;
+      &.display-box-view-mode {
+        max-width: 960px;
+        width:100%;
+        margin: 0 auto;
+      }
+      background-color: white;
+    }
   }
 }
+
 
 // On / Off Switch
 .onoffswitch {
