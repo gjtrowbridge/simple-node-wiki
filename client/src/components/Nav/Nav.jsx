@@ -22,7 +22,7 @@ class Nav extends React.Component {
     var user = this.props.user;
     if (user) {
       userComponent = (
-        <button className="btn btn-unobtrusive layout-fill-and-center"
+        <button className="layout-fill-and-center"
                 onClick={this.logout}
         >
           Logout
@@ -44,7 +44,7 @@ class Nav extends React.Component {
           <SearchBar />
         </div>
         <div className="nav-item">
-          <button className="btn btn-unobtrusive layout-fill-and-center"
+          <button className="layout-fill-and-center"
                                 onClick={this.showCreatePageModal}>+ New Page</button>
         </div>
         <div className="nav-item">
