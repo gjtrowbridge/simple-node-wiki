@@ -40,6 +40,7 @@ html {
       display: flex;
       flex-direction: column;
       #main-content {
+        padding: 10px;
         flex: 1 0 auto;
         position: relative;
         &::after {
@@ -192,7 +193,6 @@ nav {
 // Wiki Page Stuff
 .wiki-page {
   height: 100%;
-  padding-top: 6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -337,6 +337,18 @@ nav {
   max-width: 960px;
   padding: 20px;
   margin: auto;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    opacity: 0.5;
+    z-index: -99;
+  }
 }
 
 // Notifications
@@ -403,6 +415,7 @@ ul.search-results {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  z-index: 10;
   li.search-result {
     height: 3em;
     padding: 1em;
