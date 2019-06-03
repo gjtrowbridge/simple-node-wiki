@@ -76,7 +76,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className='app'>
+      <div className="app">
         <AreaDisabler shouldDisableClicks={this.modalIsOpen()} />
         {this.renderModal()}
         <div id="non-modal-container" className={this.modalIsOpen() ? "open-modal" : "no-modal"}>
