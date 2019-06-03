@@ -54,6 +54,7 @@
     "prop-types": "^15.7.2",
     "q": "^1.2.1",
     "react": "^16.8.6",
+    "react-codemirror2": "^6.0.0",
     "react-dom": "^16.8.6",
     "react-router": "^0.13.3",
     "react-router-dom": "^5.0.0",
