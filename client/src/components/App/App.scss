@@ -247,6 +247,22 @@ nav {
         width:100%;
         margin: 0 auto;
       }
+      table {
+        border-collapse: collapse;
+        th, td {
+          padding: 0.5em;
+          border: solid 1px black;
+        }
+        th {
+          background-color: $color4;
+          color: white;
+        }
+        tr {
+          &:nth-child(even) {
+            background-color: $color3;
+          }
+        }
+      }
       background-color: white;
     }
   }
