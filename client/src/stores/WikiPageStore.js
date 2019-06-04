@@ -70,15 +70,16 @@ var WikiPageStore = StoreUtils.createStore({
     _nextSaveRequestId++;
   },
 
-  _mergeStatusOnlyIntoOptimisticStorage: function(pageData) {
+  _mergeStatusOnlyIntoOptimisticStorage: function(pageId, status, actionType) {
     // Check that the ids match up:
     // This will likely never happen, but theoretically,
     // for long callbacks, the user may have navigated to
     // a different page and updated the optimistically-stored
     // page to be a new page, in which case we don't want to
     // update the status of it based on a now-stale request
-    if (pageData.id === _optimisticPage.id) {
-      _optimisticPage.status = pageData.status;
+    if (pageId === _optimisticPage.id) {
+      _optimisticPage.status = status;
+      _optimisticPage.actionType = actionType;
     }
   },
 
@@ -120,19 +121,6 @@ var WikiPageStore = StoreUtils.createStore({
       _optimisticPage = null;
     }
   },
-
-  // // Allows continuous saving of the markdown editor text
-  // // while typing because only the status of the data is
-  // // overwritten (instead of overwriting, for example,
-  // // the text, with stale values)
-  // _mergeStatusOnlyIntoStorage: function(pageData) {
-  //   if (pageData.hasOwnProperty('id')) {
-  //     var id = pageData.id;
-  //     // Updating in the ID dictionary will also
-  //     // update in the name dictionary (since both refer to same object)
-  //     _pagesById[id].status = pageData.status
-  //   }
-  // }
 });
 
 // All actions go through the dispatcher, and the dispatcher
@@ -154,53 +142,57 @@ WikiPageStore.dispatchToken = AppDispatcher.register(function(action) {
       WikiPageStore.emitChange();
       break;
     case ActionTypes.SAVE_PAGE:
-      var pageData = action.pageData;
-      pageData.status = action.type;
-      WikiPageStore._mergeIntoOptimisticStorage(pageData);
+      const savePageData = action.pageData;
+      savePageData.actionType = action.type;
+      savePageData.status = 200;
+      WikiPageStore._mergeIntoOptimisticStorage(savePageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.SAVE_PAGE_SUCCESS:
-      var pageData = action.pageData;
-      pageData.status = action.type;
-      WikiPageStore._mergeIntoStorage(pageData);
+      const savePageSuccessData = action.pageData;
+      savePageSuccessData.status = action.response.status;
+      savePageSuccessData.actionType = action.type;
+      WikiPageStore._mergeIntoStorage(savePageSuccessData);
       WikiPageStore.emitChange();
       action.onSuccess();
       break;
     case ActionTypes.REQUEST_PAGE_FAILURE:
     case ActionTypes.SAVE_PAGE_FAILURE:
-      var pageData = action.pageData;
-      pageData.status = action.type;
-      WikiPageStore._mergeStatusOnlyIntoOptimisticStorage(pageData);
+      const status = action.response.status;
+      WikiPageStore._mergeStatusOnlyIntoOptimisticStorage(action.pageData.id, status, action.type);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_SUCCESS:
-      var pageData = action.data;
-      pageData.status = action.type;
-      WikiPageStore._mergeIntoStorage(pageData);
+      const requestPageData = action.response.body.data;
+      requestPageData.status = action.response.status;
+      requestPageData.actionType = action.type;
+      WikiPageStore._mergeIntoStorage(requestPageData);
       WikiPageStore.emitChange();
       break;
     case ActionTypes.CREATE_PAGE:
       break;
     case ActionTypes.CREATE_PAGE_SUCCESS:
-      var pageData = action.data;
-      pageData.status = action.type;
-      WikiPageStore._mergeIntoStorage(pageData);
+      const createPageData = action.response.body.data;
+      createPageData.status = action.response.status;
+      createPageData.actionType = action.type;
+      WikiPageStore._mergeIntoStorage(createPageData);
       WikiPageStore.emitChange();
       action.onSuccess();
       break;
     case ActionTypes.CREATE_PAGE_FAILURE:
       break;
     case ActionTypes.REQUEST_PAGE_LIST_SUCCESS:
-      var pages = action.data;
+      const pages = action.response.body.data;
       _.each(pages, function(page) {
-        page.status = action.type;
+        page.status = action.response.status;
+        page.actionType = action.type;
         WikiPageStore._mergeIntoStorage(page);
       });
       WikiPageStore.emitChange();
       break;
     case ActionTypes.DELETE_PAGE_SUCCESS:
-      var id = action.pageId;
-      WikiPageStore.removePageFromStorage(id);
+      const deletePageId = action.response.body.data.id;
+      WikiPageStore.removePageFromStorage(deletePageId);
       WikiPageStore.emitChange();
       action.onSuccess();
       break;

@@ -152,7 +152,11 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       }
       // If page exists but is already on newer client timestamp, rollback transaction
       // and return 400
-      if (existingPage.clientTimestamp !== null && existingPage.clientTimestamp >= pageData.clientTimestamp) {
+      if (
+        !pageData.clientTimestamp ||
+        (existingPage.clientTimestamp !== null &&
+        existingPage.clientTimestamp >= pageData.clientTimestamp)
+      ) {
         apiHelpers.respondWithError(
           req,
           res,

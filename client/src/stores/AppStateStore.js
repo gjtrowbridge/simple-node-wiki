@@ -112,15 +112,24 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       AppStateStore.emitChange();
       break;
     case ActionTypes.CREATE_PAGE_SUCCESS:
-      var newlyCreatedPage = action.data;
+      var newlyCreatedPage = action.response.body.data;
       AppStateStore.hideModal();
       AppStateStore.showNotification(
         'You successfully created a new page: "' + newlyCreatedPage.title + '"', 10000);
       AppStateStore.emitChange();
       break;
+    case ActionTypes.CREATE_PAGE_FAILURE:
+      AppStateStore.hideModal();
+      AppStateStore.showNotification(`Error creating new page: ${action.error}`);
+      AppStateStore.emitChange();
+      break;
     case ActionTypes.DELETE_PAGE_SUCCESS:
       AppStateStore.showNotification(
         'You successfully deleted page: "' + action.pageTitle + '"', 10000);
+      AppStateStore.emitChange();
+      break;
+    case ActionTypes.DELETE_PAGE_FAILURE:
+      AppStateStore.showNotification(`Error deleting page: ${action.error}`);
       AppStateStore.emitChange();
       break;
     case ActionTypes.SAVE_PAGE:
@@ -143,8 +152,8 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       AppStateStore.emitChange();
       break;
     case ActionTypes.REQUEST_USER_SUCCESS:
-      AppStateStore.setActiveUser(action.user);
-      AppStateStore.showNotification('You are logged in as ' + action.user.email, 10000);
+      AppStateStore.setActiveUser(action.response.body.user);
+      AppStateStore.showNotification('You are logged in as ' + action.response.body.user.email, 10000);
       AppStateStore.emitChange();
       break;
     case ActionTypes.REQUEST_USER_FAILURE:
@@ -153,7 +162,7 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
       AppStateStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_FAILURE:
-      if (action.statusCode === 404) {
+      if (action.response.status === 404) {
         AppStateStore.showNotification(
           'A page with url: "' + action.pageData.name + '" does not exist!', 10000);
       } else {

@@ -70,7 +70,7 @@ class WikiPage extends React.Component {
     this.setState(this.getStateFromStores());
   }
   onEditorChange(newText) {
-    var pageData = {
+    const pageData = {
       id: this.state.id,
       name: this.state.name,
       text: newText,
@@ -106,10 +106,12 @@ class WikiPage extends React.Component {
     var saveStatus;
     if (this.state.text !== undefined) {
       var statusText = '';
-      if (this.state.status === WikiConstants.ActionTypes.SAVE_PAGE) {
+      if (this.state.actionType === WikiConstants.ActionTypes.SAVE_PAGE) {
         statusText = 'Saving...';
-      } else if (this.state.status === WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS) {
+      } else if (this.state.actionType === WikiConstants.ActionTypes.SAVE_PAGE_SUCCESS) {
         statusText = 'Saved!';
+      } else if (this.state.actionType === WikiConstants.ActionTypes.SAVE_PAGE_FAILURE) {
+        statusText = `Error: HTTP Status ${this.state.status}`;
       }
       editor = (
         <MarkdownEditor markdownText={this.state.text} statusText={statusText}

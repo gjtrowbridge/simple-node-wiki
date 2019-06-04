@@ -64,7 +64,7 @@ var WikiPageActionCreators = {
     }
     return AppDispatcher.dispatchAsync({
       promise: WikiUtils.requestViaHttpAndReturnPromise(
-          url, 'GET', headers, {}),
+          url, 'GET', headers),
       types: {
         request: WikiConstants.ActionTypes.REQUEST_PAGE,
         success: WikiConstants.ActionTypes.REQUEST_PAGE_SUCCESS,

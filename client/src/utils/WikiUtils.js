@@ -1,26 +1,50 @@
 export default {
   // Executes the specified HTTP request and returns
   // a promise that resolves to the response
-  requestViaHttpAndReturnPromise: function(url, method, headers, body) {
-    if (body) {
-      headers['Content-Type'] = 'application/json';
-      body = JSON.stringify(body);
-    }
-    return fetch(url,{
-      method,
-      headers,
-      body,
-    }).then((response) => {
-      if (response.status >= 400) {
-        // TODO: Make this less horrifyingly terrible
-        throw {
-          error: 'invalid status',
-          pageData: {
-            status: response.status,
-          },
-        };
+  requestViaHttpAndReturnPromise: async function(url, method, headers, body, errorByStatusCode = true) {
+    headers['Content-Type'] = 'application/json';
+    const returnValue = {
+      request: {
+        url,
+        method,
+        headers,
+        body,
+      },
+      response: null,
+      error: null,
+    };
+    try {
+      // fetch the desired data
+      let response;
+      if (method === 'GET' || method === 'HEAD') {
+        response = await fetch(url,{
+          method,
+          headers,
+        });
+      } else {
+        response = await fetch(url,{
+          method,
+          headers,
+          body: JSON.stringify(body),
+        });
       }
-      return response.json();
-    });
+      // wait for the response
+      const responseBody = await response.json();
+
+      // update the return value
+      returnValue.response = {
+        body: responseBody,
+        status: response.status,
+      };
+
+      if (errorByStatusCode && response.status >= 400) {
+        throw `error status code: ${response.status}`;
+      }
+    } catch(e) {
+      // if anything goes wrong, update the error field
+      returnValue.error = e;
+      throw returnValue;
+    }
+    return returnValue;
   }
 };

@@ -37,7 +37,7 @@ PageListStore.dispatchToken = AppDispatcher.register(function(action) {
       PageListStore.emitChange();
       break;
     case ActionTypes.REQUEST_PAGE_LIST_SUCCESS:
-      var pageList = action.data;
+      const pageList = action.response.body.data;
       PageListStore.storePageList(pageList, action.pageListType);
       PageListStore.emitChange();
       break;
