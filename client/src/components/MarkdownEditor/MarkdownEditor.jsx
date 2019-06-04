@@ -6,6 +6,8 @@ var React = require('react');
 import PropTypes from 'prop-types';
 import EditBox from './EditBox.jsx';
 import DisplayBox from './DisplayBox.jsx';
+import { transitionTo } from 'Src/utils/HistoryContainer';
+
 var marked = require('marked');
 var highlight = require('highlight.js');
 
@@ -31,6 +33,30 @@ class MarkdownEditor extends React.Component {
   constructor(props) {
     super(props);
     this.markdownToHtml = this.markdownToHtml.bind(this);
+    this.switchRelativeLinksToUseHistory = this.switchRelativeLinksToUseHistory.bind(this);
+  }
+  switchRelativeLinksToUseHistory() {
+    // Hacky logic to allow relative links to use faster, history-based routing
+    // instead of forcing a refresh when local page links are clicked
+    // If you are reading this and can think of a better way, let me know :)
+    const linksInMarkdown = document.querySelectorAll('.markdown-editor a');
+    linksInMarkdown.forEach((link) => {
+      const href = link.getAttribute('href');
+      // If the link is relative, use transitionTo instead of normal link behavior
+      // (again, this is for performance reasons)
+      if (/^\/pages\/.*$/.test(href)) {
+        link.onclick = (e) => {
+          transitionTo(href);
+          e.preventDefault();
+        }
+      }
+    });
+  }
+  componentDidMount() {
+    this.switchRelativeLinksToUseHistory();
+  }
+  componentDidUpdate() {
+    this.switchRelativeLinksToUseHistory();
   }
   // This is used to sanitize raw user-inputted
   // markdown and convert it to HTML

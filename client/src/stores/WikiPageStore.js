@@ -77,7 +77,7 @@ var WikiPageStore = StoreUtils.createStore({
     // a different page and updated the optimistically-stored
     // page to be a new page, in which case we don't want to
     // update the status of it based on a now-stale request
-    if (pageId === _optimisticPage.id) {
+    if (!!_optimisticPage && pageId === _optimisticPage.id) {
       _optimisticPage.status = status;
       _optimisticPage.actionType = actionType;
     }

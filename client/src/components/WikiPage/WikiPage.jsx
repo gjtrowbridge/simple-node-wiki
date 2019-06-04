@@ -35,7 +35,9 @@ class WikiPage extends React.Component {
     return result;
   }
   requestPage(pageName) {
-    WikiPageActionCreators.requestPage(pageName);
+    WikiPageActionCreators.requestPage({
+      name: pageName
+    });
   }
   savePage(pageData) {
     WikiPageActionCreators.savePage(pageData);
@@ -48,8 +50,19 @@ class WikiPage extends React.Component {
     // It may be better to solve this with key props
     // in a wrapper component...?
     if (newProps.pageName !== this.state.name &&
+        newProps.pageName !== this.props.pageName &&
         newProps.pageName !== undefined) {
-      this.setState(this.getStateFromStores(newProps.pageName));
+      this.setState({
+        name: this.props.pageName,
+        text: '',
+        ...this.getStateFromStores(this.props.pageName),
+      });
+      const self = this;
+      // Necessary to use timeout because we can't `dispatch` in the middle
+      // of another `dispatch`
+      setTimeout(() => {
+        self.requestPage(newProps.pageName);
+      }, 0);
     }
   }
   componentWillMount() {
@@ -57,7 +70,7 @@ class WikiPage extends React.Component {
     if (cachedPageData.hasOwnProperty('text')) {
       this.setState(cachedPageData);
     } else {
-      this.requestPage({ name: this.props.pageName });
+      this.requestPage(this.props.pageName);
     }
   }
   componentDidMount() {

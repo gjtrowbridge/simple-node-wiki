@@ -9,8 +9,12 @@ let history = undefined;
 const setHistory = (h) => {
   history = h;
 };
-const transitionTo = (url) => {
-  history.push(url);
+const transitionTo = (url, useReplace = false) => {
+  if (useReplace) {
+    history.replace(url);
+  } else {
+    history.push(url);
+  }
 };
 
 export { setHistory, transitionTo };

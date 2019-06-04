@@ -170,7 +170,9 @@ AppStateStore.dispatchToken = AppDispatcher.register(function(action) {
           'Error requesting page with url: "' + action.pageData.name + '"', 10000);
       }
       AppStateStore.emitChange();
-      transitionTo('');
+      // Transition with replacement so users can click "Back" button
+      // and get back to their original page (not the 404 page that does not exist)
+      transitionTo('', true);
       break;
     default:
       // do nothing
