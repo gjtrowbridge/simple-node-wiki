@@ -6,7 +6,7 @@ class PagePreviewCard extends React.Component {
   render() {
     const linkTo = `/pages/${this.props.name}`;
     var link = (
-      <Link key={this.props.id} to={linkTo}>
+      <Link key={this.props.id} to={linkTo} className="layout-fill-and-center">
         {this.props.title}
       </Link>
     );

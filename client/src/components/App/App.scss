@@ -434,10 +434,6 @@ ul.search-results {
   margin: 0;
   z-index: 10;
   li.search-result {
-    height: 3em;
-    padding: 1em;
-    //border-left: solid 1px $color1;
-    //border-right: solid 1px $color1;
     background-color: $color4;
     &:hover {
       background-color: $color1;
@@ -445,6 +441,7 @@ ul.search-results {
     border-bottom: dotted 1px white;
     a {
       color: white;
+      padding: 0.75em;
     }
     &:last-child {
       border-bottom: none;
