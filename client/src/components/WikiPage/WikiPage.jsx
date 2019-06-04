@@ -103,10 +103,22 @@ class WikiPage extends React.Component {
     WikiPageActionCreators.setViewMode(viewModeEnabled);
   }
   deletePage() {
-    WikiPageActionCreators.deletePage({
-      pageId: this.state.id,
-      pageTitle: this.state.title
-    });
+    const confirmed = confirm(
+      `Are you sure want to delete this page?
+{
+  Title: "${this.state.title}"
+  URL: "${this.state.name}\"
+}
+
+This cannot be undone.
+`
+    );
+    if (confirmed) {
+      WikiPageActionCreators.deletePage({
+        pageId: this.state.id,
+        pageTitle: this.state.title
+      });
+    }
   }
   render() {
     if (this.state.title !== undefined) {
@@ -132,10 +144,10 @@ class WikiPage extends React.Component {
       );
       viewModeToggle = <OnOffSwitch onText="EDIT MODE" offText="VIEW MODE"
           onChange={this.onChangeViewModeToggle} defaultChecked={!this.state.viewMode} />;
-      editButton = <button className="btn"
-          onClick={this.showEditPageModal}>Edit Name & Title</button>;
-      deleteButton = <button className="btn"
-          onClick={this.deletePage}>Delete Page</button>;
+      editButton = <button className="page-settings-button"
+                           onClick={this.showEditPageModal}><i className="fa fa-gear"></i></button>;
+      deleteButton = <button className="page-settings-button"
+          onClick={this.deletePage}><i className="fa fa-trash"></i></button>;
     } else {
       editor = 'Loading...';
       editButton = '';
@@ -147,12 +159,12 @@ class WikiPage extends React.Component {
       <div className="wiki-page">
         { /* <h3>{this.props.pageName}</h3> */}
         { /* {this.state.status} */}
-        {viewModeToggle}
-        {editor}
-        <div className={this.state.viewMode ? "hidden" : "edit-buttons layout-col-1-2"}>
+        <div className="page-edit-toggle">
+          {viewModeToggle}
           {editButton}
           {deleteButton}
         </div>
+        {editor}
       </div>
     );
   }

@@ -200,7 +200,6 @@ nav {
 
   // page layout
   div.onoffswitch {
-    flex-grow: 0;
     margin-top: 0;
   }
   div.markdown-editor {
@@ -210,6 +209,35 @@ nav {
     flex-grow: 0;
   }
 
+  div.page-edit-toggle {
+    flex-grow: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .page-settings-button {
+      border: none;
+      background: transparent;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      flex-grow: 0;
+      margin-bottom: 6px;
+      margin-left: 6px;
+      i.fa {
+        display: block;
+        height: 100%;
+        width: 100%;
+        font-size: 2.5em;
+        cursor: pointer;
+        color: $color4;
+        &:hover {
+          color: $color1;
+        }
+      }
+    }
+  }
 
   .markdown-editor {
     display: flex;
@@ -277,7 +305,7 @@ nav {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  margin: 6px auto;
+  margin: 0 0 6px 0;
 }
 .onoffswitch-checkbox {
   display: none;
