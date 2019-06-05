@@ -100,8 +100,8 @@ $ad-z-index: 100;
   left: 50%;
 
   background-color: white;
-  box-shadow: $color4 2px 2px 6px 3px;
-  border-radius: 4px;
+  box-shadow: $color4 1px 1px 6px 4px;
+  border-radius: 2px;
   padding: 2em;
 
   transform: translate(-50%, -50%);
@@ -115,7 +115,14 @@ $ad-z-index: 100;
     width: $close-button-dimension;
     padding: 0;
     text-transform: capitalize;
-    color: $color2;
+    color: white;
+    border: none;
+    outline: none;
+    background-color: $color4;
+    border-radius: 2px;
+    &:hover {
+      background-color: $color1;
+    }
   }
 }
 
@@ -430,6 +437,9 @@ nav {
 }
 
 .wiki-page-url-title-form {
+  h2 {
+    margin-top: 0;
+  }
   div.row {
     display: flex;
     flex-direction: row;
@@ -437,17 +447,27 @@ nav {
     align-items: center;
     margin-bottom: 1em;
     input {
-      padding: 0.25em;
+      padding: 0.5em;
+      flex-grow: 1;
+      margin-left: 1em;
+      border: solid 1px $color4;
+      border-radius: 2px;
+      font-family: 'Pier Sans', 'sans-serif';
+    }
+    label {
+      width: 5em;
     }
   }
   button {
     width: 100%;
     padding: 0.5em;
-    background-color: $color5;
-    color: $color2;
+    background-color: $color4;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 4px;
     &:hover {
       background-color: $color1;
-      color: white;
     }
   }
   width: 22em;
