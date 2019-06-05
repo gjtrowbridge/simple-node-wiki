@@ -17,8 +17,7 @@
     "start-in-test-env": "NODE_ENV=test bash -c 'node server.js'",
     "test:server": "npm run reset-test-db && npm run test:server:fast",
     "test:server:fast": "NODE_ENV=test bash -c 'tape `find tests/server/ -name test_*.js` | tap-spec || true'",
-    "watch": "npm run watch-css & npm run watch-js & nodemon server",
-    "watch-css": "stylus -w --include-css client/src/ --out client/public/assets/styles",
+    "watch": "npm run watch-js & nodemon server",
     "watch-js": "npx webpack-dev-server"
   },
   "keywords": [
@@ -43,7 +42,6 @@
     "keymirror": "^0.1.1",
     "marked": "^0.6.2",
     "node-fetch": "^2.2.0",
-    "normalize.css": "^3.0.3",
     "object-assign": "^3.0.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
