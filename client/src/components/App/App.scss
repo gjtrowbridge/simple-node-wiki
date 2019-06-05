@@ -30,6 +30,7 @@ html {
   color: $color2;
   position: relative;
   height: 100%;
+  overflow-y: scroll;
   body {
     &, #mount_point, #non-modal-container, .app {
       height: 100%;
