@@ -5,6 +5,7 @@
 import React from 'react';
 import Prism from 'prismjs';
 const marked = require('marked');
+import debounce from 'debounce';
 
 import PropTypes from 'prop-types';
 import EditBox from './EditBox.jsx';
@@ -28,6 +29,7 @@ class MarkdownEditor extends React.Component {
     super(props);
     this.markdownToHtml = this.markdownToHtml.bind(this);
     this.runAfterRender = this.runAfterRender.bind(this);
+    this.runAfterRender = debounce(this.runAfterRender, 400);
   }
   runAfterRender() {
     // Hacky logic to allow relative links to use faster, history-based routing
@@ -51,8 +53,6 @@ class MarkdownEditor extends React.Component {
     setTimeout(() => {
       Prism.highlightAll();
     }, 0);
-
-
   }
   componentDidMount() {
     this.runAfterRender();
