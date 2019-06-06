@@ -30,11 +30,12 @@ class EditBox extends React.Component {
           }}
           options={{
             autoRefresh: true,
-            mode: 'markdown',
+            cursorBlinkRate: 530,
             lineNumbers: true,
             lineWrapping: true,
+            mode: 'markdown',
             showCursorWhenSelecting: true,
-            cursorBlinkRate: 530,
+            tabSize: 2,
           }}
         />
       </div>
