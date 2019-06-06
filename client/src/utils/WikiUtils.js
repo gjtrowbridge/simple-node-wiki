@@ -29,7 +29,13 @@ export default {
         });
       }
       // wait for the response
-      const responseBody = await response.json();
+      let responseBody = await response.text();
+
+      try {
+        responseBody = JSON.parse(responseBody)
+      } catch (e) {
+        // Do nothing -- just keep the body as text if it's not parseable.
+      }
 
       // update the return value
       returnValue.response = {
