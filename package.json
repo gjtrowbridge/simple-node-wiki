@@ -7,9 +7,7 @@
     "node": "8.9.3"
   },
   "scripts": {
-    "build": "npm run build-css & npm run build-js",
-    "build-css": "stylus --include-css client/src/ --out client/public/assets/styles",
-    "build-js": "npx webpack",
+    "build": "npx webpack",
     "db:migrate": "sequelize db:migrate",
     "postinstall": "npm run build & npm run db:migrate",
     "reset-test-db": "NODE_ENV=test bash -c 'sequelize db:migrate:undo:all && sequelize db:migrate'",
