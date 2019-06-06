@@ -62,7 +62,10 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
         apiHelpers.respondWithData(req, res, pages);
       },
       function(err) {
-        apiHelpers.respondWithError(req, res, err);
+        console.error('GET /pages error', err);
+        apiHelpers.respondWithError(req, res, {
+          error: 'unable to GET /pages'
+        });
       }
     )
   });
@@ -79,7 +82,10 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
         apiHelpers.respondWithDataOrNotFound(req, res, page);
       },
       function(err) {
-        apiHelpers.respondWithError(req, res, err);
+        console.error('GET /pages/:id error', err);
+        apiHelpers.respondWithError(req, res, {
+          error: 'unable to GET /pages/:id'
+        });
       }
     );
   });
@@ -96,7 +102,10 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
         apiHelpers.respondWithDataOrNotFound(req, res, page);
       },
       function(err) {
-        apiHelpers.respondWithError(req, res, err);
+        console.error('GET /pages/name/:name error', err);
+        apiHelpers.respondWithError(req, res, {
+          error: 'unable to GET /pages/name/:name',
+        });
       }
     );
   });
@@ -107,8 +116,8 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
     try {
       const page = await Page.create(pageData);
       apiHelpers.respondWithData(req, res, page, 201);
-    } catch (e) {
-      if (e instanceof db.Sequelize.UniqueConstraintError) {
+    } catch (err) {
+      if (err instanceof db.Sequelize.UniqueConstraintError) {
         apiHelpers.respondWithError(
           req,
           res,
@@ -116,7 +125,10 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
           400,
         );
       } else {
-        apiHelpers.respondWithError(req, res, e);
+        console.error('POST /pages/ error', err);
+        apiHelpers.respondWithError(req, res, {
+          error: 'unable to POST /pages/',
+        });
       }
     }
   });
@@ -179,10 +191,12 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       apiHelpers.respondWithData(req, res, {
         rows_affected: rowsAffected[0],
       });
-    } catch (e) {
+    } catch (err) {
       await t.rollback();
-      console.error(`ERROR (PUT /pages/:id): ${e}`);
-      apiHelpers.respondWithError(req, res, e);
+      console.error('PUT /pages/:id error', err);
+      apiHelpers.respondWithError(req, res, {
+        error: 'unable to PUT /pages/:id',
+      });
     }
   });
 
@@ -200,7 +214,10 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
         apiHelpers.respondWithDataOrNotFound(req, res, page);
       },
       function(err) {
-        apiHelpers.respondWithError(req, res, err);
+        console.error('DELETE /pages/:id error', err);
+        apiHelpers.respondWithError(req, res, {
+          error: 'unable to DELETE /pages/:id',
+        });
       }
     );
   });
@@ -237,9 +254,11 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       });
 
       apiHelpers.respondWithDataOrNotFound(req, res, pages);
-    } catch (e) {
-      console.log('Error searching for wiki page:', e);
-      apiHelpers.respondWithError(req, res, e);
+    } catch (err) {
+      console.error('GET /pages/search/:keyword error', err);
+      apiHelpers.respondWithError(req, res, {
+        error: 'unable to GET /pages/search/:keyword',
+      });
     }
   });
 
