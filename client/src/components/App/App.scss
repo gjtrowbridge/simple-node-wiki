@@ -511,6 +511,16 @@ ul.search-results {
     padding: 1em;
     font-size: 1.2em;
   }
+  .user-token-info {
+    margin-bottom: 0.4em;
+  }
+  p.warning {
+    color: hsla(0, 100%, 20%, 1);
+    padding: 0;
+    margin: 0;
+    font-size: 0.8em;
+    font-style: italic;
+  }
 }
 
 // Global misc rules

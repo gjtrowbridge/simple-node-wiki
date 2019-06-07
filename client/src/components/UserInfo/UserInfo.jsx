@@ -46,9 +46,10 @@ fetch('${baseUrl}/_api/pages', {
     return (
       <div className="user-info">
         <h2>User Info ({userEmail})</h2>
-        <p>
+        <p className="user-token-info">
           Your current user token is: "{jwt}".
         </p>
+        <p className="warning">(Do not share this token with others)</p>
         <p>
           To write automated requests that interact with your wiki pages,
           simply add this token as a header in all your requests, as shown below:
