@@ -178,6 +178,7 @@ nav {
         position: absolute;
       }
       input {
+        text-align: center;
         font-size: 1em;
         padding: 0 1em;
         border-radius: 4px;
@@ -504,4 +505,14 @@ ul.search-results {
   display: none;
 }
 
-
+// Adjustments for smaller screens
+@media only screen and (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+  .markdown-editor {
+    .box.display-box.box-edit-mode {
+      display: none;
+    }
+  }
+}
