@@ -1,19 +1,35 @@
-var React = require('react');
-const { Link } = require('react-router-dom');
+
+import React from 'react';
+import { Link } from 'react-router-dom';
 import AppStateActionCreators from '../../actions/AppStateActionCreators';
 import WikiPageActionCreators from '../../actions/WikiPageActionCreators';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import WikiPageUrlTitleForm from '../WikiPage/WikiPageUrlTitleForm.jsx';
+import UserInfo from 'Components/UserInfo/UserInfo.jsx';
 
 class Nav extends React.Component {
+  constructor(props) {
+    super(props);
+    this.showUserInfoModal = this.showUserInfoModal.bind(this);
+  }
   showCreatePageModal() {
-    var innerNode = (
+    const innerNode = (
       <WikiPageUrlTitleForm />
     );
     AppStateActionCreators.showModal(innerNode);
   }
-  logout() {
-    WikiPageActionCreators.logoutUser();
+  showUserInfoModal() {
+    const { user } = this.props;
+    const innerNode = (
+      <UserInfo
+        logoutFn={() => {
+          WikiPageActionCreators.logoutUser();
+          AppStateActionCreators.hideModal();
+        }}
+        userEmail={user.email}
+      />
+    );
+    AppStateActionCreators.showModal(innerNode);
   }
   render() {
     var id = this.props.id !== undefined ?
@@ -23,9 +39,9 @@ class Nav extends React.Component {
     if (user) {
       userComponent = (
         <button className="layout-fill-and-center"
-                onClick={this.logout}
+                onClick={this.showUserInfoModal}
         >
-          Logout
+          User Info ({user.email})
         </button>
       );
     } else {

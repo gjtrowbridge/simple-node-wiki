@@ -31,7 +31,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       valueToConvert: req.query.limit,
       defaultValue: 10,
       minimum: 1,
-      maximum: 10
+      maximum: 30,
     });
     var offset = apiHelpers.convertToIntWithDefault({
       valueToConvert: req.query.offset,

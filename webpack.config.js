@@ -49,6 +49,10 @@ module.exports = {
       'Components': path.join(__dirname, './client/src/components'),
       'Stores': path.join(__dirname, './client/src/stores'),
     },
+    extensions: [
+      '.js',
+      '.jsx',
+    ]
   },
   devServer: {
     contentBase: path.join(__dirname, 'client/public'),
