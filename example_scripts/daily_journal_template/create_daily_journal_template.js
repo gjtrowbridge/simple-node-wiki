@@ -3,8 +3,8 @@ const getDailyJournalTemplate = require('./daily_journal_template');
 
 const wikiURL = 'https://simple-node-wiki.herokuapp.com';
 const jwtForYourUser = process.env.JWT_FOR_YOUR_USER;
-let currentDate = new Date('2018-08-30');
-const numDays = 100;
+let currentDate = new Date('2019-06-10');
+const numDays = 7;
 
 const addDaysToDate = function(date, days=1) {
   date = new Date(date);

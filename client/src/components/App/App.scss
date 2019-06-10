@@ -98,8 +98,8 @@ $ad-z-index: 100;
   position: fixed;
   top: 50%;
   left: 50%;
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 90%;
+  max-width: 90%;
   overflow-y: auto;
   overflow-x: auto;
 
@@ -510,6 +510,7 @@ ul.search-results {
     width: 100%;
     padding: 1em;
     font-size: 1.2em;
+    margin-bottom: 1em;
   }
   .user-token-info {
     margin-bottom: 0.4em;
@@ -520,6 +521,21 @@ ul.search-results {
     margin: 0;
     font-size: 0.8em;
     font-style: italic;
+  }
+  p.note {
+    color: navy;
+    padding: 0;
+    margin: 0;
+    font-size: 0.8em;
+    font-style: italic;
+  }
+  p.jwt-token {
+    padding: 0.5em;
+    color: $color2;
+    font-family: monospace;
+    font-size: 1.2em;
+    -ms-word-break: break-word;
+    word-break: break-word;
   }
 }
 

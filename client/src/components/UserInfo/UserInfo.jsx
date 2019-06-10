@@ -46,15 +46,19 @@ fetch('${baseUrl}/_api/pages', {
     return (
       <div className="user-info">
         <h2>User Info ({userEmail})</h2>
+        <p>
+          To interact with your wiki pages via API,
+          simply add your current user token as a "jwt" header in all your requests.
+        </p>
         <p className="user-token-info">
-          Your current user token is: "{jwt}".
+          Your current user token is:
+        </p>
+        <p className="jwt-token">
+          {jwt}
         </p>
         <p className="warning">(Do not share this token with others)</p>
-        <p>
-          To write automated requests that interact with your wiki pages,
-          simply add this token as a header in all your requests, as shown below:
-        </p>
         <h3>Example: Creating a New Page With a Node Script</h3>
+        <p className="note">(Note: you can copy/paste this example as-is, it already contains your current user token)</p>
         <pre className="language-javascript">
           <code className="language-javascript">
             {createPagesCode}

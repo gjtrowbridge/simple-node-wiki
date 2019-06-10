@@ -10,28 +10,14 @@ const getDailyJournalTemplate = function(
 [Yesterday (${yesterdayString})](/pages/${urlPrefix}-${yesterdayString})
 [Tomorrow (${tomorrowString})](/pages/${urlPrefix}-${tomorrowString})
 
-# Daily Journal: ${todayString}
+# Morning Journal: ${todayString}
 
-## Random Journaling
+## At the end of today, I will be STOKED about how the day turned out if...
+* eg. I go for a 2-mile run.
+* eg. I sign up for that class I've been wanting to take.
 
-Walruses are the coolest sea creature by far...blah blah blah...
-
-## Summary
-
-### Favorite Part of the Day
-
-My favorite part of the day was...
-
-### One thing I'm thankful for
-
-I'm thankful for...hot showers.
-
-### Progress Towards Goals (either [yesterday's](/pages/${urlPrefix}-${yesterdayString}) or [overall goals](/pages/goals))
-* Spent 1 hour learning all the words to a Sean Paul song.
-* ...
-
-### Goals for [Tomorrow](/pages/${urlPrefix}-${tomorrowString})
-* Do a beach run
+## Other thoughts
+eg. Is it weird that moose x 1 = moose, moose x 5 = moose, but goose x 1 = goose, goose x 5 = geese?
 
 [Journaling is good for you, according to this article](https://medium.com/the-mission/why-keeping-a-daily-journal-could-change-your-life-b9421a69912a)
 `;
