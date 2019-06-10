@@ -1,33 +1,81 @@
 # Simple Node Wiki / Note-taker / Journal
 
-Like the title implies, the goal here was to build a very simple wiki/note-taker/journal.
 
-Other goals:
+## Intro
 
-* Easy to download and deploy (eg. uses SQLite, easy to deploy to Heroku)
+**The goal of this project was to create a very simple wiki/note-taker/journal.**
+
+* Users can create content using [Markdown](https://guides.github.com/features/mastering-markdown/#what), and view / edit / search that content in real time.
+* Users can also create / view / edit / search content via an API (see the "API Overview" section below).
+
+
+### Other goals
+* Easy to download and deploy (see "create own deployment" section below)
 * Easy-to-use API for users that want to create or access content programmatically.
-* VERY simple front-end that allows users to easily create, edit, or view content
-* Authentication that allows users to limit entry to the wiki to only certain users.
+* Very simple front-end that allows users to easily create, edit, or view content.
+* Authentication that allows users to have exclusive access to their own content.
 
-Node/Express/SQL back-end, React/Flux front-end.
-***
-To see the application in action, check out: https://simple-node-wiki.herokuapp.com/
-***
+### Tech Stack
+#### Back-End
+* Node
+* Express
+* SQL
 
-### To Install And Use Locally
+#### Front-End
+* React (with ReactRouter)
+* Flux
+* Webpack
+* SCSS
+
+## Demo
+To see the application in action, check out: https://simple-node-wiki-demo.herokuapp.com, or check out the short videos below:
+
+### Login and create new page
+![Log in and create new page video](https://user-images.githubusercontent.com/931171/59230992-15486f00-8b94-11e9-82cf-09026ff617cd.gif)
+
+### More markdown examples
+
+#### Create a table
+
+![Create a table](https://user-images.githubusercontent.com/931171/59232942-57c17a00-8b9b-11e9-9194-7725d720921b.gif)
+
+#### Link an image
+
+![Link an image](https://user-images.githubusercontent.com/931171/59232940-52fcc600-8b9b-11e9-9a26-25484f6dd4e4.gif)
+
+#### Add code highlighting
+
+![Add code highlighting](https://user-images.githubusercontent.com/931171/59232950-5bed9780-8b9b-11e9-8f11-dcd9bde176b2.gif)
+
+### Search for a page
+
+![Search for a page](https://user-images.githubusercontent.com/931171/59232946-5abc6a80-8b9b-11e9-8f3e-f86c77d900b7.gif)
+
+### Edit / Delete
+
+
+## To Install And Use Locally
 
 * Make sure you have `node` and `npm` installed
-* Make sure your `node` version is the same as the one specified in `package.json` (currently, `6.9.2`)
+* Make sure your `node` version is the same as the one specified in `package.json` (currently, `8.9.3`)
     * ([nvm](https://github.com/creationix/nvm) is a great way to manage multiple node versions)
 * `git clone`
   * If you have SSH set up: `git clone git@github.com:gjtrowbridge/simple-node-wiki.git`
   * Otherwise: `https://github.com/gjtrowbridge/simple-node-wiki.git`
 * `cd simple-node-wiki`
-* `npm install`
+* Set up Postgres database:
+
+	1. Install [postgres](https://www.postgresql.org/download/).
+	2. Look at the database config file (`./server/database/config/config.json`), update the "username" to match your postgres user.
+	3. Set up a database called `simple_node_wiki_dev`.
+	4. Set up a database called `simple_node_wiki_test` (if you plan to run tests).
+	5. (No need to set up the production database if you are using this locally only.)
+* `npm install` (make sure the `postinstall` script ran correctly -- it will fail if postgres is not set up correctly).
 * `npm run start`
 * That's it!  After starting the server, use the application by navigating to http://localhost:8090
+* To run in webpack-dev-server mode, try `npm run webpack-dev-server`, then navigate to http://localhost:9000
 
-### To Install And Use on Heroku
+## To Create Your Own Online Version With Heroku
 
 * Make sure you have a Heroku account and the Heroku toolbelt CLI installed.
 * `git clone`
@@ -41,7 +89,9 @@ To see the application in action, check out: https://simple-node-wiki.herokuapp.
     * `heroku config:set WIKI_APP_URL=https://your-app.herokuapp.com`
     * If planning to use user authentication (ie. users must sign in, and can only see their own content)
         * Follow step 3 [here](http://gregtrowbridge.com/node-authentication-with-google-oauth-part1-sessions/) to get your Google client ID and client secret.
-            * If you have issues with this part, open an issue on Github and I'll take a look!
+        	* **One difference from the blog post linked above:** For the "Authorized redirect URIs" section, use the suffix `/_auth/google/callback` instead of `/auth/google/callback` (this app has the auth routes listed under "/_auth/..." instead of "/auth/..."
+          	* eg. `https://my-apps-url-on-heroku.herokuapp.com/_auth/google/callback` instead of `https://my-apps-url-on-heroku.herokuapp.com/auth/google/callback `
+          * If you have issues with this part, open an issue on Github and I'll take a look!
         * `heroku config:set GOOGLE_OAUTH_CLIENT_ID=your_google_client_id`
         * `heroku config:set GOOGLE_OAUTH_CLIENT_SECRET=your_google_client_secret`
         * `heroku config:set IS_PRODUCTION=true`
@@ -51,7 +101,7 @@ To see the application in action, check out: https://simple-node-wiki.herokuapp.
 * `git push heroku master`
 * `heroku open`
 
-### Existing Features
+## Existing Features
 
 * Markdown editor for creating and viewing content.
   * Easy to edit page url, title, or text.
@@ -65,29 +115,36 @@ To see the application in action, check out: https://simple-node-wiki.herokuapp.
 * Support for other databases in prod.
 * Support for user login and user-specific wiki pages.
 
-### Potential Upcoming Features
+## API Overview
 
-* More test coverage
-* Contribution guide for those interested in helping make this better.
+All API endpoints require passing a JSON Web Token (JWT) as a header.
+eg. In JavaScript, you can create a new page with the following:
+```javascript
+// Install "node-fetch" package with `npm install node-fetch`
+const fetch = require('node-fetch');
+fetch('https://simple-node-wiki.herokuapp.com/_api/pages', {
+  method: 'POST',
+  headers: {
+    jwt: 'your-temporary-unique-user-token',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    name: 'new-page-url',
+    title: 'My New Page (created via API!)',
+    text: '#My New Page\n\nThis is my new page!', 
+  })
+}).then(...)
+```
 
-### API Overview
+To get your current user token (and see an example of how to make API calls):
+	* Login to the app normally in a browser.
+  * Click the "User Info" button in the top navigation bar.
 
-Most of the relevant API endpoints are defined in [createPageRouter.js](https://github.com/gjtrowbridge/simple-node-wiki/blob/master/server/api/createPageRouter.js), but here's a basic overview of the data and available endpoints:
-With recent changes, all API endpoints will require passing a JSON Web Token (JWT) as a header.
-To do this:
-    * Login to the app normally in a browser.
-    * Open the browser's developer console, and run `localStorage.getItem('jwt')`.  This is your JWT.
-    * When sending manual requests to the API, include the JWT string as a header with the name `jwt`.
-
-#### Data
-
-* The database contains `Page` objects, which have the following core properties:
-  * Page.id
-  * Page.name
-  * Page.title
-  * Page.text
+# TODO: app gif here
 
 #### Endpoints
+Most of the relevant API endpoints are defined in [createPageRouter.js](https://github.com/gjtrowbridge/simple-node-wiki/blob/master/server/api/createPageRouter.js). Here is a brief overview:
+
 * `GET /pages?limit=10&offset=0&listType=ORDER_BY_CREATED`
   * Options for `listType`:
     * `ORDER_BY_CREATED`
@@ -98,7 +155,21 @@ To do this:
   * Returns a page with the given ID
 * `GET /pages/:name`
   * Returns a page with the given name
+* `GET /pages/search/:keyword?limit=10&offset=0`
+	* Returns a list of pages that contain the given keyword (case-insensitive)
 * `POST /pages`
   * Creates a new page
+  * Example body:
+  ```
+  {
+  	"name": "some-url",
+    "title": "Some Page Title",
+    "text": "# markdown text"
+  }
+  ```
 * `PUT /pages/:id`
   * Updates an existing page
+* `DELETE /pages/:id`
+	* Deletes an existing page
+  
+[Example Script That Uses the API](https://github.com/gjtrowbridge/simple-node-wiki/tree/master/example_scripts/daily_journal_template)
