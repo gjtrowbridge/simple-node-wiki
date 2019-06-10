@@ -16,24 +16,25 @@
 * Authentication that allows users to have exclusive access to their own content.
 
 ### Tech Stack
-#### Back-End
-* Node
-* Express
-* SQL
+**Back-End:** Node, Express, SQL
 
-#### Front-End
-* React (with ReactRouter)
-* Flux
-* Webpack
-* SCSS
+**Front-End:** React (with ReactRouter), Flux, Webpack
 
 ## Demo
 To see the application in action, check out: https://simple-node-wiki-demo.herokuapp.com, or check out the short videos below:
 
-### Login and create new page
+### Sign in and create new page
 ![Log in and create new page video](https://user-images.githubusercontent.com/931171/59230992-15486f00-8b94-11e9-82cf-09026ff617cd.gif)
 
+### Search for a page
+
+![Search for a page](https://user-images.githubusercontent.com/931171/59232946-5abc6a80-8b9b-11e9-8f3e-f86c77d900b7.gif)
+
 ### More markdown examples
+
+#### Add code highlighting
+
+![Add code highlighting](https://user-images.githubusercontent.com/931171/59232950-5bed9780-8b9b-11e9-8f11-dcd9bde176b2.gif)
 
 #### Create a table
 
@@ -42,17 +43,6 @@ To see the application in action, check out: https://simple-node-wiki-demo.herok
 #### Link an image
 
 ![Link an image](https://user-images.githubusercontent.com/931171/59232940-52fcc600-8b9b-11e9-9a26-25484f6dd4e4.gif)
-
-#### Add code highlighting
-
-![Add code highlighting](https://user-images.githubusercontent.com/931171/59232950-5bed9780-8b9b-11e9-8f11-dcd9bde176b2.gif)
-
-### Search for a page
-
-![Search for a page](https://user-images.githubusercontent.com/931171/59232946-5abc6a80-8b9b-11e9-8f3e-f86c77d900b7.gif)
-
-### Edit / Delete
-
 
 ## To Install And Use Locally
 
@@ -75,7 +65,7 @@ To see the application in action, check out: https://simple-node-wiki-demo.herok
 * That's it!  After starting the server, use the application by navigating to http://localhost:8090
 * To run in webpack-dev-server mode, try `npm run webpack-dev-server`, then navigate to http://localhost:9000
 
-## To Create Your Own Online Version With Heroku
+## To Create Your Own Online Instance With Heroku
 
 * Make sure you have a Heroku account and the Heroku toolbelt CLI installed.
 * `git clone`
@@ -139,8 +129,6 @@ fetch('https://simple-node-wiki.herokuapp.com/_api/pages', {
 To get your current user token (and see an example of how to make API calls):
 	* Login to the app normally in a browser.
   * Click the "User Info" button in the top navigation bar.
-
-# TODO: app gif here
 
 #### Endpoints
 Most of the relevant API endpoints are defined in [createPageRouter.js](https://github.com/gjtrowbridge/simple-node-wiki/blob/master/server/api/createPageRouter.js). Here is a brief overview:
