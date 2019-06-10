@@ -30,11 +30,11 @@ fetch('${baseUrl}/_api/pages', {
     jwt: '${jwt}',
     'Content-Type': 'application/json',
   },
-  body: {
+  body: JSON.stringify({
     name: 'new-page-url',
-    title: 'My New Page',
+    title: 'My New Page (created via API!)',
     text: '#My New Page\\n\\nThis is my new page!', 
-  }
+  })
 }).then((response) => {
   return response.text();
 }).then((text) => {
