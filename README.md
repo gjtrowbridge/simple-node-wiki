@@ -127,8 +127,9 @@ fetch('https://simple-node-wiki.herokuapp.com/_api/pages', {
 ```
 
 To get your current user token (and see an example of how to make API calls):
-	* Login to the app normally in a browser.
-  * Click the "User Info" button in the top navigation bar.
+
+* Login to the app normally in a browser.
+* Click the "User Info" button in the top navigation bar.
 
 #### Endpoints
 Most of the relevant API endpoints are defined in [createPageRouter.js](https://github.com/gjtrowbridge/simple-node-wiki/blob/master/server/api/createPageRouter.js). Here is a brief overview:
