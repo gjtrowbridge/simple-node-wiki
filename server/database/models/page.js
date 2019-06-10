@@ -6,7 +6,10 @@ module.exports = function(sequelize, Sequelize) {
     name: {
       type: Sequelize.DataTypes.STRING,
       validate: {
-        is: /^[\w\-]+$/i,
+        is: {
+          args: [/^[\w\-]+$/i],
+          msg: 'page urls can ONLY contain numbers, letters, dashes, and underscores',
+        },
       }
     },
     clientTimestamp: Sequelize.DataTypes.BIGINT,

@@ -439,7 +439,7 @@ nav {
         border-top: none;
       }
       border-top: dashed 1px $color4;
-      padding: 1em;
+      padding: 1em ($close-button-dimension + 0.2em) 1em 1em;
       position: relative;
       button.close-button {
         position: absolute;

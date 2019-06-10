@@ -43,8 +43,12 @@ export default {
         status: response.status,
       };
 
+      let errorMsg = 'request failed';
+      if (responseBody  && responseBody.error) {
+        errorMsg = responseBody.error;
+      }
       if (errorByStatusCode && response.status >= 400) {
-        throw `error status code: ${response.status}`;
+        throw `status code ${response.status}: ${errorMsg}`;
       }
     } catch(e) {
       // if anything goes wrong, update the error field

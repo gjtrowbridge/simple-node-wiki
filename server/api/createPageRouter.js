@@ -63,9 +63,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       },
       function(err) {
         console.error('GET /pages error', err);
-        apiHelpers.respondWithError(req, res, {
-          error: 'unable to GET /pages'
-        });
+        apiHelpers.respondWithError(req, res,'unable to GET /pages');
       }
     )
   });
@@ -83,9 +81,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       },
       function(err) {
         console.error('GET /pages/:id error', err);
-        apiHelpers.respondWithError(req, res, {
-          error: 'unable to GET /pages/:id'
-        });
+        apiHelpers.respondWithError(req, res,'unable to GET /pages/:id');
       }
     );
   });
@@ -103,9 +99,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       },
       function(err) {
         console.error('GET /pages/name/:name error', err);
-        apiHelpers.respondWithError(req, res, {
-          error: 'unable to GET /pages/name/:name',
-        });
+        apiHelpers.respondWithError(req, res, 'unable to GET /pages/name/:name');
       }
     );
   });
@@ -126,9 +120,11 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
         );
       } else {
         console.error('POST /pages/ error', err);
-        apiHelpers.respondWithError(req, res, {
-          error: 'unable to POST /pages/',
-        });
+        let error = 'unable to POST /pages/';
+        if (Array.isArray(err.errors) && err.errors.length > 0 && err.errors[0].message) {
+          error = err.errors[0].message;
+        }
+        apiHelpers.respondWithError(req, res, error);
       }
     }
   });
@@ -194,9 +190,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
     } catch (err) {
       await t.rollback();
       console.error('PUT /pages/:id error', err);
-      apiHelpers.respondWithError(req, res, {
-        error: 'unable to PUT /pages/:id',
-      });
+      apiHelpers.respondWithError(req, res,'unable to PUT /pages/:id');
     }
   });
 
@@ -215,9 +209,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       },
       function(err) {
         console.error('DELETE /pages/:id error', err);
-        apiHelpers.respondWithError(req, res, {
-          error: 'unable to DELETE /pages/:id',
-        });
+        apiHelpers.respondWithError(req, res,'unable to DELETE /pages/:id');
       }
     );
   });
@@ -256,9 +248,7 @@ var createPageRouter = function(express, db, addUserToReqMiddleware) {
       apiHelpers.respondWithDataOrNotFound(req, res, pages);
     } catch (err) {
       console.error('GET /pages/search/:keyword error', err);
-      apiHelpers.respondWithError(req, res, {
-        error: 'unable to GET /pages/search/:keyword',
-      });
+      apiHelpers.respondWithError(req, res,'unable to GET /pages/search/:keyword');
     }
   });
 
