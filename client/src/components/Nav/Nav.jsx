@@ -32,10 +32,16 @@ class Nav extends React.Component {
     AppStateActionCreators.showModal(innerNode);
   }
   render() {
-    var id = this.props.id !== undefined ?
+    const id = this.props.id !== undefined ?
         this.props.id : "";
-    var userComponent;
-    var user = this.props.user;
+    let userComponent = (
+      <a className="google-login layout-fill-and-center" href="_auth/google/callback">
+        <img src={"https://evernote.com/img/home/google-logo.svg"} />Sign up/in with Google
+      </a>
+    );
+    let searchComponent;
+    let newPageComponent;
+    const user = this.props.user;
     if (user) {
       userComponent = (
         <button className="layout-fill-and-center"
@@ -44,11 +50,18 @@ class Nav extends React.Component {
           User Info ({user.email})
         </button>
       );
-    } else {
-      userComponent = (
-        <a className="google-login layout-fill-and-center" href="_auth/google/callback">
-          <img src={"https://evernote.com/img/home/google-logo.svg"} />Sign up/in with Google
-        </a>
+
+      searchComponent = (
+        <div className="nav-item">
+          <SearchBar />
+        </div>
+      );
+
+      newPageComponent = (
+        <div className="nav-item">
+          <button className="layout-fill-and-center"
+                  onClick={this.showCreatePageModal}>+ New Page</button>
+        </div>
       );
     }
     return (
@@ -56,13 +69,8 @@ class Nav extends React.Component {
         <div className="nav-item">
           <Link to={"/"} className="layout-fill-and-center">Home</Link>
         </div>
-        <div className="nav-item">
-          <SearchBar />
-        </div>
-        <div className="nav-item">
-          <button className="layout-fill-and-center"
-                                onClick={this.showCreatePageModal}>+ New Page</button>
-        </div>
+        {searchComponent}
+        {newPageComponent}
         <div className="nav-item">
           {userComponent}
         </div>
