@@ -63,7 +63,7 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
-    "acorn": "^6.1.1",
+    "acorn": "^6.4.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-prismjs": "^1.0.2",
     "css-loader": "^2.1.1",
