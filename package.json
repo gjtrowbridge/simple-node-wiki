@@ -33,7 +33,7 @@
     "body-parser": "^1.12.3",
     "codemirror": "^5.47.0",
     "debounce": "^1.2.0",
-    "express": "^4.12.3",
+    "express": "^4.17.3",
     "flux": "^2.0.3",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.3.0",
